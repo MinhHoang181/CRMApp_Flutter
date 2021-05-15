@@ -11,7 +11,7 @@ class OrdersScreen extends StatelessWidget {
     );
   }
 
-  static AppBar ordersScreenAppBar(BuildContext context) {
+  AppBar ordersScreenAppBar(BuildContext context) {
     return AppBar(
       title: Text('Orders'),
     );

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+
 import 'overall/overall.screen.dart';
 import 'orders/orders.screen.dart';
-import 'products/products.screen.dart';
+import 'customers/customers.screen.dart';
 import 'messenger/messenger.screen.dart';
 import 'more/more.screen.dart';
+
+//test
+import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,9 +20,9 @@ class _HomeState extends State<Home> {
   static List<Widget> _bodyOption = <Widget>[
     OverallScreen(),
     OrdersScreen(),
-    ProductsScreen(),
+    CustomersScreen(),
     MessengerScreen(),
-    MoreScreen(),
+    ChatboxScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -34,27 +39,30 @@ class _HomeState extends State<Home> {
         items: [
           new BottomNavigationBarItem(
             icon: Icon(Icons.home_rounded),
-            label: 'Trang chu',
+            label: 'Trang chủ',
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_rounded),
-            label: 'Hoa don',
+            label: 'Hoá đơn',
           ),
           new BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket_rounded),
-            label: 'San pham',
+            icon: Icon(Icons.people_alt_rounded),
+            label: 'Khách hàng',
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.messenger_rounded),
-            label: 'Tin nhan',
+            label: 'Tin nhắn',
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.menu_rounded),
-            label: 'Them',
+            label: 'Thêm',
           ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: Fonts.SIZE_ICON_LABEL,
+        unselectedFontSize: Fonts.SIZE_ICON_LABEL,
       ),
     );
   }
