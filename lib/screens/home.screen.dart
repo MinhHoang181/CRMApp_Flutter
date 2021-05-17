@@ -7,9 +7,6 @@ import 'customers/customers.screen.dart';
 import 'messenger/messenger.screen.dart';
 import 'more/more.screen.dart';
 
-//test
-import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -22,7 +19,7 @@ class _HomeState extends State<Home> {
     OrdersScreen(),
     CustomersScreen(),
     MessengerScreen(),
-    ChatboxScreen(),
+    MoreScreen(),
   ];
 
   void _onItemTapped(int index) {

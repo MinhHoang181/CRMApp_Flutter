@@ -21,11 +21,6 @@ class CircleAvatarWithPlatform extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          padding: EdgeInsets.all(2),
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            shape: BoxShape.circle,
-          ),
           child: CircleAvatar(
             radius: radius,
             backgroundImage: NetworkImage(image),
@@ -36,15 +31,15 @@ class CircleAvatarWithPlatform extends StatelessWidget {
             right: 0,
             bottom: 0,
             child: Container(
-              padding: EdgeInsets.all(1),
+              padding: EdgeInsets.all(0.5),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 shape: BoxShape.circle,
               ),
               child: Image(
                 image: AssetImage(_getImage(platform, isActive)),
-                height: radius * 0.75,
-                width: radius * 0.75,
+                height: radius/2,
+                width: radius/2,
               ),
             ),
           )
