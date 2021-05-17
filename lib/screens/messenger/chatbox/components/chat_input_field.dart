@@ -11,6 +11,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: Layouts.SPACING / 2,
+        ),
         decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             boxShadow: [
@@ -31,20 +34,15 @@ class _ChatInputFieldState extends State<ChatInputField> {
               onPressed: () => {},
             ),
             Expanded(
-                child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: Layouts.SPACING * 0.75,
-                vertical: Layouts.SPACING / 3,
-              ),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  borderRadius: BorderRadius.circular(40)),
               child: TextField(
-                decoration: InputDecoration.collapsed(
+                decoration: InputDecoration(
                   hintText: 'Nhập nội dung',
+                  suffixIcon: InkWell(
+                    child: Icon(Icons.send),
+                  ),
                 ),
               ),
-            )),
+            ),
             IconButton(
               icon: Icon(Icons.more_vert_rounded),
               onPressed: () => {},

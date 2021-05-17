@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants/colors.dart' as Colors;
+import 'constants/layouts.dart' as Layouts;
 
 ThemeData ligthThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
@@ -21,6 +22,9 @@ ThemeData ligthThemeData(BuildContext context) {
       unselectedItemColor: Colors.CONTENT_LIGHT_THEME.withOpacity(0.32),
       selectedIconTheme: IconThemeData(color: Colors.PRIMARY),
       showUnselectedLabels: true,
+    ),
+    inputDecorationTheme: inputDecorationTheme.copyWith(
+      fillColor: Colors.ON_BACKGROUND_LIGHT_THEME,
     ),
     //Color
     primaryColor: Colors.PRIMARY,
@@ -49,9 +53,20 @@ ThemeData darkThemeData(BuildContext context) {
       selectedIconTheme: IconThemeData(color: Colors.PRIMARY),
       showUnselectedLabels: true,
     ),
+    inputDecorationTheme: inputDecorationTheme.copyWith(
+      fillColor: Colors.ON_BACKGROUND_DARK_THEME,
+    ),
     //Color
     primaryColor: Colors.PRIMARY,
     scaffoldBackgroundColor: Colors.BACKGROUND_DARK_THEME,
     shadowColor: Colors.SHADOW_DARK_THEME,
   );
 }
+
+final inputDecorationTheme = InputDecorationTheme(
+  filled: true,
+  border: OutlineInputBorder(
+    borderSide: BorderSide.none,
+    borderRadius: const BorderRadius.all(Radius.circular(50)),
+  ),
+);

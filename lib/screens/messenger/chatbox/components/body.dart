@@ -5,7 +5,7 @@ import 'chat_input_field.dart';
 import 'message.dart';
 
 //Model
-import 'package:cntt2_crm/models/ChatMessage.dart';
+import 'package:cntt2_crm/models/testModels.dart';
 
 class Body extends StatelessWidget {
   const Body({Key key, @required this.avatar}) : super(key: key);
@@ -37,9 +37,9 @@ class ChatLog extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Layouts.SPACING),
         child: ListView.builder(
           reverse: true,
-          itemCount: demoChat.length,
+          itemCount: testCustomer.chatLogs.length,
           itemBuilder: (context, index) => Message(
-            message: demoChat[index],
+            message: testCustomer.chatLogs[index],
             avatar: avatar,
           ),
         ),

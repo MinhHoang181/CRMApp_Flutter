@@ -7,10 +7,8 @@ import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 import 'package:cntt2_crm/screens/tags/select_tag.screen.dart';
 //components
 import 'components/body.dart';
-
-//test
-final String testAvatar =
-    'https://scontent.fhan5-5.fna.fbcdn.net/v/t1.6435-9/127647065_2858040844461205_173329872841937354_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=LLyCWOvZgM4AX83eZ1X&_nc_ht=scontent.fhan5-5.fna&oh=0726dc574cf53b851efdc413d91ceaa9&oe=60C6FA86';
+//Models
+import 'package:cntt2_crm/models/testModels.dart';
 
 class ChatboxScreen extends StatelessWidget {
   @override
@@ -18,7 +16,7 @@ class ChatboxScreen extends StatelessWidget {
     return Scaffold(
       appBar: chatboxScreenAppBar(context),
       body: Body(
-        avatar: testAvatar,
+        avatar: testCustomer.avatar,
       ),
     );
   }
@@ -30,7 +28,7 @@ class ChatboxScreen extends StatelessWidget {
         children: [
           BackButton(),
           CircleAvatarWithPlatform(
-            image: testAvatar,
+            image: testCustomer.avatar,
             radius: 22,
             platform: Platform.messenger,
             isActive: true,
@@ -40,7 +38,7 @@ class ChatboxScreen extends StatelessWidget {
           ),
           Flexible(
             child: Text(
-              'Lê Thanh Tú',
+              testCustomer.name,
               style: TextStyle(fontSize: 14),
               overflow: TextOverflow.ellipsis,
             ),
