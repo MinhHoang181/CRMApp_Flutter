@@ -16,7 +16,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ChatLog(
+        _ChatLog(
           avatar: avatar,
         ),
         ChatInputField(),
@@ -25,8 +25,8 @@ class Body extends StatelessWidget {
   }
 }
 
-class ChatLog extends StatelessWidget {
-  const ChatLog({Key key, @required this.avatar}) : super(key: key);
+class _ChatLog extends StatelessWidget {
+  const _ChatLog({Key key, @required this.avatar}) : super(key: key);
 
   final String avatar;
 
@@ -38,12 +38,23 @@ class ChatLog extends StatelessWidget {
         child: ListView.builder(
           reverse: true,
           itemCount: testCustomer.chatLogs.length,
-          itemBuilder: (context, index) => Message(
-            message: testCustomer.chatLogs[index],
-            avatar: avatar,
-          ),
+          itemBuilder: (context, index) {
+            return _buildRow(index);
+          },
         ),
       ),
+    );
+  }
+
+  Widget _buildRow(int index) {
+    bool _isMutilLine = false;
+    if (!testCustomer.chatLogs[index].isSender && index != 0) {
+      _isMutilLine = !testCustomer.chatLogs[index - 1].isSender;
+    }
+    return Message(
+      message: testCustomer.chatLogs[index],
+      avatar: avatar,
+      isMutilLine: _isMutilLine,
     );
   }
 }

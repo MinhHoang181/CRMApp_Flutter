@@ -12,7 +12,7 @@ class SelectTagScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: selectTagScreenAppBar(context),
-      body: ListTag(),
+      body: _ListTag(),
     );
   }
 
@@ -24,12 +24,12 @@ class SelectTagScreen extends StatelessWidget {
   }
 }
 
-class ListTag extends StatefulWidget {
+class _ListTag extends StatefulWidget {
   @override
   _ListTagState createState() => _ListTagState();
 }
 
-class _ListTagState extends State<ListTag> {
+class _ListTagState extends State<_ListTag> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Tag {
-  final String name;
-  final Color color;
+  String name;
+  Color color;
 
   Tag({
     @required this.name,

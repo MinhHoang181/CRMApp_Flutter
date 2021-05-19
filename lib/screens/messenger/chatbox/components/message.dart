@@ -11,10 +11,12 @@ class Message extends StatelessWidget {
     Key key,
     @required this.message,
     @required this.avatar,
+    this.isMutilLine = false,
   }) : super(key: key);
 
   final ChatMessage message;
   final String avatar;
+  final bool isMutilLine;
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +25,17 @@ class Message extends StatelessWidget {
           message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         if (!message.isSender) ...[
-          CircleAvatar(
-            backgroundImage: NetworkImage(avatar),
-            radius: 12,
+          Opacity(
+            opacity: isMutilLine ? 0.0 : 1.0,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(avatar),
+              radius: 12,
+            ),
           ),
-          SizedBox(
-            width: Layouts.SPACING / 2,
-          )
         ],
+        SizedBox(
+          width: Layouts.SPACING / 2,
+        ),
         TextMessage(
           message: message,
         ),

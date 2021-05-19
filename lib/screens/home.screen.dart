@@ -22,12 +22,6 @@ class _HomeState extends State<Home> {
     MoreScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,5 +57,10 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-}
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+}

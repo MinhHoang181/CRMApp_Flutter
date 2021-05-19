@@ -5,7 +5,7 @@ import 'package:cntt2_crm/constants/enum.dart';
 class CircleAvatarWithPlatform extends StatelessWidget {
   const CircleAvatarWithPlatform({
     Key key,
-    this.image,
+    @required this.image,
     this.platform = Platform.none,
     this.radius = 24,
     this.isActive = true,
@@ -38,8 +38,8 @@ class CircleAvatarWithPlatform extends StatelessWidget {
               ),
               child: Image(
                 image: AssetImage(_getImage(platform, isActive)),
-                height: radius/2,
-                width: radius/2,
+                height: radius / 2,
+                width: radius / 2,
               ),
             ),
           )
@@ -48,7 +48,7 @@ class CircleAvatarWithPlatform extends StatelessWidget {
   }
 
   String _getImage(Platform platform, bool isActive) {
-    switch(platform) {
+    switch (platform) {
       case Platform.messenger:
         return isActive ? Icons.MESSENGER : Icons.MESSENGER_GRAY;
       case Platform.facebook:

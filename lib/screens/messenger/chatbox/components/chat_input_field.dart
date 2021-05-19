@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
+//Screen
+import 'package:cntt2_crm/screens/quick_answers/select_answer.screen.dart';
+
 class ChatInputField extends StatefulWidget {
   @override
   _ChatInputFieldState createState() => _ChatInputFieldState();
 }
 
 class _ChatInputFieldState extends State<ChatInputField> {
+  var _inputController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,10 +35,12 @@ class _ChatInputFieldState extends State<ChatInputField> {
             ),
             IconButton(
               icon: Icon(Icons.chat_rounded),
-              onPressed: () => {},
+              onPressed: () =>
+                  _navigateToSelectAnswerScreenAndReceiveAnswer(context),
             ),
             Expanded(
               child: TextField(
+                controller: _inputController,
                 decoration: InputDecoration(
                   hintText: 'Nhập nội dung',
                   suffixIcon: InkWell(
@@ -51,5 +57,16 @@ class _ChatInputFieldState extends State<ChatInputField> {
         ),
       ),
     );
+  }
+
+  void _navigateToSelectAnswerScreenAndReceiveAnswer(
+      BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SelectAnswerScreen(),
+      ),
+    );
+    _inputController.text = result;
   }
 }

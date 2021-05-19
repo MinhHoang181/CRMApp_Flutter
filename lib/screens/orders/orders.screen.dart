@@ -4,14 +4,14 @@ class OrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ordersScreenAppBar(context),
+      appBar: _ordersScreenAppBar(context),
       body: Center(
         child: Text("Orders"),
       ),
     );
   }
 
-  AppBar ordersScreenAppBar(BuildContext context) {
+  AppBar _ordersScreenAppBar(BuildContext context) {
     return AppBar(
       title: Text('Orders'),
     );

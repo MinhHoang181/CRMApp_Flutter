@@ -26,6 +26,9 @@ ThemeData ligthThemeData(BuildContext context) {
     inputDecorationTheme: inputDecorationTheme.copyWith(
       fillColor: Colors.ON_BACKGROUND_LIGHT_THEME,
     ),
+    dividerTheme: DividerThemeData(
+      color: Colors.CONTENT_LIGHT_THEME,
+    ),
     //Color
     primaryColor: Colors.PRIMARY,
     scaffoldBackgroundColor: Colors.BACKGROUND_LIGHT_THEME,
@@ -55,6 +58,9 @@ ThemeData darkThemeData(BuildContext context) {
     ),
     inputDecorationTheme: inputDecorationTheme.copyWith(
       fillColor: Colors.ON_BACKGROUND_DARK_THEME,
+    ),
+    dividerTheme: DividerThemeData(
+      color: Colors.CONTENT_DARK_THEME,
     ),
     //Color
     primaryColor: Colors.PRIMARY,

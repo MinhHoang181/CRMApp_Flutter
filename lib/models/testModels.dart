@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'ChatMessage.dart';
 import 'Customer.dart';
 import 'Tag.dart';
+import 'QuickAnswer.dart';
 
 final List<ChatMessage> demoChat = new List.from([
   ChatMessage(
@@ -107,3 +108,9 @@ final Customer testCustomer = new Customer(
   ..addTag(tagsList[0])
   ..addTag(tagsList[2])
   ..updateChatLogs(demoChat);
+
+final List<QuickAnswer> answerList = [
+  QuickAnswer(
+      'Xin chào', 'Chào mừng tới với demo Flutter app chăm sóc khách hàng'),
+  QuickAnswer('Cảm ơn', 'Cảm ơn vì đã mua hàng ở cửa hàng chúng tôi'),
+];
