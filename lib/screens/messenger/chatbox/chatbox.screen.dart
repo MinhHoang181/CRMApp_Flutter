@@ -37,12 +37,10 @@ class ChatboxScreen extends StatelessWidget {
             SizedBox(
               width: Layouts.SPACING * 0.75,
             ),
-            Flexible(
-              child: Text(
-                testCustomer.name,
-                style: TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM),
-                overflow: TextOverflow.ellipsis,
-              ),
+            Text(
+              testCustomer.name,
+              style: TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

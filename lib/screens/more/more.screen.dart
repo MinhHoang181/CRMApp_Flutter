@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //test
 import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';
 import 'package:cntt2_crm/screens/tags/tags.screen.dart';
+import 'package:cntt2_crm/screens/quick_answers/answers.screen.dart';
 
 class MoreScreen extends StatelessWidget {
   @override
@@ -12,6 +13,16 @@ class MoreScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            IconButton(
+              icon: Icon(Icons.message_rounded),
+              iconSize: 100,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AnswersScreen(),
+                ),
+              ),
+            ),
             IconButton(
               icon: Icon(Icons.style_rounded),
               iconSize: 100,

@@ -34,10 +34,10 @@ class _ListTagState extends State<_ListTag> {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: tagsList.length * 2,
-      itemBuilder: (context, i) {
-        if (i.isOdd) return Divider();
-        final index = i ~/ 2;
-        return _buildRow(tagsList[index]);
+      itemBuilder: (context, index) {
+        if (index.isOdd) return Divider();
+        final i = index ~/ 2;
+        return _buildRow(tagsList[i]);
       },
     );
   }

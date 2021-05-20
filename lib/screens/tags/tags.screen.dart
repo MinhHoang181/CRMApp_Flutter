@@ -8,7 +8,7 @@ import 'package:cntt2_crm/models/testModels.dart';
 import 'components/tag_item.dart';
 
 //Screen
-import 'add_tag.screen.dart';
+import 'tag_detail.screen.dart';
 
 class TagsScreen extends StatelessWidget {
   @override
@@ -28,7 +28,7 @@ class TagsScreen extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddTagScreen(),
+              builder: (context) => TagDetailScreen(),
             ),
           ),
         ),
@@ -45,10 +45,13 @@ class _ListTag extends StatefulWidget {
 class _ListTagState extends State<_ListTag> {
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: tagsList.length,
-      separatorBuilder: (context, index) => Divider(),
-      itemBuilder: (context, index) => _buildRow(tagsList[index]),
+    return ListView.builder(
+      itemCount: tagsList.length * 2,
+      itemBuilder: (context, index) {
+        if (index.isOdd) return Divider();
+        final i = index ~/ 2;
+        return _buildRow(tagsList[i]);
+      },
     );
   }
 
@@ -61,14 +64,18 @@ class _ListTagState extends State<_ListTag> {
             child: TagItem(tag: tag),
           ),
           IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () => {},
-          ),
-          IconButton(
             icon: Icon(Icons.delete),
             onPressed: () => {},
           ),
         ],
+      ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TagDetailScreen(
+            tag: tag,
+          ),
+        ),
       ),
     );
   }

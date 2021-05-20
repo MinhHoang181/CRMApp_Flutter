@@ -5,6 +5,8 @@ const Color SECONDARY = Colors.lightBlueAccent;
 const Color WARNING = Colors.yellowAccent;
 const Color ERROR = Colors.redAccent;
 
+const Color ON_PRIMARY = Colors.white;
+
 // Light Theme
 const Color CONTENT_LIGHT_THEME = Colors.black;
 const Color BACKGROUND_LIGHT_THEME = Colors.white;

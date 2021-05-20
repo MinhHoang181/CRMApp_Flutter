@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'constants/colors.dart' as Colors;
-import 'constants/layouts.dart' as Layouts;
 
 ThemeData ligthThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
@@ -15,6 +14,7 @@ ThemeData ligthThemeData(BuildContext context) {
       error: Colors.ERROR,
       background: Colors.BACKGROUND_LIGHT_THEME,
       onBackground: Colors.ON_BACKGROUND_LIGHT_THEME,
+      onPrimary: Colors.ON_PRIMARY,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.BACKGROUND_LIGHT_THEME,
@@ -48,6 +48,7 @@ ThemeData darkThemeData(BuildContext context) {
       error: Colors.ERROR,
       background: Colors.BACKGROUND_DARK_THEME,
       onBackground: Colors.ON_BACKGROUND_DARK_THEME,
+      onPrimary: Colors.ON_PRIMARY,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.BACKGROUND_DARK_THEME,
