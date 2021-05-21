@@ -1,5 +1,8 @@
+import 'dart:math';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 import 'overall/overall.screen.dart';
 import 'orders/orders.screen.dart';
@@ -24,6 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var _messNotfiCount = min(10, 999);
     return Scaffold(
       body: _bodyOption.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -41,11 +45,25 @@ class _HomeState extends State<Home> {
             label: 'Khách hàng',
           ),
           new BottomNavigationBarItem(
-            icon: Icon(Icons.messenger_rounded),
+            icon: Badge(
+              padding: EdgeInsets.all(Layouts.SPACING / 3),
+              position: BadgePosition.topEnd(
+                top: -Layouts.SPACING,
+                end: -Layouts.SPACING,
+              ),
+              child: Icon(Icons.messenger_rounded),
+              badgeContent: Text(
+                '$_messNotfiCount',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              showBadge: _messNotfiCount > 0 ? true : false,
+            ),
             label: 'Tin nhắn',
           ),
           new BottomNavigationBarItem(
-            icon: Icon(Icons.menu_rounded),
+            icon: Icon(Icons.apps_rounded),
             label: 'Thêm',
           ),
         ],
