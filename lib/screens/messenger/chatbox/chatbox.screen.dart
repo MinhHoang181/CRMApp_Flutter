@@ -7,6 +7,7 @@ import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 //screen
 import 'package:cntt2_crm/screens/tags/select_tag.screen.dart';
 import 'package:cntt2_crm/screens/customers/profile_customer/profile_customer.screen.dart';
+import 'package:cntt2_crm/screens/orders/order_detail/order_detail.screen.dart';
 //components
 import 'components/body.dart';
 //Models
@@ -57,14 +58,20 @@ class ChatboxScreen extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.style_rounded),
           onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SelectTagScreen(),
-              )),
+            context,
+            MaterialPageRoute(
+              builder: (context) => SelectTagScreen(),
+            ),
+          ),
         ),
         IconButton(
           icon: Icon(Icons.add_shopping_cart_rounded),
-          onPressed: () => {},
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderDetailScreen(),
+            ),
+          ),
         ),
         SizedBox(
           width: Layouts.SPACING / 2,
