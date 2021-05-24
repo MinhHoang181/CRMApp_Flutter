@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 
+class User {
+  final String id;
+  final String name;
+
+  User({
+    @required this.id,
+    @required this.name,
+  });
+}
+
 class Conversations {
   final pageId;
   List<Conversation> list = List.empty(growable: true);
@@ -21,7 +31,7 @@ class Conversation {
   final String id;
   final String snippet;
   final String pageId;
-  final String userId;
+  final List<User> users;
   final String updateTime;
   final int undreadCount;
   final bool isSender;
@@ -29,7 +39,7 @@ class Conversation {
   Conversation({
     @required this.id,
     @required this.pageId,
-    @required this.userId,
+    @required this.users,
     @required this.snippet,
     @required this.updateTime,
     @required this.undreadCount,
@@ -38,20 +48,28 @@ class Conversation {
 
   factory Conversation.fromJson(String pageId, Map<String, dynamic> json) {
     List<dynamic> tags = json['messages']['data'][0]['tags']['data'];
+    List<dynamic> participants = json['participants']['data'];
     bool isSender = false;
-    String userId;
     tags.forEach((element) {
       if (element['name'] == 'sent') {
         isSender = true;
       }
     });
-    userId = isSender
-        ? json['messages']['data'][0]['to']['id']
-        : json['messages']['data'][0]['from']['id'];
+
+    List<User> users = List.empty(growable: true);
+    participants.forEach((element) {
+      if (element['id'] != pageId) {
+        users.add(User(
+          id: element['id'],
+          name: element['name'],
+        ));
+      }
+    });
+
     return Conversation(
       id: json['id'],
       pageId: pageId,
-      userId: userId,
+      users: users,
       snippet: json['snippet'],
       updateTime: json['update_time'],
       undreadCount: json['unread_count'],

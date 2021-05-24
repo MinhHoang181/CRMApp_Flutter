@@ -7,7 +7,7 @@ import 'package:cntt2_crm/models/FacebookUser.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
 
 const String access_token =
-    'EAAEltaK2YYoBALnS1GrbGadbsFbBo4Fr6TbaSBi9PpaSL2wGl90A50eIL8L1KqmeaSbPuOUm4r7yPR9KDQdXd0ZCS8YdKIdvLZB4wQse34wKTUOoQ3mb8t9IVX38eP1kSW1u2ACPIZAvCcgJr5FwmZBJ6P3EYW56UvSTbRpssD2M4gaCLNADL3LV4gnQRfAyRKkxZAU4RwI8sLZAb0qGroZCeFnd6A2C8gZD';
+    'EAACrQDFJsh4BADBdV9iiPVJ0S0cXQeqLTynl5i1JrsmA7pZC0Q9gNCftZB0u7MThdqprHmj0ZB0bTAD724d0YNYsFRjSIF4J11IZAUNui7ZCcZAGi7OXDh9BTxk3IWGusFPQH7JOll7RpZBnKhiCZAdlM3EJEATkz2HwdogTkXeODmSkBz2KQHNe8ZCh7ZBQ3tSPZBYVbii6cbFkgZDZD';
 
 const String facebook_api_uri = 'graph.facebook.com';
 const String version = 'v10.0';
@@ -27,7 +27,7 @@ Future<FacebookUser> fetchFacebookUser(String userId) async {
 }
 
 Future<Conversations> fetchConversations(String pageId) async {
-  final String messagesField = 'messages.limit(1){tags,from,to}';
+  final String messagesField = 'messages.limit(1){tags}';
   final String fields =
       'snippet,unread_count,updated_time,participants' + ',' + messagesField;
 

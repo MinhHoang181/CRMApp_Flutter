@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_rounded),
-            label: 'Hoá đơn',
+            label: 'Đơn hàng',
           ),
           new BottomNavigationBarItem(
             icon: Icon(Icons.people_alt_rounded),

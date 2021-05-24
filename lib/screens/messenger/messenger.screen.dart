@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/enum.dart';
-import 'package:cntt2_crm/constants/icons.dart' as _Icons;
+import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:badges/badges.dart';
 
 //Screen
@@ -36,9 +36,9 @@ class __ListPlatformState extends State<_ListPlatform> {
       padding: EdgeInsets.all(Layouts.SPACING),
       child: ListView(
         children: [
-          _platform(Platform.facebook, 10, FacebookMessengerScreen()),
+          _platform(Platform.facebook, 100, FacebookMessengerScreen()),
           Divider(),
-          _platform(Platform.zalo, 0, null),
+          _platform(Platform.zalo, 10, null),
           Divider(),
         ],
       ),
@@ -50,10 +50,10 @@ class __ListPlatformState extends State<_ListPlatform> {
     notificationCount = min(notificationCount, 999);
     switch (platform) {
       case Platform.facebook:
-        _image = AssetImage(_Icons.FACEBOOK);
+        _image = AssetImage(Images.FACEBOOK);
         break;
       case Platform.zalo:
-        _image = AssetImage(_Icons.ZALO);
+        _image = AssetImage(Images.ZALO);
         break;
       default:
         break;

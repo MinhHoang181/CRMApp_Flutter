@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cntt2_crm/constants/icons.dart' as Icons;
+import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:cntt2_crm/constants/enum.dart';
 
 class CircleAvatarWithPlatform extends StatelessWidget {
@@ -50,11 +50,11 @@ class CircleAvatarWithPlatform extends StatelessWidget {
   String _getImage(Platform platform, bool isActive) {
     switch (platform) {
       case Platform.messenger:
-        return isActive ? Icons.MESSENGER : Icons.MESSENGER_GRAY;
+        return isActive ? Images.MESSENGER : Images.MESSENGER_GRAY;
       case Platform.facebook:
-        return Icons.FACEBOOK;
+        return Images.FACEBOOK;
       case Platform.zalo:
-        return Icons.ZALO;
+        return Images.ZALO;
       default:
         return '';
     }
