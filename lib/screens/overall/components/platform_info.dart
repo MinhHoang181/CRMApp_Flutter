@@ -27,7 +27,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
       ),
       child: Column(
         children: [
-          _platformRow(Platform.facebook, 10, 1),
+          _platformRow(Platform.facebook, 1, 1),
           Divider(),
           _platformRow(Platform.zalo, 5, 3),
         ],
