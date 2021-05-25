@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cntt2_crm/constants/colors.dart' as Colors;
 import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:flutter_login/flutter_login.dart';
 

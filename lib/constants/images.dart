@@ -5,3 +5,4 @@ const String FACEBOOK = 'assets/images/logo-facebook.png';
 const String ZALO = 'assets/images/logo-zalo.jpg';
 const String AZSALES = 'assets/images/logo-azsales.png';
 const String NO_CUSTOMER = 'assets/images/no-customer.png';
+const String NO_PRODUCT_ORDER = 'assets/images/no-product-order.png';
