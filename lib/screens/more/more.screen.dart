@@ -14,34 +14,12 @@ class MoreScreen extends StatelessWidget {
         child: Column(
           children: [
             IconButton(
-              icon: Icon(Icons.message_rounded),
-              iconSize: 100,
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AnswersScreen(),
-                ),
-              ),
-            ),
-            IconButton(
               icon: Icon(Icons.style_rounded),
               iconSize: 100,
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => TagsScreen(),
-                  )),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            IconButton(
-              icon: Icon(Icons.messenger),
-              iconSize: 100,
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChatboxScreen(),
                   )),
             ),
           ],

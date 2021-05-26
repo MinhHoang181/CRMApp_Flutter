@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 class User {
@@ -10,20 +12,32 @@ class User {
   });
 }
 
-class Conversations {
-  final pageId;
-  List<Conversation> list = List.empty(growable: true);
+class ConversationModel extends ChangeNotifier {
+  final String pageId;
 
-  Conversations({
+  final List<Conversation> _list = List.empty(growable: true);
+  UnmodifiableListView<Conversation> get all => UnmodifiableListView(_list);
+
+  ConversationModel({
     @required this.pageId,
   });
 
-  factory Conversations.fromJson(String pageId, List<dynamic> json) {
-    Conversations conversations = new Conversations(pageId: pageId);
+  factory ConversationModel.fromJson(String pageId, List<dynamic> json) {
+    ConversationModel conversations = new ConversationModel(pageId: pageId);
     json.forEach((value) {
-      conversations.list.add(Conversation.fromJson(pageId, value));
+      conversations.add(Conversation.fromJson(pageId, value));
     });
     return conversations;
+  }
+
+  void add(Conversation conversation) {
+    _list.add(conversation);
+    notifyListeners();
+  }
+
+  void remove(Conversation conversation) {
+    _list.remove(conversation);
+    notifyListeners();
   }
 }
 

@@ -63,7 +63,12 @@ class __ListPlatformState extends State<_ListPlatform> {
         image: _image,
       ),
       title: Text('Facebook'),
-      subtitle: Text('Quản lý tập trung tin nhắn'),
+      subtitle: Text(
+        'Quản lý tập trung tin nhắn',
+        style: TextStyle(
+          color: Theme.of(context).textTheme.bodyText1.color,
+        ),
+      ),
       trailing: Badge(
         padding: EdgeInsets.all(Layouts.SPACING / 2),
         badgeContent: Text(

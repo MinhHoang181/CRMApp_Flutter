@@ -5,7 +5,7 @@ import 'package:cntt2_crm/constants/enum.dart';
 class CircleAvatarWithPlatform extends StatelessWidget {
   const CircleAvatarWithPlatform({
     Key key,
-    @required this.image,
+    this.image = '',
     this.platform = Platform.none,
     this.radius = 24,
     this.isActive = true,
@@ -20,11 +20,11 @@ class CircleAvatarWithPlatform extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          child: CircleAvatar(
-            radius: radius,
-            backgroundImage: NetworkImage(image),
-          ),
+        CircleAvatar(
+          radius: radius,
+          backgroundImage: AssetImage(Images.AVATAR),
+          foregroundImage:
+              image.isEmpty ? AssetImage(Images.AVATAR) : NetworkImage(image),
         ),
         if (platform != Platform.none)
           Positioned(

@@ -5,20 +5,17 @@ import 'chat_input_field.dart';
 import 'message.dart';
 
 //Model
-import 'package:cntt2_crm/models/testModels.dart';
+import 'package:cntt2_crm/models/ChatMessage.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key key, @required this.avatar}) : super(key: key);
+  final List<ChatMessage> chatlog;
 
-  final String avatar;
-
+  const Body({Key key, @required this.chatlog}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _ChatLog(
-          avatar: avatar,
-        ),
+        _ChatLog(chatlog: chatlog),
         ChatInputField(),
       ],
     );
@@ -26,9 +23,9 @@ class Body extends StatelessWidget {
 }
 
 class _ChatLog extends StatelessWidget {
-  const _ChatLog({Key key, @required this.avatar}) : super(key: key);
+  final List<ChatMessage> chatlog;
 
-  final String avatar;
+  const _ChatLog({Key key, @required this.chatlog}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +34,7 @@ class _ChatLog extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: Layouts.SPACING),
         child: ListView.builder(
           reverse: true,
-          itemCount: testCustomer.chatLogs.length,
+          itemCount: chatlog.length,
           itemBuilder: (context, index) {
             return _buildRow(index);
           },
@@ -48,12 +45,13 @@ class _ChatLog extends StatelessWidget {
 
   Widget _buildRow(int index) {
     bool _isMutilLine = false;
-    if (!testCustomer.chatLogs[index].isSender && index != 0) {
-      _isMutilLine = !testCustomer.chatLogs[index - 1].isSender;
+    if (!chatlog[index].isSender && index != 0) {
+      _isMutilLine = !chatlog[index - 1].isSender;
+    } else if (chatlog[index].isSender && index != 0) {
+      _isMutilLine = chatlog[index - 1].isSender;
     }
     return Message(
-      message: testCustomer.chatLogs[index],
-      avatar: avatar,
+      message: chatlog[index],
       isMutilLine: _isMutilLine,
     );
   }

@@ -6,13 +6,16 @@ import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 
 //Models
-import 'package:cntt2_crm/models/Customer.dart';
 
 class ProfileCustomerScreen extends StatelessWidget {
-  final Customer customer;
+  final String customerName;
+  final String customerId;
 
-  const ProfileCustomerScreen({Key key, @required this.customer})
-      : super(key: key);
+  const ProfileCustomerScreen({
+    Key key,
+    @required this.customerName,
+    @required this.customerId,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,14 +33,12 @@ class ProfileCustomerScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CircleAvatarWithPlatform(
-              image: customer.avatar,
-            ),
+            CircleAvatarWithPlatform(),
             SizedBox(
               height: Layouts.SPACING,
             ),
             Text(
-              customer.name,
+              customerName,
               style: TextStyle(fontSize: Fonts.SIZE_TEXT_LARGE),
             ),
           ],
