@@ -25,63 +25,63 @@ class OrdersScreen extends StatelessWidget {
 class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          InkWell(
-            child: _createOrderButton(context),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddOrderScreen(),
-              ),
-            ),
+    return SafeArea(
+      child: CustomScrollView(slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              _createOrderButton(context),
+              _OrdersManager(),
+            ],
           ),
-          _OrdersManager(),
-        ],
-      ),
+        ),
+      ]),
     );
   }
 
   Widget _createOrderButton(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: Layouts.SPACING * 2,
-          vertical: Layouts.SPACING,
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: Layouts.SPACING * 2,
+        vertical: Layouts.SPACING,
+      ),
+      padding: EdgeInsets.all(Layouts.SPACING),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 10,
+            color: Theme.of(context).shadowColor,
+          ),
+        ],
+      ),
+      child: InkWell(
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: [
+              Icon(
+                Icons.add_shopping_cart_rounded,
+                color: Colors.white,
+                size: 60,
+              ),
+              SizedBox(height: Layouts.SPACING / 2),
+              Text(
+                'Tạo đơn hàng mới',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: Fonts.SIZE_TEXT_LARGE),
+              ),
+            ],
+          ),
         ),
-        padding: EdgeInsets.all(Layouts.SPACING),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 10,
-              color: Theme.of(context).shadowColor,
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              children: [
-                Icon(
-                  Icons.add_shopping_cart_rounded,
-                  color: Colors.white,
-                  size: 60,
-                ),
-                SizedBox(height: Layouts.SPACING / 2),
-                Text(
-                  'Tạo đơn hàng mới',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: Fonts.SIZE_TEXT_LARGE),
-                ),
-              ],
-            ),
-          ],
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddOrderScreen(),
+          ),
         ),
       ),
     );

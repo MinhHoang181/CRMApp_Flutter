@@ -21,8 +21,8 @@ class NoProductOrder extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(Layouts.SPACING * 2),
+          Padding(
+            padding: const EdgeInsets.all(Layouts.SPACING * 2),
             child: Image(
               image: AssetImage(Images.NO_PRODUCT_ORDER),
             ),

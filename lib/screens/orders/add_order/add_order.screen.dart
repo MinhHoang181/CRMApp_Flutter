@@ -15,12 +15,82 @@ class AddOrderScreen extends StatelessWidget {
     return Scaffold(
       appBar: _addOrderScreenAppBar(context),
       body: _Body(),
+      bottomNavigationBar: _createOrderButton(context),
     );
   }
 
   AppBar _addOrderScreenAppBar(BuildContext context) {
     return AppBar(
       title: Text('Thêm đơn hàng'),
+    );
+  }
+
+  BottomAppBar _createOrderButton(BuildContext context) {
+    return BottomAppBar(
+      child: Container(
+        padding: EdgeInsets.all(Layouts.SPACING),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          boxShadow: [
+            BoxShadow(
+                color: Theme.of(context).shadowColor,
+                offset: Offset(0, -2),
+                blurRadius: 2),
+          ],
+        ),
+        child: Table(
+          children: [
+            TableRow(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Tạm tính',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: Fonts.SIZE_TEXT_LARGE,
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      '0',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: Fonts.SIZE_TEXT_LARGE,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            TableRow(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Text('Tạo đơn hàng'),
+                        onPressed: () => {},
+                      ),
+                    ),
+                    SizedBox(width: Layouts.SPACING),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white.withOpacity(0.6),
+                      ),
+                      child: Icon(
+                        Icons.more_horiz_rounded,
+                        color: Colors.black,
+                      ),
+                      onPressed: () => {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -32,75 +102,15 @@ class _Body extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Container(
-              child: Column(
-                children: [
-                  NoProductOrder(),
-                  TotalCostInfo(),
-                  CustomerInfo(),
-                  PaymentMethod(),
-                  AddNote(),
-                ],
-              ),
+            child: Column(
+              children: [
+                NoProductOrder(),
+                TotalCostInfo(),
+                CustomerInfo(),
+                PaymentMethod(),
+                AddNote(),
+              ],
             ),
-          ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: _createOrderButton(context),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _createOrderButton(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(Layouts.SPACING),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                'Tạm tính',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Fonts.SIZE_TEXT_LARGE,
-                ),
-              ),
-              Spacer(),
-              Text(
-                '0',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Fonts.SIZE_TEXT_LARGE,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: Layouts.SPACING / 2),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  child: Text('Tạo đơn hàng'),
-                  onPressed: () => {},
-                ),
-              ),
-              SizedBox(width: Layouts.SPACING),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white.withOpacity(0.6),
-                ),
-                child: Icon(
-                  Icons.more_horiz_rounded,
-                  color: Colors.black,
-                ),
-                onPressed: () => {},
-              ),
-            ],
           ),
         ],
       ),
