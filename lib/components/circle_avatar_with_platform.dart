@@ -38,8 +38,8 @@ class CircleAvatarWithPlatform extends StatelessWidget {
               ),
               child: Image(
                 image: AssetImage(_getImage(platform, isActive)),
-                height: radius / 2,
-                width: radius / 2,
+                height: radius * 0.6,
+                width: radius * 0.6,
               ),
             ),
           )
