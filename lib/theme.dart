@@ -4,6 +4,9 @@ import 'constants/colors.dart' as Colors;
 ThemeData ligthThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
     //Theme
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+    ),
     iconTheme: IconThemeData(color: Colors.PRIMARY),
     textTheme: Theme.of(context)
         .textTheme

@@ -5,6 +5,8 @@ const Color SECONDARY = Colors.lightBlueAccent;
 const Color WARNING = Colors.yellowAccent;
 const Color ERROR = Colors.redAccent;
 
+const Color BACKGROUND_LOGIN = Color(0xFF9CB8F0);
+
 const Color ON_PRIMARY = Colors.white;
 
 // Light Theme

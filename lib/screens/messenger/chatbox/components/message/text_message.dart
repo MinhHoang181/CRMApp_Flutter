@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 
 //Models
 import 'package:cntt2_crm/models/ChatMessage.dart';
@@ -12,7 +13,15 @@ class TextMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 1),
+      margin: message.isSender
+          ? EdgeInsets.only(
+              top: 1,
+              left: Layouts.SPACING * 4,
+            )
+          : EdgeInsets.only(
+              top: 1,
+              right: Layouts.SPACING * 4,
+            ),
       padding: EdgeInsets.symmetric(
         horizontal: Layouts.SPACING * 0.75,
         vertical: Layouts.SPACING / 2,
@@ -24,11 +33,12 @@ class TextMessage extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
-        message.text,
+        message.message,
         style: TextStyle(
           color: message.isSender
               ? Colors.white
               : Theme.of(context).textTheme.bodyText1.color,
+          fontSize: Fonts.SIZE_TEXT_MEDIUM,
         ),
       ),
     );

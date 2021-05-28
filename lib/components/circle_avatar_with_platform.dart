@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:cntt2_crm/constants/icons.dart' as Icons;
+import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:cntt2_crm/constants/enum.dart';
 
 class CircleAvatarWithPlatform extends StatelessWidget {
   const CircleAvatarWithPlatform({
     Key key,
-    @required this.image,
+    this.image = '',
     this.platform = Platform.none,
     this.radius = 24,
     this.isActive = true,
@@ -20,11 +20,11 @@ class CircleAvatarWithPlatform extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          child: CircleAvatar(
-            radius: radius,
-            backgroundImage: NetworkImage(image),
-          ),
+        CircleAvatar(
+          radius: radius,
+          backgroundImage: AssetImage(Images.AVATAR),
+          foregroundImage:
+              image.isEmpty ? AssetImage(Images.AVATAR) : NetworkImage(image),
         ),
         if (platform != Platform.none)
           Positioned(
@@ -38,8 +38,8 @@ class CircleAvatarWithPlatform extends StatelessWidget {
               ),
               child: Image(
                 image: AssetImage(_getImage(platform, isActive)),
-                height: radius / 2,
-                width: radius / 2,
+                height: radius * 0.6,
+                width: radius * 0.6,
               ),
             ),
           )
@@ -50,11 +50,11 @@ class CircleAvatarWithPlatform extends StatelessWidget {
   String _getImage(Platform platform, bool isActive) {
     switch (platform) {
       case Platform.messenger:
-        return isActive ? Icons.MESSENGER : Icons.MESSENGER_GRAY;
+        return isActive ? Images.MESSENGER : Images.MESSENGER_GRAY;
       case Platform.facebook:
-        return Icons.FACEBOOK;
+        return Images.FACEBOOK;
       case Platform.zalo:
-        return Icons.ZALO;
+        return Images.ZALO;
       default:
         return '';
     }
