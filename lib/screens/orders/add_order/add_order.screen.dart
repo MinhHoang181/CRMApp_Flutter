@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 //Components
-import 'components/no_product_order.dart';
-import 'components/total_cost_info.dart';
-import 'components/customer_info.dart';
-import 'components/payment_method.dart';
-import 'components/add_note.dart';
+import 'components/body.dart';
+
+//Models
+import 'package:cntt2_crm/models/Cart.dart';
 
 class AddOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _addOrderScreenAppBar(context),
-      body: _Body(),
+      body: Body(),
       bottomNavigationBar: _createOrderButton(context),
     );
   }
@@ -53,7 +54,8 @@ class AddOrderScreen extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      '0',
+                      NumberFormat('#,###')
+                          .format(Provider.of<Cart>(context).getTotalCost()),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: Fonts.SIZE_TEXT_LARGE,
@@ -90,29 +92,6 @@ class AddOrderScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                NoProductOrder(),
-                TotalCostInfo(),
-                CustomerInfo(),
-                PaymentMethod(),
-                AddNote(),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+//Models
+import 'package:cntt2_crm/models/Cart.dart';
 
 class TotalCostInfo extends StatefulWidget {
   @override
@@ -7,16 +12,13 @@ class TotalCostInfo extends StatefulWidget {
 }
 
 class _TotalCostInfoState extends State<TotalCostInfo> {
-  int _totalQuantity = 0;
-  int _totalCost = 0;
-  int _totalDiscount = 0;
-  int _feeship = 0;
   @override
   Widget build(BuildContext context) {
-    _totalQuantity = 0;
-    _totalCost = 0;
-    _totalDiscount = 0;
-    _feeship = 0;
+    final cart = Provider.of<Cart>(context);
+    int _totalQuantity = cart.getTotalQuantity();
+    int _totalPrice = cart.getTotalPrice();
+    int _totalDiscount = 0;
+    int _feeship = 0;
     return Container(
       margin: EdgeInsets.symmetric(vertical: Layouts.SPACING / 2),
       padding: EdgeInsets.all(Layouts.SPACING),
@@ -53,7 +55,9 @@ class _TotalCostInfoState extends State<TotalCostInfo> {
                 ),
               ),
               Spacer(),
-              Text('$_totalCost'),
+              Text(
+                NumberFormat('#,###').format(_totalPrice),
+              ),
             ],
           ),
           SizedBox(height: Layouts.SPACING),

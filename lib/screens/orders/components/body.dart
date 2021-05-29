@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'package:provider/provider.dart';
 
 //Components
 import 'order_manager.dart';
 
 //Screens
 import '../add_order/add_order.screen.dart';
+
+//Models
+import 'package:cntt2_crm/models/Cart.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -66,7 +70,10 @@ class Body extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AddOrderScreen(),
+            builder: (context) => ChangeNotifierProvider(
+              create: (context) => Cart(),
+              child: AddOrderScreen(),
+            ),
           ),
         ),
       ),

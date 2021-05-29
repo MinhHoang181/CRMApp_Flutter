@@ -54,7 +54,7 @@ class _SalesInfoState extends State<SalesInfo> {
                 Column(
                   children: [
                     Text(
-                      'Đơn hàng mới',
+                      'Đơn mới',
                       style: TextStyle(
                         fontSize: Fonts.SIZE_TEXT_MEDIUM,
                       ),
@@ -70,7 +70,7 @@ class _SalesInfoState extends State<SalesInfo> {
                 Column(
                   children: [
                     Text(
-                      'Đơn hàng hủy',
+                      'Đơn hủy',
                       style: TextStyle(
                         fontSize: Fonts.SIZE_TEXT_MEDIUM,
                       ),
@@ -86,7 +86,7 @@ class _SalesInfoState extends State<SalesInfo> {
                 Column(
                   children: [
                     Text(
-                      'Đơn hàng trả về',
+                      'Đơn trả về',
                       style: TextStyle(
                         fontSize: Fonts.SIZE_TEXT_MEDIUM,
                       ),
