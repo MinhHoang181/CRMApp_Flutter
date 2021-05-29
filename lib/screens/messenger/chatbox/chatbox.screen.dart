@@ -6,7 +6,7 @@ import 'package:cntt2_crm/constants/enum.dart';
 //screen
 import 'package:cntt2_crm/screens/tags/select_tag.screen.dart';
 import 'package:cntt2_crm/screens/customers/profile_customer/profile_customer.screen.dart';
-import 'package:cntt2_crm/screens/orders/order_detail/order_detail.screen.dart';
+import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
 //components
 import 'components/body.dart';
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
@@ -33,16 +33,18 @@ class ChatboxScreen extends StatelessWidget {
         fetchConversation(conversationId);
     return Scaffold(
       appBar: _chatboxScreenAppBar(context),
-      body: FutureBuilder<List<ChatMessage>>(
-          future: futureListChatMessage,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Body(chatlog: snapshot.data);
-            } else if (snapshot.hasError) {
-              print(snapshot.error);
-            }
-            return CircularProgressIndicator();
-          }),
+      body: Center(
+        child: FutureBuilder<List<ChatMessage>>(
+            future: futureListChatMessage,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Body(chatlog: snapshot.data);
+              } else if (snapshot.hasError) {
+                print(snapshot.error);
+              }
+              return CircularProgressIndicator();
+            }),
+      ),
     );
   }
 
@@ -91,7 +93,7 @@ class ChatboxScreen extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => OrderDetailScreen(),
+              builder: (context) => AddOrderScreen(),
             ),
           ),
         ),

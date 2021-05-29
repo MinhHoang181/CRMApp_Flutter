@@ -4,7 +4,6 @@ import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:http/http.dart' as http;
 
 //Models
-import 'package:cntt2_crm/models/FacebookUser.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
 
 const String access_token =
