@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 //test
-import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';
 import 'package:cntt2_crm/screens/tags/tags.screen.dart';
-import 'package:cntt2_crm/screens/quick_answers/answers.screen.dart';
 
 class MoreScreen extends StatelessWidget {
   @override

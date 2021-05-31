@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:cntt2_crm/constants/images.dart' as Images;
 
 //Models
 import 'package:cntt2_crm/models/Product.dart';
@@ -71,6 +72,9 @@ class _ProductOrderState extends State<ProductOrder> {
   Widget _buildRow(BuildContext context, Product product) {
     int _total = Provider.of<Cart>(context).products[product];
     return ListTile(
+      leading: product.image.isEmpty
+          ? Image.asset(Images.IMAGE_HOLDER)
+          : Image.network(product.image),
       title: Text(
         product.name,
         style: TextStyle(
