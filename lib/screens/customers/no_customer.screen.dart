@@ -3,6 +3,9 @@ import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 
+//Screens
+import 'add_customer/add_customer.screen.dart';
+
 class NoCustomerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,12 @@ class NoCustomerScreen extends StatelessWidget {
           height: 50,
           child: ElevatedButton(
             child: Text('Thêm mới'),
-            onPressed: () => {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddCustomerScreen(),
+              ),
+            ),
           ),
         ),
         SizedBox(height: Layouts.SPACING),
