@@ -9,7 +9,7 @@ final List<Tag> tagsList = [
   Tag(name: 'Khách Lẻ', color: Colors.yellow),
   Tag(name: 'Khách Buôn', color: Colors.green),
 ];
-final Customer testCustomer = new Customer()
+final Customer testCustomer = new Customer(name: 'test')
   ..addTag(tagsList[0])
   ..addTag(tagsList[2]);
 

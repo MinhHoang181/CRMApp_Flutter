@@ -1,12 +1,51 @@
 //Models
+import 'package:flutter/material.dart';
+
 import 'Tag.dart';
 
-class Customer {
-  String name;
-  String phone;
+class Address {
+  int provinceId;
+  String province;
+  int districtId;
+  String district;
+  int wardId;
+  String ward;
   String address;
 
+  Address({
+    @required this.province,
+    @required this.district,
+    @required this.ward,
+    @required this.address,
+  });
+
+  @override
+  String toString() {
+    String address = this.address +
+        ', ' +
+        this.ward +
+        ', ' +
+        this.district +
+        ', ' +
+        this.province;
+    return address;
+  }
+}
+
+class Customer {
+  String id;
+  final String name;
+  String phone;
+  Address address;
+
   List<Tag> tags = List.empty(growable: true);
+
+  Customer({
+    this.id,
+    @required this.name,
+    this.phone,
+    this.address,
+  });
 
   void addTag(Tag tag) {
     if (!tags.contains(tag)) {
