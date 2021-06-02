@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 enum AttachmentType {
@@ -36,6 +38,17 @@ class Attachment {
     @required this.reviewUrl,
     @required this.attachmentType,
   });
+}
+
+class Messages extends ChangeNotifier {
+  List<ChatMessage> _messages = List.empty(growable: true);
+
+  UnmodifiableListView get messages => UnmodifiableListView(_messages);
+
+  void add(ChatMessage message) {
+    _messages.add(message);
+    notifyListeners();
+  }
 }
 
 class ChatMessage {

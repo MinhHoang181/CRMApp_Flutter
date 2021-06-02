@@ -31,16 +31,18 @@ class ChatboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<ChatMessage>> futureListChatMessage =
-        fetchConversation(conversationId);
+    Future<Messages> futureListChatMessage = fetchConversation(conversationId);
     return Scaffold(
       appBar: _chatboxScreenAppBar(context),
       body: Center(
-        child: FutureBuilder<List<ChatMessage>>(
+        child: FutureBuilder<Messages>(
             future: futureListChatMessage,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Body(chatlog: snapshot.data);
+                return ChangeNotifierProvider.value(
+                  value: snapshot.data,
+                  child: Body(),
+                );
               } else if (snapshot.hasError) {
                 print(snapshot.error);
               }
@@ -70,15 +72,7 @@ class ChatboxScreen extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProfileCustomerScreen(
-              customerId: customerId,
-              customerName: customerName,
-            ),
-          ),
-        ),
+        onTap: () => {},
       ),
       actions: [
         IconButton(

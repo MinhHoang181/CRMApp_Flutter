@@ -36,7 +36,10 @@ class Customer {
   String id;
   final String name;
   String phone;
+  String email;
   Address address;
+  String birthday;
+  String type;
 
   List<Tag> tags = List.empty(growable: true);
 
@@ -44,7 +47,10 @@ class Customer {
     this.id,
     @required this.name,
     this.phone,
+    this.email,
     this.address,
+    this.birthday,
+    this.type,
   });
 
   void addTag(Tag tag) {

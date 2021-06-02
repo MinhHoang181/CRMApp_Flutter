@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 //Models
 import 'package:cntt2_crm/models/Customer.dart';
 
+//Screens
+import 'package:cntt2_crm/screens/customers/profile_customer/profile_customer.screen.dart';
+
 class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Customer> customers = Provider.of<List<Customer>>(context);
@@ -43,12 +46,12 @@ class Body extends StatelessWidget {
         shrinkWrap: true,
         separatorBuilder: (context, index) => Divider(),
         itemCount: customers.length,
-        itemBuilder: (context, index) => _buildRow(customers[index]),
+        itemBuilder: (context, index) => _buildRow(context, customers[index]),
       ),
     );
   }
 
-  Widget _buildRow(Customer customer) {
+  Widget _buildRow(BuildContext context, Customer customer) {
     return ListTile(
       title: Text(
         customer.name,
@@ -66,6 +69,15 @@ class Body extends StatelessWidget {
             customer.address == null ? '---' : customer.address.toString(),
           ),
         ],
+      ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Provider.value(
+            value: customer,
+            child: ProfileCustomerScreen(),
+          ),
+        ),
       ),
     );
   }
