@@ -36,7 +36,7 @@ Future<ConversationModel> fetchConversations(String pageId) async {
   }
 }
 
-Future<List<ChatMessage>> fetchConversation(String conversationId) async {
+Future<Messages> fetchConversation(String conversationId) async {
   final String fields = 'message,tags,created_time,sticker,attachments';
   final String unencodedPath =
       version + '/' + conversationId + '/' + 'messages';
@@ -50,11 +50,11 @@ Future<List<ChatMessage>> fetchConversation(String conversationId) async {
   ));
 
   if (response.statusCode == 200) {
-    List<ChatMessage> list = List.empty(growable: true);
+    Messages chatlog = new Messages();
     jsonDecode(response.body)['data'].forEach((element) {
-      list.add(ChatMessage.fromJson(element));
+      chatlog.add(ChatMessage.fromJson(element));
     });
-    return list;
+    return chatlog;
   } else {
     print(response.body);
     throw Exception('Lỗi load thông tin tin nhắn');

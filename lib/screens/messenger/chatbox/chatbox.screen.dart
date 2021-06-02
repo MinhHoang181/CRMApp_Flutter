@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'package:cntt2_crm/constants/enum.dart';
+import 'package:provider/provider.dart';
 
 //screen
 import 'package:cntt2_crm/screens/tags/select_tag.screen.dart';
@@ -12,6 +13,7 @@ import 'components/body.dart';
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 //Models
 import 'package:cntt2_crm/models/ChatMessage.dart';
+import 'package:cntt2_crm/models/Cart.dart';
 //Providers
 import 'package:cntt2_crm/providers/facebook_api/facebook_api.dart';
 
@@ -29,16 +31,18 @@ class ChatboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<List<ChatMessage>> futureListChatMessage =
-        fetchConversation(conversationId);
+    Future<Messages> futureListChatMessage = fetchConversation(conversationId);
     return Scaffold(
       appBar: _chatboxScreenAppBar(context),
       body: Center(
-        child: FutureBuilder<List<ChatMessage>>(
+        child: FutureBuilder<Messages>(
             future: futureListChatMessage,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Body(chatlog: snapshot.data);
+                return ChangeNotifierProvider.value(
+                  value: snapshot.data,
+                  child: Body(),
+                );
               } else if (snapshot.hasError) {
                 print(snapshot.error);
               }
@@ -68,15 +72,7 @@ class ChatboxScreen extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProfileCustomerScreen(
-              customerId: customerId,
-              customerName: customerName,
-            ),
-          ),
-        ),
+        onTap: () => {},
       ),
       actions: [
         IconButton(
@@ -93,7 +89,10 @@ class ChatboxScreen extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddOrderScreen(),
+              builder: (context) => ChangeNotifierProvider(
+                create: (context) => Cart(),
+                child: AddOrderScreen(),
+              ),
             ),
           ),
         ),

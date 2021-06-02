@@ -2,6 +2,9 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
+//Screens
+import '../list_order/list_order.screen.dart';
+
 class OrdersManager extends StatefulWidget {
   @override
   _OrdersManagerState createState() => _OrdersManagerState();
@@ -48,6 +51,12 @@ class _OrdersManagerState extends State<OrdersManager> {
               ],
             ),
             trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ListOrderScreen(),
+              ),
+            ),
           ),
           Divider(),
           ListTile(

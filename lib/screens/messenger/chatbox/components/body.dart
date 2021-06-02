@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:provider/provider.dart';
 //Conponents
 import 'chat_input_field.dart';
 import 'message.dart';
@@ -8,14 +9,11 @@ import 'message.dart';
 import 'package:cntt2_crm/models/ChatMessage.dart';
 
 class Body extends StatelessWidget {
-  final List<ChatMessage> chatlog;
-
-  const Body({Key key, @required this.chatlog}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _ChatLog(chatlog: chatlog),
+        _ChatLog(),
         ChatInputField(),
       ],
     );
@@ -23,35 +21,32 @@ class Body extends StatelessWidget {
 }
 
 class _ChatLog extends StatelessWidget {
-  final List<ChatMessage> chatlog;
-
-  const _ChatLog({Key key, @required this.chatlog}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final chatlog = Provider.of<Messages>(context);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Layouts.SPACING),
         child: ListView.builder(
           reverse: true,
-          itemCount: chatlog.length,
+          itemCount: chatlog.messages.length,
           itemBuilder: (context, index) {
-            return _buildRow(index);
+            return _buildRow(chatlog, index);
           },
         ),
       ),
     );
   }
 
-  Widget _buildRow(int index) {
+  Widget _buildRow(Messages chatlog, int index) {
     bool _isMutilLine = false;
-    if (!chatlog[index].isSender && index != 0) {
-      _isMutilLine = !chatlog[index - 1].isSender;
-    } else if (chatlog[index].isSender && index != 0) {
-      _isMutilLine = chatlog[index - 1].isSender;
+    if (!chatlog.messages[index].isSender && index != 0) {
+      _isMutilLine = !chatlog.messages[index - 1].isSender;
+    } else if (chatlog.messages[index].isSender && index != 0) {
+      _isMutilLine = chatlog.messages[index - 1].isSender;
     }
     return Message(
-      message: chatlog[index],
+      message: chatlog.messages[index],
       isMutilLine: _isMutilLine,
     );
   }

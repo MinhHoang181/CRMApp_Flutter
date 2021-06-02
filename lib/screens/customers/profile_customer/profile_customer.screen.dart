@@ -1,48 +1,66 @@
+import 'package:cntt2_crm/screens/customers/profile_customer/components/contact_info.dart';
 import 'package:flutter/material.dart';
-import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 
 //Components
-import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
-
-//Models
+import 'components/contact_info.dart';
+import 'components/customer_history.dart';
+import 'components/customer_info.dart';
 
 class ProfileCustomerScreen extends StatelessWidget {
-  final String customerName;
-  final String customerId;
-
-  const ProfileCustomerScreen({
-    Key key,
-    @required this.customerName,
-    @required this.customerId,
-  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _profileCustomerScreenAppBar(context),
-      body: Center(
-        child: Text('Profile'),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: _profileCustomerScreenAppBar(context),
+        body: TabBarView(
+          children: [
+            CustomerInfo(),
+            CustomerHistory(),
+          ],
+        ),
       ),
     );
   }
 
   AppBar _profileCustomerScreenAppBar(BuildContext context) {
     return AppBar(
-      toolbarHeight: 120,
-      title: Container(
+      title: Text('Khách hàng'),
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(160),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CircleAvatarWithPlatform(),
-            SizedBox(
-              height: Layouts.SPACING,
-            ),
-            Text(
-              customerName,
-              style: TextStyle(fontSize: Fonts.SIZE_TEXT_LARGE),
-            ),
+            ContactInfo(),
+            Divider(height: 0),
+            _tabBar(context),
           ],
         ),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add_shopping_cart_rounded),
+          onPressed: () => {},
+        ),
+        IconButton(
+          icon: Icon(Icons.edit_rounded),
+          onPressed: () => {},
+        ),
+      ],
+    );
+  }
+
+  Widget _tabBar(BuildContext context) {
+    return Material(
+      child: TabBar(
+        labelColor: Theme.of(context).textTheme.bodyText1.color,
+        tabs: [
+          Tab(
+            text: 'Thông tin',
+          ),
+          Tab(
+            text: 'Lịch sử',
+          )
+        ],
       ),
     );
   }

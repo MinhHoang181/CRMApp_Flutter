@@ -93,6 +93,10 @@ class _BodyState extends State<Body> {
           }
           cart.add(product);
         } else {
+          if (cart.products.containsKey(product)) {
+            final _selectTotal = cart.products[product];
+            if (product.total == _selectTotal) return;
+          }
           cart.add(product);
           Navigator.pop(context);
         }
