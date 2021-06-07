@@ -8,9 +8,7 @@ ThemeData ligthThemeData(BuildContext context) {
       centerTitle: true,
     ),
     iconTheme: IconThemeData(color: Colors.PRIMARY),
-    textTheme: Theme.of(context)
-        .textTheme
-        .apply(bodyColor: Colors.CONTENT_LIGHT_THEME),
+    textTheme: textTheme(context, Colors.CONTENT_LIGHT_THEME),
     colorScheme: ColorScheme.light(
       primary: Colors.PRIMARY,
       secondary: Colors.SECONDARY,
@@ -43,8 +41,7 @@ ThemeData darkThemeData(BuildContext context) {
   return ThemeData.dark().copyWith(
     //Theme
     iconTheme: IconThemeData(color: Colors.PRIMARY),
-    textTheme:
-        Theme.of(context).textTheme.apply(bodyColor: Colors.CONTENT_DARK_THEME),
+    textTheme: textTheme(context, Colors.CONTENT_DARK_THEME),
     colorScheme: ColorScheme.light(
       primary: Colors.PRIMARY,
       secondary: Colors.SECONDARY,
@@ -80,3 +77,20 @@ final inputDecorationTheme = InputDecorationTheme(
     borderRadius: const BorderRadius.all(Radius.circular(50)),
   ),
 );
+
+TextTheme textTheme(BuildContext context, Color color) {
+  return Theme.of(context)
+      .textTheme
+      .apply(
+        bodyColor: color,
+      )
+      .copyWith(
+        headline5: TextStyle(
+          fontSize: 20,
+        ),
+        subtitle1: TextStyle(
+          fontSize: 12,
+          color: color.withOpacity(0.5),
+        ),
+      );
+}

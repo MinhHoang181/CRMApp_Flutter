@@ -93,39 +93,43 @@ class ChatMessage {
       _messageType = MessageType.sticker;
     } else if (json.containsKey('attachments')) {
       List<dynamic> list = json['attachments']['data'];
-      list.forEach((element) {
-        Map<String, dynamic> _attachment = element;
-        String _url;
-        String _reviewUrl;
-        String _mimeType = element['mime_type'];
-        AttachmentType _attachmentType = AttachmentType.none;
-        if (_attachment.containsKey('video_data')) {
-          _url = _attachment['video_data']['url'];
-          _reviewUrl = _attachment['video_data']['preview_url'];
-          _attachmentType = AttachmentType.video;
-        } else if (_attachment.containsKey('image_data')) {
-          _url = _attachment['image_data']['url'];
-          _reviewUrl = _attachment['image_data']['preview_url'];
-          if (_mimeType.contains('gif')) {
-            _attachmentType = AttachmentType.gif;
-          } else {
-            _attachmentType = AttachmentType.image;
+      list.forEach(
+        (element) {
+          Map<String, dynamic> _attachment = element;
+          String _url;
+          String _reviewUrl;
+          String _mimeType = element['mime_type'];
+          AttachmentType _attachmentType = AttachmentType.none;
+          if (_attachment.containsKey('video_data')) {
+            _url = _attachment['video_data']['url'];
+            _reviewUrl = _attachment['video_data']['preview_url'];
+            _attachmentType = AttachmentType.video;
+          } else if (_attachment.containsKey('image_data')) {
+            _url = _attachment['image_data']['url'];
+            _reviewUrl = _attachment['image_data']['preview_url'];
+            if (_mimeType.contains('gif')) {
+              _attachmentType = AttachmentType.gif;
+            } else {
+              _attachmentType = AttachmentType.image;
+            }
+          } else if (_attachment.containsKey('file_url')) {
+            _url = _attachment['file_url'];
+            _reviewUrl = _attachment['file_url'];
+            _attachmentType = AttachmentType.file;
           }
-        } else if (_attachment.containsKey('file_url')) {
-          _url = _attachment['file_url'];
-          _reviewUrl = _attachment['file_url'];
-          _attachmentType = AttachmentType.file;
-        }
 
-        _attachments.add(Attachment(
-          id: element['id'],
-          mimeType: _mimeType,
-          name: element['name'],
-          url: _url,
-          reviewUrl: _reviewUrl,
-          attachmentType: _attachmentType,
-        ));
-      });
+          _attachments.add(
+            Attachment(
+              id: element['id'],
+              mimeType: _mimeType,
+              name: element['name'],
+              url: _url,
+              reviewUrl: _reviewUrl,
+              attachmentType: _attachmentType,
+            ),
+          );
+        },
+      );
       _messageType = MessageType.attachment;
     }
 

@@ -24,13 +24,6 @@ class Body extends StatelessWidget {
             ),
             child: Text(
               customers.length.toString() + ' khách hàng',
-              style: TextStyle(
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    .color
-                    .withOpacity(0.7),
-              ),
             ),
           ),
           _listOrder(context, customers),
@@ -55,18 +48,18 @@ class Body extends StatelessWidget {
     return ListTile(
       title: Text(
         customer.name,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.headline5,
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             customer.phone == null ? '---' : customer.phone,
+            style: Theme.of(context).textTheme.subtitle1,
           ),
           Text(
             customer.address == null ? '---' : customer.address.toString(),
+            style: Theme.of(context).textTheme.subtitle1,
           ),
         ],
       ),
