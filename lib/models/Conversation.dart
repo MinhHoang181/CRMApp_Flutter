@@ -2,11 +2,11 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-class User {
+class Participant {
   final String id;
   final String name;
 
-  User({
+  Participant({
     @required this.id,
     @required this.name,
   });
@@ -45,7 +45,7 @@ class Conversation {
   final String id;
   final String snippet;
   final String pageId;
-  final List<User> users;
+  final List<Participant> users;
   final String updateTime;
   final int undreadCount;
   final bool isSender;
@@ -70,10 +70,10 @@ class Conversation {
       }
     });
 
-    List<User> users = List.empty(growable: true);
+    List<Participant> users = List.empty(growable: true);
     participants.forEach((element) {
       if (element['id'] != pageId) {
-        users.add(User(
+        users.add(Participant(
           id: element['id'],
           name: element['name'],
         ));
