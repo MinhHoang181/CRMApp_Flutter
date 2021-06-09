@@ -53,20 +53,21 @@ class Body extends StatelessWidget {
 
   Widget _buildRow(BuildContext context, Customer customer) {
     return ListTile(
-      title: Text(
+      title:
+      Text(
         customer.name,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.subtitle1,
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             customer.phone == null ? '---' : customer.phone,
+            style: Theme.of(context).textTheme.subtitle2,
           ),
           Text(
             customer.address == null ? '---' : customer.address.toString(),
+            style: Theme.of(context).textTheme.subtitle2,
           ),
         ],
       ),

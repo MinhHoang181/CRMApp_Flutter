@@ -41,8 +41,8 @@ class Body extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            blurRadius: 10,
-            color: Theme.of(context).shadowColor,
+            blurRadius: 1,
+            color: Theme.of(context).primaryColorLight,
           ),
         ],
       ),

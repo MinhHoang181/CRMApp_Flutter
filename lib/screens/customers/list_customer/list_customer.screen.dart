@@ -41,7 +41,7 @@ class ListCustomerScreen extends StatelessWidget {
               child: TextField(
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search_rounded),
+                  prefixIcon: Icon(Icons.search_rounded, color: Colors.grey,),
                   hintText: 'Nhập tên, số điện thoại, mã',
                 ),
               ),

@@ -20,7 +20,8 @@ class _PlatformInfoState extends State<PlatformInfo> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            blurRadius: 10,
+            blurRadius: 5,
+            spreadRadius: 1,
             color: Theme.of(context).shadowColor,
           ),
         ],

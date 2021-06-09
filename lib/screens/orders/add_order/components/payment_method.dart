@@ -25,9 +25,9 @@ class _PaymentMethodState extends State<PaymentMethod> {
         ],
       ),
       child: ListTile(
-        leading: Icon(Icons.attach_money_rounded),
+        leading: Icon(Icons.attach_money_rounded,color: Theme.of(context).accentColor,),
         title: Text('Chọn phương thức thanh toán'),
-        trailing: Icon(Icons.arrow_forward_ios),
+        trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
       ),
     );
   }

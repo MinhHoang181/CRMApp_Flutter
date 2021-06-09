@@ -35,7 +35,7 @@ class _OrdersManagerState extends State<OrdersManager> {
       child: Column(
         children: [
           ListTile(
-            leading: Icon(Icons.list_rounded),
+            leading: Icon(Icons.list_rounded,color: Theme.of(context).accentColor,),
             title: Row(
               children: [
                 Text('Danh sách đơn hàng'),
@@ -50,7 +50,7 @@ class _OrdersManagerState extends State<OrdersManager> {
                 ),
               ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -60,7 +60,7 @@ class _OrdersManagerState extends State<OrdersManager> {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.remove_shopping_cart_rounded),
+            leading: Icon(Icons.remove_shopping_cart_rounded,color: Theme.of(context).accentColor,),
             title: Row(
               children: [
                 Text('Khách trả hàng'),
@@ -75,11 +75,11 @@ class _OrdersManagerState extends State<OrdersManager> {
                 ),
               ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.drive_eta_rounded),
+            leading: Icon(Icons.drive_eta_rounded,color: Theme.of(context).accentColor,),
             title: Row(
               children: [
                 Text('Quản lý giao hàng'),
@@ -94,7 +94,7 @@ class _OrdersManagerState extends State<OrdersManager> {
                 ),
               ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
           ),
         ],
       ),

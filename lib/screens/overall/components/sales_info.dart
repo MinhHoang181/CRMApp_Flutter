@@ -26,7 +26,8 @@ class _SalesInfoState extends State<SalesInfo> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            blurRadius: 10,
+            blurRadius: 5,
+            spreadRadius: 1,
             color: Theme.of(context).shadowColor,
           ),
         ],
@@ -45,6 +46,7 @@ class _SalesInfoState extends State<SalesInfo> {
             '$_moneyTotal',
             style: TextStyle(
               fontSize: Fonts.SIZE_TEXT_LARGE * 2,
+              fontFamily: 'RobotoMono',
             ),
           ),
           Divider(),
@@ -57,6 +59,7 @@ class _SalesInfoState extends State<SalesInfo> {
                       'Đơn mới',
                       style: TextStyle(
                         fontSize: Fonts.SIZE_TEXT_MEDIUM,
+                       fontWeight: FontWeight.bold
                       ),
                     ),
                     Text(
@@ -73,6 +76,7 @@ class _SalesInfoState extends State<SalesInfo> {
                       'Đơn hủy',
                       style: TextStyle(
                         fontSize: Fonts.SIZE_TEXT_MEDIUM,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                     Text(
@@ -89,6 +93,7 @@ class _SalesInfoState extends State<SalesInfo> {
                       'Đơn trả về',
                       style: TextStyle(
                         fontSize: Fonts.SIZE_TEXT_MEDIUM,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                     Text(

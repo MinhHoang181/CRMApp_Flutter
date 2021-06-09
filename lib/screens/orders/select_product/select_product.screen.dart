@@ -55,7 +55,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       child: TextField(
         textAlignVertical: TextAlignVertical.bottom,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: Icon(Icons.search,color: Theme.of(context).accentColor,),
           hintText: "Tên, SKU, Barcode",
         ),
       ),

@@ -86,12 +86,11 @@ class _ProductOrderState extends State<ProductOrder> {
         children: [
           Text(
             'SKU: ' + product.sku,
+            style: Theme.of(context).textTheme.subtitle2,
           ),
           Text(
             NumberFormat('#,###').format(product.price),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.subtitle1,
           ),
         ],
       ),

@@ -7,10 +7,8 @@ ThemeData ligthThemeData(BuildContext context) {
     appBarTheme: AppBarTheme(
       centerTitle: true,
     ),
-    iconTheme: IconThemeData(color: Colors.PRIMARY),
-    textTheme: Theme.of(context)
-        .textTheme
-        .apply(bodyColor: Colors.CONTENT_LIGHT_THEME),
+    iconTheme: IconThemeData(color: Colors.CONTENT_LIGHT_THEME),
+    textTheme:  textTheme(context, Colors.CONTENT_LIGHT_THEME),
     colorScheme: ColorScheme.light(
       primary: Colors.PRIMARY,
       secondary: Colors.SECONDARY,
@@ -33,6 +31,7 @@ ThemeData ligthThemeData(BuildContext context) {
       color: Colors.CONTENT_LIGHT_THEME,
     ),
     //Color
+    accentColor: Colors.TEXT_BLACK,
     primaryColor: Colors.PRIMARY,
     scaffoldBackgroundColor: Colors.BACKGROUND_LIGHT_THEME,
     shadowColor: Colors.SHADOW_LIGHT_THEME,
@@ -42,11 +41,11 @@ ThemeData ligthThemeData(BuildContext context) {
 ThemeData darkThemeData(BuildContext context) {
   return ThemeData.dark().copyWith(
     //Theme
-    iconTheme: IconThemeData(color: Colors.PRIMARY),
-    textTheme:
-        Theme.of(context).textTheme.apply(bodyColor: Colors.CONTENT_DARK_THEME),
+    iconTheme: IconThemeData(color: Colors.CONTENT_DARK_THEME),
+    textTheme: textTheme(context, Colors.CONTENT_DARK_THEME),
     colorScheme: ColorScheme.light(
       primary: Colors.PRIMARY,
+      
       secondary: Colors.SECONDARY,
       error: Colors.ERROR,
       background: Colors.BACKGROUND_DARK_THEME,
@@ -67,6 +66,7 @@ ThemeData darkThemeData(BuildContext context) {
       color: Colors.CONTENT_DARK_THEME,
     ),
     //Color
+    accentColor: Colors.TEXT_WHITE,
     primaryColor: Colors.PRIMARY,
     scaffoldBackgroundColor: Colors.BACKGROUND_DARK_THEME,
     shadowColor: Colors.SHADOW_DARK_THEME,
@@ -80,3 +80,23 @@ final inputDecorationTheme = InputDecorationTheme(
     borderRadius: const BorderRadius.all(Radius.circular(50)),
   ),
 );
+
+TextTheme textTheme(BuildContext context, Color color){
+  return Theme.of(context)
+      .textTheme
+      .apply(
+    bodyColor: color,
+  )
+      .copyWith(
+      subtitle1: TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.bold,
+        color: color.withOpacity(1),
+      ),
+      subtitle2: TextStyle(
+      fontSize: 10,
+      color: color.withOpacity(0.68),
+    )
+  );
+
+}

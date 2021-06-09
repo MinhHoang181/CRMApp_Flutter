@@ -35,25 +35,25 @@ class _CustomerInfoState extends State<CustomerInfo> {
           ),
           SizedBox(height: Layouts.SPACING / 2),
           ListTile(
-            leading: Icon(Icons.person_add_alt_rounded),
+            leading: Icon(Icons.person_add_alt_rounded, color: Theme.of(context).accentColor,),
             title: Text(
               'Thêm khách hàng',
               style: TextStyle(
                 color: Theme.of(context).primaryColor.withOpacity(0.7),
               ),
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: Icon(Icons.arrow_forward_ios, color: Theme.of(context).accentColor,),
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.payment_rounded),
+            leading: Icon(Icons.payment_rounded,color: Theme.of(context).accentColor,),
             title: Text(
               'Giá bán lẻ',
               style: TextStyle(
                 color: Theme.of(context).primaryColor.withOpacity(0.7),
               ),
             ),
-            trailing: Icon(Icons.arrow_forward_ios),
+            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
           )
         ],
       ),

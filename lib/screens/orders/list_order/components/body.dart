@@ -51,12 +51,13 @@ class Body extends StatelessWidget {
         'DONHANG00001',
         style: TextStyle(
           fontWeight: FontWeight.bold,
+
         ),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Khách lẻ'),
+          Text('Khách lẻ',),
           Text('20:03 03-04-2021'),
         ],
       ),

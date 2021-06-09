@@ -14,7 +14,11 @@ class OverallScreen extends StatelessWidget {
 
   AppBar _overallScreenAppBar(BuildContext context) {
     return AppBar(
-      title: Text('Trang chủ'),
+      title: Text( 'Trang Chủ',
+        style: TextStyle(
+            fontSize: 27,
+        ),
+      ),
     );
   }
 }
