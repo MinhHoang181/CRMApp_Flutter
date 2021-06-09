@@ -1,26 +1,45 @@
+import 'package:cntt2_crm/providers/azsales_api/chat_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:flutter_login/flutter_login.dart';
+import 'package:provider/provider.dart';
+
+import 'package:cntt2_crm/providers/azsales_api/auth_service.dart';
 
 //Screens
 import 'package:cntt2_crm/screens/home.screen.dart';
 
-const users = const {
-  'admin': 'admin',
-};
+//Models
+import 'package:cntt2_crm/models/User.dart';
 
-class LoginScreen extends StatelessWidget {
-  Duration get loginTime => Duration(milliseconds: 0);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  User _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _user = new User();
+  }
 
   Future<String> _authUser(LoginData data) {
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'Tên đăng nhập không tồn tại';
+    return login(data).then((user) {
+      if (user.accessToken == null) {
+        return 'Tên đăng nhập hoặc mật khẩu sai';
       }
-      if (users[data.name] != data.password) {
-        return 'Mật khẩu không chính xác';
-      }
-      return null;
+      return fetchPages(user.accessToken).then(
+        (pages) {
+          user.pages = pages;
+          _user = user;
+          return null;
+        },
+      );
     });
   }
 
@@ -62,7 +81,10 @@ class LoginScreen extends StatelessWidget {
       messages: _loginMessages,
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Home(),
+          builder: (context) => Provider.value(
+            value: _user,
+            child: Home(),
+          ),
         ));
       },
     );

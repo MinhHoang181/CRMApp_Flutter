@@ -31,8 +31,18 @@ class CustomerHistory extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Thanh Tú'),
-          Text('27 tháng 5'),
+          Text(
+            'Thanh Tú',
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodyText1.color,
+            ),
+          ),
+          Text(
+            '27 tháng 5',
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodyText1.color,
+            ),
+          ),
         ],
       ),
       trailing: Column(

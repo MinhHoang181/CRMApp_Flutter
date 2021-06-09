@@ -24,13 +24,6 @@ class Body extends StatelessWidget {
             ),
             child: Text(
               customers.length.toString() + ' khách hàng',
-              style: TextStyle(
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    .color
-                    .withOpacity(0.7),
-              ),
             ),
           ),
           _listOrder(context, customers),

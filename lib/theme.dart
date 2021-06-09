@@ -7,8 +7,13 @@ ThemeData ligthThemeData(BuildContext context) {
     appBarTheme: AppBarTheme(
       centerTitle: true,
     ),
+<<<<<<< HEAD
     iconTheme: IconThemeData(color: Colors.CONTENT_LIGHT_THEME),
     textTheme:  textTheme(context, Colors.CONTENT_LIGHT_THEME),
+=======
+    iconTheme: IconThemeData(color: Colors.PRIMARY),
+    textTheme: textTheme(context, Colors.CONTENT_LIGHT_THEME),
+>>>>>>> 7baf9c7ddcf37391210d6afdcace3b456a5c8cf0
     colorScheme: ColorScheme.light(
       primary: Colors.PRIMARY,
       secondary: Colors.SECONDARY,
@@ -81,6 +86,7 @@ final inputDecorationTheme = InputDecorationTheme(
   ),
 );
 
+<<<<<<< HEAD
 TextTheme textTheme(BuildContext context, Color color){
   return Theme.of(context)
       .textTheme
@@ -99,4 +105,21 @@ TextTheme textTheme(BuildContext context, Color color){
     )
   );
 
+=======
+TextTheme textTheme(BuildContext context, Color color) {
+  return Theme.of(context)
+      .textTheme
+      .apply(
+        bodyColor: color,
+      )
+      .copyWith(
+        headline5: TextStyle(
+          fontSize: 20,
+        ),
+        subtitle1: TextStyle(
+          fontSize: 12,
+          color: color.withOpacity(0.5),
+        ),
+      );
+>>>>>>> 7baf9c7ddcf37391210d6afdcace3b456a5c8cf0
 }

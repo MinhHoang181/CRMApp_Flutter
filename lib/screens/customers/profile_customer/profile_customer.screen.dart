@@ -52,7 +52,6 @@ class ProfileCustomerScreen extends StatelessWidget {
   Widget _tabBar(BuildContext context) {
     return Material(
       child: TabBar(
-        labelColor: Theme.of(context).textTheme.bodyText1.color,
         tabs: [
           Tab(
             text: 'Thông tin',
