@@ -1,10 +1,8 @@
+import 'package:cntt2_crm/models/AzsalesData.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-import 'package:provider/provider.dart';
 
-//Models
-import 'package:cntt2_crm/models/User.dart';
-import 'package:cntt2_crm/models/PageFacebook.dart';
+import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 
 //Components
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
@@ -38,7 +36,7 @@ class _UserInfoState extends State<UserInfo> {
   }
 
   Widget _userInfo() {
-    final user = Provider.of<User>(context);
+    final user = AzsalesData.instance.azsalesAccount;
     return Row(
       children: [
         CircleAvatarWithPlatform(),
@@ -47,13 +45,13 @@ class _UserInfoState extends State<UserInfo> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              user.displayName,
+              user.displayName == null ? '---' : user.displayName,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              user.email,
+              user.email == null ? '---' : user.email,
               style: TextStyle(
                 color: Theme.of(context)
                     .textTheme
@@ -69,7 +67,7 @@ class _UserInfoState extends State<UserInfo> {
   }
 
   Widget _listPage() {
-    final pages = Provider.of<User>(context).pages;
+    final pages = AzsalesData.instance.pages;
     return pages.isEmpty
         ? _noConnectPage()
         : ListView(
@@ -77,12 +75,12 @@ class _UserInfoState extends State<UserInfo> {
             shrinkWrap: true,
             children: List.generate(
               pages.length,
-              (index) => _itemPage(pages[index]),
+              (index) => _itemPage(pages.values.elementAt(index)),
             ),
           );
   }
 
-  Widget _itemPage(PageFacebook page) {
+  Widget _itemPage(FacebookPage page) {
     return ListTile(
       title: Text(page.name),
     );

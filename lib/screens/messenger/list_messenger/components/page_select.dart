@@ -1,10 +1,7 @@
-import 'package:cntt2_crm/models/PageFacebook.dart';
+import 'package:cntt2_crm/models/AzsalesData.dart';
+import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-import 'package:provider/provider.dart';
-
-//Models
-import 'package:cntt2_crm/models/User.dart';
 
 class PageSelect extends StatefulWidget {
   const PageSelect({Key key}) : super(key: key);
@@ -60,7 +57,7 @@ class _PageSelectState extends State<PageSelect> {
   }
 
   Widget _listPage() {
-    final pages = Provider.of<User>(context).pages;
+    final pages = AzsalesData.instance.pages;
     return Flexible(
       child: SingleChildScrollView(
         child: Wrap(
@@ -71,7 +68,7 @@ class _PageSelectState extends State<PageSelect> {
     );
   }
 
-  Widget _itemPage(PageFacebook page) {
+  Widget _itemPage(FacebookPage page) {
     return ListTile(
       title: Text(page.name),
       trailing: Icon(

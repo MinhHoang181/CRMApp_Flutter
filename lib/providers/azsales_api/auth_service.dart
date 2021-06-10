@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:cntt2_crm/models/User.dart';
+import 'package:cntt2_crm/models/AzsalesAccount.dart';
 import 'package:flutter_login/flutter_login.dart';
 
 import 'package:http/http.dart' as http;
 
 const azsales_auth_api_url = 'auth-service-dev.azsales.vn';
 
-Future<User> login(LoginData data) async {
+Future<AzsalesAccount> login(LoginData data) async {
   final _name = data.name;
   final _password = data.password;
   final String unencodedPath = 'graphql';
@@ -22,9 +22,6 @@ Future<User> login(LoginData data) async {
             user_role,
             email,
           }
-          error {
-            message,
-          }
         }
       }
     }
@@ -38,7 +35,9 @@ Future<User> login(LoginData data) async {
   ));
 
   if (response.statusCode == 200) {
-    return User.fromJson(jsonDecode(response.body)['data']['auth']['login']);
+    Map<String, dynamic> json =
+        jsonDecode(response.body)['data']['auth']['login'];
+    return json['accessToken'] == null ? null : AzsalesAccount.fromJson(json);
   } else {
     print(response.body);
     throw Exception('Lỗi đăng nhập');

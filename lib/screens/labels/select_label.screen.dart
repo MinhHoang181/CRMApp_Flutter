@@ -1,8 +1,8 @@
+import 'package:cntt2_crm/models/AzsalesData.dart';
 import 'package:flutter/material.dart';
 
 //Models
 import 'package:cntt2_crm/models/Label.dart';
-import 'package:cntt2_crm/models/testModels.dart';
 
 //Components
 import 'components/label_item.dart';
@@ -32,18 +32,17 @@ class _ListLabel extends StatefulWidget {
 class _ListLabelState extends State<_ListLabel> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: labelsList.length * 2,
-      itemBuilder: (context, index) {
-        if (index.isOdd) return Divider();
-        final i = index ~/ 2;
-        return _buildRow(labelsList[i]);
-      },
+    final labels = AzsalesData.instance.labels;
+    return ListView.separated(
+      separatorBuilder: (context, index) => Divider(),
+      itemCount: labels.length,
+      itemBuilder: (context, index) =>
+          _buildRow(labels.values.elementAt(index)),
     );
   }
 
   Widget _buildRow(Label label) {
-    final _haveLabel = testCustomer.labels.contains(label);
+    final _haveLabel = false; //testCustomer.labels.contains(label);
     return ListTile(
       title: LabelItem(label: label),
       trailing: _haveLabel
@@ -55,9 +54,9 @@ class _ListLabelState extends State<_ListLabel> {
       onTap: () {
         setState(() {
           if (_haveLabel) {
-            testCustomer.removeLabel(label);
+            //testCustomer.removeLabel(label);
           } else {
-            testCustomer.addLabel(label);
+            //testCustomer.addLabel(label);
           }
         });
       },

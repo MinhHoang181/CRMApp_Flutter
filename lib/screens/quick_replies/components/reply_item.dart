@@ -2,40 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 //Models
-import 'package:cntt2_crm/models/QuickAnswer.dart';
+import 'package:cntt2_crm/models/QuickReply.dart';
 
 //Screen
-import '../answer_detail.screen.dart';
+import '../reply_detail.screen.dart';
 
-class AnswerItem extends StatefulWidget {
-  const AnswerItem({Key key, @required this.answer}) : super(key: key);
+class ReplyItem extends StatefulWidget {
+  const ReplyItem({Key key, @required this.reply}) : super(key: key);
 
-  final QuickAnswer answer;
+  final QuickReply reply;
 
   @override
-  _AnswerItemState createState() => _AnswerItemState();
+  _ReplyItemState createState() => _ReplyItemState();
 }
 
-class _AnswerItemState extends State<AnswerItem> {
+class _ReplyItemState extends State<ReplyItem> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: ValueKey(widget.answer.shortcut),
+      key: ValueKey(widget.reply.shortcut),
       actionPane: SlidableScrollActionPane(),
       child: ListTile(
         title: Text(
-          widget.answer.shortcut,
+          widget.reply.shortcut,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         subtitle: Text(
-          widget.answer.text,
+          widget.reply.text,
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1.color.withOpacity(0.5),
           ),
         ),
-        onTap: () => Navigator.pop(context, widget.answer.text),
+        onTap: () => Navigator.pop(context, widget.reply.text),
       ),
       secondaryActions: [
         IconSlideAction(
@@ -45,9 +45,7 @@ class _AnswerItemState extends State<AnswerItem> {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AnswerDetailScreen(
-                answer: widget.answer,
-              ),
+              builder: (context) => ReplyDetailScreen(reply: widget.reply),
             ),
           ),
         ),
