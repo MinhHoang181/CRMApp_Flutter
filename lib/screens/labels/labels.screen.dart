@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
 //Model
-import 'package:cntt2_crm/models/Tag.dart';
+import 'package:cntt2_crm/models/Label.dart';
 import 'package:cntt2_crm/models/testModels.dart';
 
 //Components
-import 'components/tag_item.dart';
+import 'components/label_item.dart';
 
 //Screen
-import 'tag_detail.screen.dart';
+import 'label_detail.screen.dart';
 
-class TagsScreen extends StatelessWidget {
+class LabelsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _tagsScreenAppBar(context),
-      body: _ListTag(),
+      appBar: _labelsScreenAppBar(context),
+      body: _ListLabel(),
     );
   }
 
-  AppBar _tagsScreenAppBar(BuildContext context) {
+  AppBar _labelsScreenAppBar(BuildContext context) {
     return AppBar(
       title: Text('Quản lý nhãn hội thoại'),
       actions: [
@@ -28,7 +28,7 @@ class TagsScreen extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => TagDetailScreen(),
+              builder: (context) => LabelDetailScreen(),
             ),
           ),
         ),
@@ -37,31 +37,31 @@ class TagsScreen extends StatelessWidget {
   }
 }
 
-class _ListTag extends StatefulWidget {
+class _ListLabel extends StatefulWidget {
   @override
-  _ListTagState createState() => _ListTagState();
+  _ListLabelState createState() => _ListLabelState();
 }
 
-class _ListTagState extends State<_ListTag> {
+class _ListLabelState extends State<_ListLabel> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: tagsList.length * 2,
+      itemCount: labelsList.length * 2,
       itemBuilder: (context, index) {
         if (index.isOdd) return Divider();
         final i = index ~/ 2;
-        return _buildRow(tagsList[i]);
+        return _buildRow(labelsList[i]);
       },
     );
   }
 
-  Widget _buildRow(Tag tag) {
+  Widget _buildRow(Label label) {
     return ListTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-            child: TagItem(tag: tag),
+            child: LabelItem(label: label),
           ),
           IconButton(
             icon: Icon(Icons.delete),
@@ -72,8 +72,8 @@ class _ListTagState extends State<_ListTag> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TagDetailScreen(
-            tag: tag,
+          builder: (context) => LabelDetailScreen(
+            label: label,
           ),
         ),
       ),

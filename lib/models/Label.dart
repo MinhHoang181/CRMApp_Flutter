@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Tag {
+class Label {
   String name;
   Color color;
 
-  Tag({
+  Label({
     @required this.name,
     @required this.color,
   });

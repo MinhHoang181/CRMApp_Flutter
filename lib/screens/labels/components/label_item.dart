@@ -3,12 +3,12 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 
 //Model
-import 'package:cntt2_crm/models/Tag.dart';
+import 'package:cntt2_crm/models/Label.dart';
 
-class TagItem extends StatelessWidget {
-  const TagItem({Key key, @required this.tag}) : super(key: key);
+class LabelItem extends StatelessWidget {
+  const LabelItem({Key key, @required this.label}) : super(key: key);
 
-  final Tag tag;
+  final Label label;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,13 @@ class TagItem extends StatelessWidget {
         children: [
           Icon(
             Icons.style_rounded,
-            color: tag.color,
+            color: label.color,
           ),
           SizedBox(
             width: Layouts.SPACING,
           ),
           Text(
-            tag.name,
+            label.name,
             style: TextStyle(
               fontSize: Fonts.SIZE_ITEM_LIST,
             ),

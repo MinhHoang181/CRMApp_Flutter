@@ -5,8 +5,7 @@ import 'package:cntt2_crm/constants/enum.dart';
 import 'package:provider/provider.dart';
 
 //screen
-import 'package:cntt2_crm/screens/tags/select_tag.screen.dart';
-import 'package:cntt2_crm/screens/customers/profile_customer/profile_customer.screen.dart';
+import 'package:cntt2_crm/screens/labels/select_label.screen.dart';
 import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
 //components
 import 'components/body.dart';
@@ -80,7 +79,7 @@ class ChatboxScreen extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SelectTagScreen(),
+              builder: (context) => SelectLabelScreen(),
             ),
           ),
         ),

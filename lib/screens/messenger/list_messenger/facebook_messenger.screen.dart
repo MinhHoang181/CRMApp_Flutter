@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //Components
 import 'components/body.dart';
+import 'components/page_select.dart';
 
 class FacebookMessengerScreen extends StatefulWidget {
   @override
@@ -32,6 +33,7 @@ class _FacebookMessengerScreenState extends State<FacebookMessengerScreen> {
       centerTitle: false,
       title: Text('Tin nhắn'),
       actions: [
+        PageSelect(),
         IconButton(
           icon: Icon(Icons.search_rounded),
           onPressed: () => {},

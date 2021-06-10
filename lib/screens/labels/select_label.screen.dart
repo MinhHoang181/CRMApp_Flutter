@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 //Models
-import 'package:cntt2_crm/models/Tag.dart';
+import 'package:cntt2_crm/models/Label.dart';
 import 'package:cntt2_crm/models/testModels.dart';
 
 //Components
-import 'components/tag_item.dart';
+import 'components/label_item.dart';
 
-class SelectTagScreen extends StatelessWidget {
+class SelectLabelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: selectTagScreenAppBar(context),
-      body: _ListTag(),
+      appBar: selectLabelScreenAppBar(context),
+      body: _ListLabel(),
     );
   }
 
-  AppBar selectTagScreenAppBar(BuildContext context) {
+  AppBar selectLabelScreenAppBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
       title: Text('Gắn nhãn tin nhắn'),
@@ -24,29 +24,29 @@ class SelectTagScreen extends StatelessWidget {
   }
 }
 
-class _ListTag extends StatefulWidget {
+class _ListLabel extends StatefulWidget {
   @override
-  _ListTagState createState() => _ListTagState();
+  _ListLabelState createState() => _ListLabelState();
 }
 
-class _ListTagState extends State<_ListTag> {
+class _ListLabelState extends State<_ListLabel> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: tagsList.length * 2,
+      itemCount: labelsList.length * 2,
       itemBuilder: (context, index) {
         if (index.isOdd) return Divider();
         final i = index ~/ 2;
-        return _buildRow(tagsList[i]);
+        return _buildRow(labelsList[i]);
       },
     );
   }
 
-  Widget _buildRow(Tag tag) {
-    final _haveTag = testCustomer.tags.contains(tag);
+  Widget _buildRow(Label label) {
+    final _haveLabel = testCustomer.labels.contains(label);
     return ListTile(
-      title: TagItem(tag: tag),
-      trailing: _haveTag
+      title: LabelItem(label: label),
+      trailing: _haveLabel
           ? Icon(
               Icons.check,
               color: Theme.of(context).primaryColor,
@@ -54,10 +54,10 @@ class _ListTagState extends State<_ListTag> {
           : null,
       onTap: () {
         setState(() {
-          if (_haveTag) {
-            testCustomer.removeTag(tag);
+          if (_haveLabel) {
+            testCustomer.removeLabel(label);
           } else {
-            testCustomer.addTag(tag);
+            testCustomer.addLabel(label);
           }
         });
       },

@@ -2,53 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Models
-import 'package:cntt2_crm/models/Tag.dart';
+import 'package:cntt2_crm/models/Label.dart';
 
 //Components
 import 'package:cntt2_crm/components/color_list.dart';
 
-class TagDetailScreen extends StatelessWidget {
-  const TagDetailScreen({Key key, this.tag}) : super(key: key);
+class LabelDetailScreen extends StatelessWidget {
+  const LabelDetailScreen({Key key, this.label}) : super(key: key);
 
-  final Tag tag;
+  final Label label;
 
   @override
   Widget build(BuildContext context) {
-    final _title = tag != null ? ' Sửa nhãn hội thoại' : 'Tạo nhãn hội thoại';
+    final _title = label != null ? ' Sửa nhãn hội thoại' : 'Tạo nhãn hội thoại';
     return Scaffold(
-      appBar: _addTagScreenAppBar(context, _title),
-      body: _TagDetail(
-        tag: tag,
+      appBar: _addLabelScreenAppBar(context, _title),
+      body: _LabelDetail(
+        label: label,
       ),
       resizeToAvoidBottomInset: false,
     );
   }
 
-  AppBar _addTagScreenAppBar(BuildContext context, String title) {
+  AppBar _addLabelScreenAppBar(BuildContext context, String title) {
     return AppBar(
       title: Text(title),
     );
   }
 }
 
-class _TagDetail extends StatefulWidget {
-  const _TagDetail({Key key, this.tag}) : super(key: key);
-  final Tag tag;
+class _LabelDetail extends StatefulWidget {
+  const _LabelDetail({Key key, this.label}) : super(key: key);
+  final Label label;
   @override
-  _TagDetailState createState() => _TagDetailState();
+  _LabelDetailState createState() => _LabelDetailState();
 }
 
-class _TagDetailState extends State<_TagDetail> {
+class _LabelDetailState extends State<_LabelDetail> {
   @override
   void initState() {
     super.initState();
-    if (widget.tag != null) {
-      _textFieldController.text = widget.tag.name;
-      _tagColor = widget.tag.color;
+    if (widget.label != null) {
+      _textFieldController.text = widget.label.name;
+      _labelColor = widget.label.color;
     }
   }
 
-  Color _tagColor = Colors.red;
+  Color _labelColor = Colors.red;
   final TextEditingController _textFieldController = TextEditingController();
 
   @override
@@ -60,7 +60,7 @@ class _TagDetailState extends State<_TagDetail> {
           children: [
             Column(
               children: [
-                _tagName(),
+                _labelName(),
                 SizedBox(
                   height: Layouts.SPACING,
                 ),
@@ -99,12 +99,12 @@ class _TagDetailState extends State<_TagDetail> {
     Navigator.pop(context);
   }
 
-  Widget _tagName() {
+  Widget _labelName() {
     return Row(
       children: [
         Icon(
           Icons.style_rounded,
-          color: _tagColor,
+          color: _labelColor,
           size: 60,
         ),
         SizedBox(width: Layouts.SPACING),
@@ -129,10 +129,10 @@ class _TagDetailState extends State<_TagDetail> {
   Widget _colorTable() {
     return Container(
       child: ColorList(
-        screenPickerColor: _tagColor,
+        screenPickerColor: _labelColor,
         onColorSelected: (color) {
           setState(() {
-            _tagColor = color;
+            _labelColor = color;
           });
         },
       ),

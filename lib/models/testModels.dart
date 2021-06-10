@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'Customer.dart';
-import 'Tag.dart';
+import 'Label.dart';
 import 'QuickAnswer.dart';
 
-final List<Tag> tagsList = [
-  Tag(name: 'Khách VIP', color: Colors.red),
-  Tag(name: 'Khách Lẻ', color: Colors.yellow),
-  Tag(name: 'Khách Buôn', color: Colors.green),
+final List<Label> labelsList = [
+  Label(name: 'Khách VIP', color: Colors.red),
+  Label(name: 'Khách Lẻ', color: Colors.yellow),
+  Label(name: 'Khách Buôn', color: Colors.green),
 ];
 final Customer testCustomer = new Customer(name: 'test')
-  ..addTag(tagsList[0])
-  ..addTag(tagsList[2]);
+  ..addLabel(labelsList[0])
+  ..addLabel(labelsList[2]);
 
 final List<QuickAnswer> answerList = [
   QuickAnswer(

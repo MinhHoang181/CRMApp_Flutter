@@ -4,9 +4,13 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/enum.dart';
 import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:badges/badges.dart';
+import 'package:provider/provider.dart';
 
 //Screen
 import 'list_messenger/facebook_messenger.screen.dart';
+
+//Models
+import 'package:cntt2_crm/models/User.dart';
 
 class MessengerScreen extends StatelessWidget {
   @override
@@ -58,6 +62,7 @@ class __ListPlatformState extends State<_ListPlatform> {
       default:
         break;
     }
+    final user = Provider.of<User>(context);
     return ListTile(
       leading: Image(
         image: _image,
@@ -83,7 +88,10 @@ class __ListPlatformState extends State<_ListPlatform> {
           ? () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => toPage,
+                  builder: (context) => Provider.value(
+                    value: user,
+                    child: toPage,
+                  ),
                 ),
               )
           : null,
