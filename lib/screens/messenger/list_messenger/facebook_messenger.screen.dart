@@ -20,7 +20,7 @@ class _FacebookMessengerScreenState extends State<FacebookMessengerScreen> {
         body: TabBarView(
           children: [
             Body(),
-            Body(),
+            Container(),
             Container(),
           ],
         ),

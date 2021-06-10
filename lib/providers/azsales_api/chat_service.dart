@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cntt2_crm/models/AzsalesData.dart';
+import 'package:cntt2_crm/models/Conversation.dart';
 import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:cntt2_crm/models/Label.dart';
 import 'package:cntt2_crm/models/QuickReply.dart';
@@ -115,5 +116,64 @@ Future<List<FacebookPage>> fetchPages(String accessToken) async {
   } else {
     print(response.body);
     throw Exception('Lỗi lấy tất cả trang');
+  }
+}
+
+Future<List<Conversation>> fetchConversationsAllPages(
+    String accessToken) async {
+  final String query = """
+    {
+      conversation {
+        buckets {
+          conversations {
+            _id
+            page_id
+            participants {
+              _id,
+              name,
+            }
+            snippet,
+            is_read,
+            is_replied,
+            label_ids,
+            page_id,
+            updated_time,
+            has_note,
+            has_order,
+            has_phone,
+          }
+        }
+      }
+    }
+  """;
+  final response = await http.get(
+    Uri.https(
+      azsales_chat_api_url,
+      unencodedPath,
+      {
+        'query': query,
+      },
+    ),
+    headers: {
+      'access_token': accessToken,
+    },
+  );
+
+  if (response.statusCode == 200) {
+    List<Conversation> list = List.empty(growable: true);
+    List<dynamic> buckets =
+        jsonDecode(response.body)['data']['conversation']['buckets'];
+    buckets.forEach((bucket) {
+      List<dynamic> conversations = bucket['conversations'];
+      if (conversations.isNotEmpty) {
+        conversations.forEach((element) {
+          list.add(Conversation.fromJson(element));
+        });
+      }
+    });
+    return list;
+  } else {
+    print(response.body);
+    throw Exception('Lỗi load thông tin danh sách tin nhắn của mọi Page');
   }
 }

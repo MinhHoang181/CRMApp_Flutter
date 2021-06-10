@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
 
 class Participant {
@@ -25,7 +26,7 @@ class ConversationModel extends ChangeNotifier {
   factory ConversationModel.fromJson(String pageId, List<dynamic> json) {
     ConversationModel conversations = new ConversationModel(pageId: pageId);
     json.forEach((value) {
-      conversations.add(Conversation.fromJson(pageId, value));
+      conversations.add(Conversation.fromJson(value));
     });
     return conversations;
   }
@@ -43,51 +44,60 @@ class ConversationModel extends ChangeNotifier {
 
 class Conversation {
   final String id;
-  final String snippet;
   final String pageId;
-  final List<Participant> users;
-  final String updateTime;
-  final int undreadCount;
-  final bool isSender;
+  final List<Participant> participants;
+
+  String snippet;
+  String updatedTime;
+  bool isRead;
+  bool isReplied;
+  List<String> labelIds;
+  bool hasNode;
+  bool hasOrder;
+  bool hasPhone;
 
   Conversation({
     @required this.id,
     @required this.pageId,
-    @required this.users,
+    @required this.participants,
     @required this.snippet,
-    @required this.updateTime,
-    @required this.undreadCount,
-    @required this.isSender,
+    @required this.updatedTime,
+    @required this.isRead,
+    @required this.isReplied,
+    this.labelIds,
+    this.hasNode = false,
+    this.hasOrder = false,
+    this.hasPhone = false,
   });
 
-  factory Conversation.fromJson(String pageId, Map<String, dynamic> json) {
-    List<dynamic> tags = json['messages']['data'][0]['tags']['data'];
-    List<dynamic> participants = json['participants']['data'];
-    bool isSender = false;
-    tags.forEach((element) {
-      if (element['name'] == 'sent') {
-        isSender = true;
-      }
+  factory Conversation.fromJson(Map<String, dynamic> json) {
+    List<dynamic> users = json['participants'];
+    List<dynamic> labels = json['label_ids'];
+    List<Participant> participants = List.empty(growable: true);
+    users.forEach((element) {
+      participants.add(Participant(
+        id: element['_id'],
+        name: element['name'],
+      ));
     });
-
-    List<Participant> users = List.empty(growable: true);
-    participants.forEach((element) {
-      if (element['id'] != pageId) {
-        users.add(Participant(
-          id: element['id'],
-          name: element['name'],
-        ));
-      }
+    List<String> labelIds = List.empty(growable: true);
+    labels.forEach((element) {
+      labelIds.add(element);
     });
+    final updatedTime = readTimestamp(json['updated_time']);
 
     return Conversation(
       id: json['id'],
-      pageId: pageId,
-      users: users,
+      pageId: json['page_id'],
+      participants: participants,
       snippet: json['snippet'],
-      updateTime: json['update_time'],
-      undreadCount: json['unread_count'],
-      isSender: isSender,
+      updatedTime: updatedTime,
+      isRead: json['is_read'],
+      isReplied: json['is_replied'],
+      labelIds: labelIds,
+      hasNode: json['has_node'] != null ? json['has_node'] : false,
+      hasOrder: json['has_order'] != null ? json['has_order'] : false,
+      hasPhone: json['has_phone'] != null ? json['has_phone'] : false,
     );
   }
 }
