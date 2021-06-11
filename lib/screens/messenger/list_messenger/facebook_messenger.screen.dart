@@ -17,12 +17,14 @@ class _FacebookMessengerScreenState extends State<FacebookMessengerScreen> {
       length: 3,
       child: Scaffold(
         appBar: _facebookMessengerScreenAppBar(),
-        body: TabBarView(
-          children: [
-            Body(),
-            Container(),
-            Container(),
-          ],
+        body: SafeArea(
+          child: TabBarView(
+            children: [
+              Body(),
+              Container(),
+              Container(),
+            ],
+          ),
         ),
       ),
     );

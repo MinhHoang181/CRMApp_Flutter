@@ -7,6 +7,7 @@ import 'message.dart';
 
 //Model
 import 'package:cntt2_crm/models/ChatMessage.dart';
+import 'package:cntt2_crm/models/Paging/MessagePage.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -23,30 +24,30 @@ class Body extends StatelessWidget {
 class _ChatLog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final chatlog = Provider.of<Messages>(context);
+    final chatlog = Provider.of<MessagePage>(context);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Layouts.SPACING),
         child: ListView.builder(
           reverse: true,
-          itemCount: chatlog.messages.length,
+          itemCount: chatlog.list.length,
           itemBuilder: (context, index) {
-            return _buildRow(chatlog, index);
+            return _buildRow(chatlog.list.values.toList(), index);
           },
         ),
       ),
     );
   }
 
-  Widget _buildRow(Messages chatlog, int index) {
+  Widget _buildRow(List<ChatMessage> chatlog, int index) {
     bool _isMutilLine = false;
-    if (!chatlog.messages[index].isSender && index != 0) {
-      _isMutilLine = !chatlog.messages[index - 1].isSender;
-    } else if (chatlog.messages[index].isSender && index != 0) {
-      _isMutilLine = chatlog.messages[index - 1].isSender;
+    if (!chatlog[index].isSender && index != 0) {
+      _isMutilLine = !chatlog[index - 1].isSender;
+    } else if (chatlog[index].isSender && index != 0) {
+      _isMutilLine = chatlog[index - 1].isSender;
     }
     return Message(
-      message: chatlog.messages[index],
+      message: chatlog[index],
       isMutilLine: _isMutilLine,
     );
   }

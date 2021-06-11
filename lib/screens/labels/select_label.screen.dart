@@ -1,8 +1,10 @@
-import 'package:cntt2_crm/models/AzsalesData.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 //Models
 import 'package:cntt2_crm/models/Label.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Conversation.dart';
 
 //Components
 import 'components/label_item.dart';
@@ -42,7 +44,8 @@ class _ListLabelState extends State<_ListLabel> {
   }
 
   Widget _buildRow(Label label) {
-    final _haveLabel = false; //testCustomer.labels.contains(label);
+    final _haveLabel =
+        Provider.of<Conversation>(context).labelIds.contains(label.id);
     return ListTile(
       title: LabelItem(label: label),
       trailing: _haveLabel

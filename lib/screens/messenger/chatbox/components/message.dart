@@ -6,7 +6,6 @@ import 'package:cntt2_crm/models/ChatMessage.dart';
 
 //Components
 import 'message/text_message.dart';
-import 'message/sticker_message.dart';
 import 'message/attachment_message.dart';
 
 class Message extends StatelessWidget {
@@ -23,8 +22,6 @@ class Message extends StatelessWidget {
     switch (message.messageType) {
       case MessageType.text:
         return TextMessage(message: message);
-      case MessageType.sticker:
-        return StickerMessage(message: message);
       case MessageType.attachment:
         return AttachmentMessage(message: message);
       default:

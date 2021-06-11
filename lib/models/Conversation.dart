@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Paging/MessagePage.dart';
 import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
 
@@ -13,36 +14,7 @@ class Participant {
   });
 }
 
-class ConversationModel extends ChangeNotifier {
-  final String pageId;
-
-  final List<Conversation> _list = List.empty(growable: true);
-  UnmodifiableListView<Conversation> get all => UnmodifiableListView(_list);
-
-  ConversationModel({
-    @required this.pageId,
-  });
-
-  factory ConversationModel.fromJson(String pageId, List<dynamic> json) {
-    ConversationModel conversations = new ConversationModel(pageId: pageId);
-    json.forEach((value) {
-      conversations.add(Conversation.fromJson(value));
-    });
-    return conversations;
-  }
-
-  void add(Conversation conversation) {
-    _list.add(conversation);
-    notifyListeners();
-  }
-
-  void remove(Conversation conversation) {
-    _list.remove(conversation);
-    notifyListeners();
-  }
-}
-
-class Conversation {
+class Conversation extends ChangeNotifier {
   final String id;
   final String pageId;
   final List<Participant> participants;
@@ -56,6 +28,8 @@ class Conversation {
   bool hasOrder;
   bool hasPhone;
 
+  final MessagePage messages;
+
   Conversation({
     @required this.id,
     @required this.pageId,
@@ -64,6 +38,7 @@ class Conversation {
     @required this.updatedTime,
     @required this.isRead,
     @required this.isReplied,
+    @required this.messages,
     this.labelIds,
     this.hasNode = false,
     this.hasOrder = false,
@@ -85,15 +60,15 @@ class Conversation {
       labelIds.add(element);
     });
     final updatedTime = readTimestamp(json['updated_time']);
-
     return Conversation(
-      id: json['id'],
+      id: json['_id'],
       pageId: json['page_id'],
       participants: participants,
       snippet: json['snippet'],
       updatedTime: updatedTime,
       isRead: json['is_read'],
       isReplied: json['is_replied'],
+      messages: new MessagePage(conversationId: json['_id']),
       labelIds: labelIds,
       hasNode: json['has_node'] != null ? json['has_node'] : false,
       hasOrder: json['has_order'] != null ? json['has_order'] : false,

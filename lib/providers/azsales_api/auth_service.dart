@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cntt2_crm/models/AzsalesAccount.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
 import 'package:flutter_login/flutter_login.dart';
 
 import 'package:http/http.dart' as http;

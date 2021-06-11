@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/enum.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
-//Providers
-import 'package:cntt2_crm/providers/azsales_api/chat_service.dart';
-
 //Screens
 import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';
 
@@ -13,9 +10,11 @@ import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 
 //Models
-import 'package:cntt2_crm/models/AzsalesData.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Paging/ConversationPage.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
 import 'package:cntt2_crm/models/Label.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -23,37 +22,63 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Future<List<Conversation>> futureConversations;
+  RefreshController _refreshController = RefreshController();
 
-  @override
-  void initState() {
-    super.initState();
-    final accessToken = AzsalesData.instance.azsalesAccessToken;
-    futureConversations = fetchConversationsAllPages(accessToken);
+  void _onRefresh() async {
+    await AzsalesData.instance.conversations.refreshData();
+    _refreshController.refreshCompleted();
+    setState(() {});
+  }
+
+  void _onLoading() async {
+    bool check = await AzsalesData.instance.conversations.loadMoreData();
+    if (check) {
+      _refreshController.loadComplete();
+      setState(() {});
+    } else {
+      _refreshController.loadNoData();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder<List<Conversation>>(
-          future: futureConversations,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return _buildList(snapshot.data);
-            } else if (snapshot.hasError) {
-              print(snapshot.error);
-            }
-            return CircularProgressIndicator();
-          }),
-    );
+    return FutureBuilder<ConversationPage>(
+        future: AzsalesData.instance.conversations.fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _buildList(snapshot.data);
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          return Center(child: CircularProgressIndicator());
+        });
   }
 
-  Widget _buildList(List<Conversation> conversations) {
-    return ListView.builder(
-        itemCount: conversations.length,
-        itemBuilder: (context, index) {
-          return _buildRow(conversations[index]);
-        });
+  Widget _buildList(ConversationPage conversations) {
+    return SmartRefresher(
+      header: ClassicHeader(
+        idleText: 'Kéo xuống để làm mới danh sách tin nhắn',
+        releaseText: 'Thả ra để làm mới danh sách tin nhắn',
+        refreshingText: 'Đang làm mới danh sách tin nhắn',
+        completeText: 'Đã làm mới danh sách tin nhắn',
+        failedText: 'Làm mới danh sách tin nhắn thất bại',
+      ),
+      enablePullUp: conversations.pageInfo.hasNextPage ? true : false,
+      footer: ClassicFooter(
+        canLoadingText: 'Tải thêm tin nhắn',
+        loadingText: 'Đang tải thêm tin nhắn',
+        noDataText: 'Đã tải hết tin nhắn',
+        failedText: 'Tải tin nhắn thất bại',
+      ),
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      controller: _refreshController,
+      child: ListView.builder(
+          itemCount: conversations.list.length,
+          itemBuilder: (context, index) {
+            return _buildRow(conversations.list.values.elementAt(index));
+          }),
+    );
   }
 
   Widget _buildRow(Conversation conversation) {
@@ -109,8 +134,7 @@ class _BodyState extends State<Body> {
                   child: Text(
                     conversation.isReplied
                         ? 'Bạn: ' + conversation.snippet
-                        : conversation.snippet +
-                            'tttttttttttttttttttttttttttttttttttttttttttttttttt',
+                        : conversation.snippet,
                     style: TextStyle(
                       fontWeight: conversation.isRead
                           ? FontWeight.normal
@@ -136,7 +160,12 @@ class _BodyState extends State<Body> {
         ),
       ),
       trailing: _moreInfo(conversation),
-      onTap: () => {},
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatboxScreen(conversation: conversation),
+        ),
+      ),
     );
   }
 

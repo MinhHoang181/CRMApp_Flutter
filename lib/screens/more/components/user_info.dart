@@ -1,4 +1,4 @@
-import 'package:cntt2_crm/models/AzsalesData.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 

@@ -1,23 +1,26 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Paging/ConversationPage.dart';
 import 'package:cntt2_crm/models/Label.dart';
 import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:cntt2_crm/models/QuickReply.dart';
-import 'package:cntt2_crm/models/AzsalesAccount.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
 import 'package:flutter/material.dart';
 
 class AzsalesData extends ChangeNotifier {
   static AzsalesData _instance = AzsalesData._();
 
   String azsalesAccessToken;
-  AzsalesAccount _azsalesAccount = new AzsalesAccount();
+  AzsalesAccount azsalesAccount = new AzsalesAccount();
 
   final Map<String, Label> _labes = new Map<String, Label>();
   final Map<String, QuickReply> _replies = new Map<String, QuickReply>();
   final Map<String, FacebookPage> _pages = new Map<String, FacebookPage>();
 
+  //Chat - Conversation
+  final ConversationPage conversations = new ConversationPage();
+
   static AzsalesData get instance => _instance;
-  AzsalesAccount get azsalesAccount => _azsalesAccount;
   UnmodifiableMapView get labels => UnmodifiableMapView(_labes);
   UnmodifiableMapView get replies => UnmodifiableMapView(_replies);
   UnmodifiableMapView get pages => UnmodifiableMapView(_pages);
@@ -51,7 +54,7 @@ class AzsalesData extends ChangeNotifier {
 
   //AZSALESACCOUNT
   void updateAzsalesAccount(AzsalesAccount account) {
-    _azsalesAccount = account;
+    azsalesAccount = account;
     notifyListeners();
   }
 
