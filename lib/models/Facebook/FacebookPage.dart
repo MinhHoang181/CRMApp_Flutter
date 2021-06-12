@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class PageFacebook {
+class FacebookPage {
   final String id;
   final String name;
 
-  PageFacebook({
+  FacebookPage({
     @required this.id,
     @required this.name,
   });
 
-  factory PageFacebook.fromJson(Map<String, dynamic> json) {
-    return PageFacebook(
+  factory FacebookPage.fromJson(Map<String, dynamic> json) {
+    return FacebookPage(
       id: json['_id'],
       name: json['name'],
     );

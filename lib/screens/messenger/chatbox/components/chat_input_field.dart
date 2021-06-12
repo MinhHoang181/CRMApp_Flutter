@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Screen
-import 'package:cntt2_crm/screens/quick_answers/answers.screen.dart';
+import 'package:cntt2_crm/screens/quick_replies/replies.screen.dart';
 
 class ChatInputField extends StatefulWidget {
   @override
@@ -64,7 +64,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AnswersScreen(),
+        builder: (context) => RepliesScreen(),
       ),
     );
     _inputController.text = result;

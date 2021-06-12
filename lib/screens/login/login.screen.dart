@@ -1,16 +1,13 @@
-import 'package:cntt2_crm/providers/azsales_api/chat_service.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/querry_api.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:flutter_login/flutter_login.dart';
-import 'package:provider/provider.dart';
 
 import 'package:cntt2_crm/providers/azsales_api/auth_service.dart';
 
 //Screens
 import 'package:cntt2_crm/screens/home.screen.dart';
-
-//Models
-import 'package:cntt2_crm/models/User.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -20,26 +17,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  User _user;
-
-  @override
-  void initState() {
-    super.initState();
-    _user = new User();
-  }
-
   Future<String> _authUser(LoginData data) {
     return login(data).then((user) {
-      if (user.accessToken == null) {
+      if (user == null) {
         return 'Tên đăng nhập hoặc mật khẩu sai';
       }
-      return fetchPages(user.accessToken).then(
-        (pages) {
-          user.pages = pages;
-          _user = user;
-          return null;
-        },
-      );
+      AzsalesData.instance.updateAzsalesAccount(user);
+      AzsalesData.instance.azsalesAccessToken = user.accessToken;
+      return fetchAzsalesData().then((check) => null);
     });
   }
 
@@ -81,10 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       messages: _loginMessages,
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Provider.value(
-            value: _user,
-            child: Home(),
-          ),
+          builder: (context) => Home(),
         ));
       },
     );

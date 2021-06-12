@@ -65,12 +65,8 @@ class AttachmentMessage extends StatelessWidget {
     switch (attachment.attachmentType) {
       case AttachmentType.image:
         return _image(attachment.url);
-      case AttachmentType.gif:
-        return _image(attachment.url);
-      case AttachmentType.video:
-        return _video(attachment.reviewUrl);
-      case AttachmentType.file:
-        return _file(context, attachment.name);
+      case AttachmentType.sticker:
+        return _sticker(attachment.url);
       default:
         return SizedBox.shrink();
     }
@@ -94,8 +90,8 @@ class AttachmentMessage extends StatelessWidget {
     );
   }
 
-  Widget _video(String url) {
-    return Container(
+  Widget _sticker(String url) {
+    Container(
       margin: message.isSender
           ? EdgeInsets.only(
               top: 1,
@@ -105,52 +101,11 @@ class AttachmentMessage extends StatelessWidget {
               top: 1,
               right: Layouts.SPACING * 4,
             ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(url),
-          ),
-          Icon(
-            Icons.play_arrow,
-            size: 60,
-            color: Colors.white,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _file(BuildContext context, String nameFile) {
-    return Container(
-      margin: message.isSender
-          ? EdgeInsets.only(
-              top: 1,
-              left: Layouts.SPACING * 4,
-            )
-          : EdgeInsets.only(
-              top: 1,
-              right: Layouts.SPACING * 4,
-            ),
-      padding: EdgeInsets.symmetric(
-        horizontal: Layouts.SPACING * 0.75,
-        vertical: Layouts.SPACING / 2,
-      ),
-      decoration: BoxDecoration(
-        color: message.isSender
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.onBackground,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        '[File] ' + nameFile,
-        style: TextStyle(
-          color: message.isSender
-              ? Colors.white
-              : Theme.of(context).textTheme.bodyText1.color,
-          fontSize: Fonts.SIZE_TEXT_MEDIUM,
-          fontWeight: FontWeight.bold,
+      child: SizedBox(
+        height: 100,
+        width: 100,
+        child: Image(
+          image: NetworkImage(url),
         ),
       ),
     );

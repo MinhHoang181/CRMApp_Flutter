@@ -14,7 +14,7 @@ class MoreScreen extends StatelessWidget {
 
   AppBar _moreScreenAppBar(BuildContext context) {
     return AppBar(
-      title: Text('More'),
+      title: Text('Cài đặt'),
     );
   }
 }

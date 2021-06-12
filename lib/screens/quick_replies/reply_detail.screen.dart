@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Models
-import 'package:cntt2_crm/models/QuickAnswer.dart';
+import 'package:cntt2_crm/models/QuickReply.dart';
 
-class AnswerDetailScreen extends StatefulWidget {
-  const AnswerDetailScreen({Key key, this.answer}) : super(key: key);
+class ReplyDetailScreen extends StatefulWidget {
+  const ReplyDetailScreen({Key key, this.reply}) : super(key: key);
 
-  final QuickAnswer answer;
+  final QuickReply reply;
 
   @override
-  _AnswerDetailScreenState createState() => _AnswerDetailScreenState();
+  _ReplyDetailScreenState createState() => _ReplyDetailScreenState();
 }
 
-class _AnswerDetailScreenState extends State<AnswerDetailScreen> {
+class _ReplyDetailScreenState extends State<ReplyDetailScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.answer != null) {
-      _shortcut.text = widget.answer.shortcut;
-      _text.text = widget.answer.text;
+    if (widget.reply != null) {
+      _shortcut.text = widget.reply.shortcut;
+      _text.text = widget.reply.text;
       _title = 'Sửa câu trả lời';
     } else {
       _title = 'Tạo câu trả lời';
@@ -32,12 +32,12 @@ class _AnswerDetailScreenState extends State<AnswerDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _addAnswerScreenAppBar(context),
-      body: _bodyAnswerDetail(),
+      appBar: _addReplyScreenAppBar(context),
+      body: _bodyReplyDetail(),
     );
   }
 
-  AppBar _addAnswerScreenAppBar(BuildContext context) {
+  AppBar _addReplyScreenAppBar(BuildContext context) {
     return AppBar(
       title: Text(_title),
       actions: [
@@ -62,7 +62,7 @@ class _AnswerDetailScreenState extends State<AnswerDetailScreen> {
     Navigator.pop(context);
   }
 
-  Widget _bodyAnswerDetail() {
+  Widget _bodyReplyDetail() {
     return Container(
       margin: EdgeInsets.all(Layouts.SPACING),
       child: Column(

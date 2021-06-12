@@ -1,7 +1,7 @@
 //Models
 import 'package:flutter/material.dart';
 
-import 'Tag.dart';
+import 'Label.dart';
 
 class Address {
   int provinceId;
@@ -41,7 +41,7 @@ class Customer {
   String birthday;
   String type;
 
-  List<Tag> tags = List.empty(growable: true);
+  List<Label> labels = List.empty(growable: true);
 
   Customer({
     this.id,
@@ -53,15 +53,15 @@ class Customer {
     this.type,
   });
 
-  void addTag(Tag tag) {
-    if (!tags.contains(tag)) {
-      tags.add(tag);
+  void addLabel(Label label) {
+    if (!labels.contains(label)) {
+      labels.add(label);
     }
   }
 
-  void removeTag(Tag tag) {
-    if (tags.contains(tag)) {
-      tags.remove(tag);
+  void removeLabel(Label label) {
+    if (labels.contains(label)) {
+      labels.remove(label);
     }
   }
 }

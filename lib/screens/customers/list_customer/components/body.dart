@@ -11,23 +11,32 @@ import 'package:cntt2_crm/screens/customers/profile_customer/profile_customer.sc
 class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Customer> customers = Provider.of<List<Customer>>(context);
-    return Container(
-      color: Theme.of(context).colorScheme.onBackground,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: Layouts.SPACING / 2,
-              bottom: Layouts.SPACING / 2,
-              left: Layouts.SPACING,
+    return SingleChildScrollView(
+      child: Container(
+        color: Theme.of(context).colorScheme.onBackground,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: Layouts.SPACING / 2,
+                bottom: Layouts.SPACING / 2,
+                left: Layouts.SPACING,
+              ),
+              child: Text(
+                customers.length.toString() + ' khách hàng',
+                style: TextStyle(
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .color
+                      .withOpacity(0.7),
+                ),
+              ),
             ),
-            child: Text(
-              customers.length.toString() + ' khách hàng',
-            ),
-          ),
-          _listOrder(context, customers),
-        ],
+            _listOrder(context, customers),
+          ],
+        ),
       ),
     );
   }
@@ -46,8 +55,7 @@ class Body extends StatelessWidget {
 
   Widget _buildRow(BuildContext context, Customer customer) {
     return ListTile(
-      title:
-      Text(
+      title: Text(
         customer.name,
         style: Theme.of(context).textTheme.subtitle1,
       ),
