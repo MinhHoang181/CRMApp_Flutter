@@ -9,12 +9,13 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
+      child: SafeArea(
         child: Column(
           children: [
             SalesInfo(),
             PlatformInfo(),
             OrdersPending(),
+            SizedBox(height: 17,)
           ],
         ),
       ),
