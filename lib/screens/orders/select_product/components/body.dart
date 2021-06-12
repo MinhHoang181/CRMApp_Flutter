@@ -12,6 +12,16 @@ import 'package:provider/provider.dart';
 List<Product> _products = [
   Product(id: '1', name: 'Iphone XS', total: 2, sku: 'PVN01', price: 8000000),
   Product(id: '2', name: 'Iphone 11', total: 3, sku: 'PVN02', price: 18000000),
+  Product(id: '1', name: 'Iphone XS', total: 2, sku: 'PVN01', price: 8000000),
+  Product(id: '2', name: 'Iphone 11', total: 3, sku: 'PVN02', price: 18000000),
+  Product(id: '1', name: 'Iphone XS', total: 2, sku: 'PVN01', price: 8000000),
+  Product(id: '2', name: 'Iphone 11', total: 3, sku: 'PVN02', price: 18000000),
+  Product(id: '1', name: 'Iphone XS', total: 2, sku: 'PVN01', price: 8000000),
+  Product(id: '2', name: 'Iphone 11', total: 3, sku: 'PVN02', price: 18000000),
+  Product(id: '1', name: 'Iphone XS', total: 2, sku: 'PVN01', price: 8000000),
+  Product(id: '2', name: 'Iphone 11', total: 3, sku: 'PVN02', price: 18000000),
+  Product(id: '1', name: 'Iphone XS', total: 2, sku: 'PVN01', price: 8000000),
+  Product(id: '2', name: 'Iphone 11', total: 3, sku: 'PVN02', price: 18000000),
 ];
 
 class Body extends StatefulWidget {

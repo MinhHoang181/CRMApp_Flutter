@@ -43,16 +43,13 @@ class Body extends StatelessWidget {
 
   Widget _listOrder(BuildContext context, List<Customer> customers) {
     return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Expanded(
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: ListView.separated(
           shrinkWrap: true,
           separatorBuilder: (context, index) => Divider(),
           itemCount: customers.length,
           itemBuilder: (context, index) => _buildRow(context, customers[index]),
-        ),
-      )
-    );
+        ));
   }
 
   Widget _buildRow(BuildContext context, Customer customer) {

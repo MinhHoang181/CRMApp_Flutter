@@ -8,7 +8,7 @@ ThemeData ligthThemeData(BuildContext context) {
       centerTitle: true,
     ),
     iconTheme: IconThemeData(color: Colors.CONTENT_LIGHT_THEME),
-    textTheme:  textTheme(context, Colors.CONTENT_LIGHT_THEME),
+    textTheme: textTheme(context, Colors.CONTENT_LIGHT_THEME),
     colorScheme: ColorScheme.light(
       primary: Colors.PRIMARY,
       secondary: Colors.SECONDARY,
@@ -29,6 +29,8 @@ ThemeData ligthThemeData(BuildContext context) {
     ),
     dividerTheme: DividerThemeData(
       color: Colors.CONTENT_LIGHT_THEME,
+      space: 10,
+      thickness: 0.3,
     ),
     //Color
     accentColor: Colors.TEXT_BLACK,
@@ -45,7 +47,6 @@ ThemeData darkThemeData(BuildContext context) {
     textTheme: textTheme(context, Colors.CONTENT_DARK_THEME),
     colorScheme: ColorScheme.light(
       primary: Colors.PRIMARY,
-      
       secondary: Colors.SECONDARY,
       error: Colors.ERROR,
       background: Colors.BACKGROUND_DARK_THEME,
@@ -64,8 +65,8 @@ ThemeData darkThemeData(BuildContext context) {
     ),
     dividerTheme: DividerThemeData(
       color: Colors.CONTENT_DARK_THEME,
-      space:10,
-      thickness: 0.3
+      space: 10,
+      thickness: 0.3,
     ),
     //Color
     accentColor: Colors.TEXT_WHITE,
@@ -83,22 +84,20 @@ final inputDecorationTheme = InputDecorationTheme(
   ),
 );
 
-TextTheme textTheme(BuildContext context, Color color){
+TextTheme textTheme(BuildContext context, Color color) {
   return Theme.of(context)
       .textTheme
       .apply(
-    bodyColor: color,
-  )
+        bodyColor: color,
+      )
       .copyWith(
-      subtitle1: TextStyle(
-        fontSize: 13,
-        fontWeight: FontWeight.bold,
-        color: color.withOpacity(1),
-      ),
-      subtitle2: TextStyle(
-      fontSize: 10,
-      color: color.withOpacity(0.68),
-    )
-  );
+          subtitle1: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+            color: color.withOpacity(1),
+          ),
+          subtitle2: TextStyle(
+            fontSize: 10,
+            color: color.withOpacity(0.68),
+          ));
 }
-

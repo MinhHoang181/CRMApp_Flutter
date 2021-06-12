@@ -5,30 +5,32 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.onBackground,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: Layouts.SPACING / 2,
-              bottom: Layouts.SPACING / 2,
-              left: Layouts.SPACING,
-            ),
-            child: Text(
-              '5 đơn hàng',
-              style: TextStyle(
-                color: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    .color
-                    .withOpacity(0.7),
+    return SingleChildScrollView(
+      child: Container(
+        color: Theme.of(context).colorScheme.onBackground,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: Layouts.SPACING / 2,
+                bottom: Layouts.SPACING / 2,
+                left: Layouts.SPACING,
+              ),
+              child: Text(
+                '5 đơn hàng',
+                style: TextStyle(
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .color
+                      .withOpacity(0.7),
+                ),
               ),
             ),
-          ),
-          _listOrder(context),
-        ],
+            _listOrder(context),
+          ],
+        ),
       ),
     );
   }
@@ -51,13 +53,14 @@ class Body extends StatelessWidget {
         'DONHANG00001',
         style: TextStyle(
           fontWeight: FontWeight.bold,
-
         ),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Khách lẻ',),
+          Text(
+            'Khách lẻ',
+          ),
           Text('20:03 03-04-2021'),
         ],
       ),
