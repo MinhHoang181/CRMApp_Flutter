@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'package:cntt2_crm/models/Paging/PagingInfo.dart';
-import 'package:cntt2_crm/providers/azsales_api/chat_service.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/querry_api.dart';
 import 'package:flutter/material.dart';
 
 import '../Conversation.dart';

@@ -1,5 +1,8 @@
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/utilities/text_color.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:future_button/future_button.dart';
 
 //Models
 import 'package:cntt2_crm/models/Label.dart';
@@ -48,6 +51,7 @@ class _LabelDetailState extends State<_LabelDetail> {
     }
   }
 
+  bool _canSave = false;
   Color _labelColor = Colors.red;
   final TextEditingController _textFieldController = TextEditingController();
 
@@ -67,36 +71,11 @@ class _LabelDetailState extends State<_LabelDetail> {
                 _colorTable(),
               ],
             ),
-            _saveButton(context),
+            _futureSaveButton(),
           ],
         ),
       ),
     );
-  }
-
-  Widget _saveButton(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        width: double.infinity,
-        child: ElevatedButton.icon(
-          icon: Icon(Icons.save_alt_rounded),
-          label: Text('Lưu'),
-          style: ElevatedButton.styleFrom(
-            primary: _textFieldController.text.isNotEmpty
-                ? Theme.of(context).primaryColor
-                : Colors.grey,
-          ),
-          onPressed: () => _textFieldController.text.isNotEmpty
-              ? _onPressSaveButton(context)
-              : null,
-        ),
-      ),
-    );
-  }
-
-  void _onPressSaveButton(BuildContext context) {
-    Navigator.pop(context);
   }
 
   Widget _labelName() {
@@ -118,7 +97,9 @@ class _LabelDetailState extends State<_LabelDetail> {
               hintText: 'Nhập tên nhãn',
             ),
             onChanged: (value) {
-              setState(() {});
+              setState(() {
+                _checkCanSave();
+              });
             },
           ),
         ),
@@ -133,8 +114,66 @@ class _LabelDetailState extends State<_LabelDetail> {
         onColorSelected: (color) {
           setState(() {
             _labelColor = color;
+            _checkCanSave();
           });
         },
+      ),
+    );
+  }
+
+  void _checkCanSave() {
+    bool check1, check2;
+    if (widget.label == null) {
+      check1 = _textFieldController.text.isNotEmpty;
+      _canSave = check1;
+    } else {
+      check1 = _textFieldController.text.isNotEmpty &&
+          _textFieldController.text != widget.label.name;
+      check2 = _labelColor != widget.label.color;
+      _canSave = check1 || check2;
+    }
+  }
+
+  Future _onPressSaveButton() async {
+    bool check;
+    if (widget.label == null) {
+      check = await AzsalesData.instance
+          .createLabel(_textFieldController.text, colorToString(_labelColor));
+    } else {
+      check = await AzsalesData.instance.updateLabel(widget.label.id,
+          _textFieldController.text, colorToString(_labelColor));
+    }
+    if (check) {
+      Navigator.pop(context);
+    } else {
+      throw Exception();
+    }
+  }
+
+  Widget _futureSaveButton() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        width: double.infinity,
+        child: FutureCupertinoButton.filled(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.save_alt_rounded,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              SizedBox(width: Layouts.SPACING),
+              Text(
+                'Lưu',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+            ],
+          ),
+          onPressed: _canSave ? _onPressSaveButton : null,
+        ),
       ),
     );
   }

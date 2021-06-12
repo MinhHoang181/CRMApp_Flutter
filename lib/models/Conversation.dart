@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Paging/MessagePage.dart';
 import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,9 @@ class Conversation extends ChangeNotifier {
     });
     List<String> labelIds = List.empty(growable: true);
     labels.forEach((element) {
-      labelIds.add(element);
+      if (AzsalesData.instance.labels.containsKey(element)) {
+        labelIds.add(element);
+      }
     });
     final updatedTime = readTimestamp(json['updated_time']);
     return Conversation(

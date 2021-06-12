@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
@@ -9,7 +8,6 @@ import 'package:cntt2_crm/models/Paging/MessagePage.dart';
 import 'package:cntt2_crm/models/Paging/PagingInfo.dart';
 import 'package:cntt2_crm/models/QuickReply.dart';
 import 'package:graphql/client.dart';
-import 'package:http/http.dart' as http;
 
 GraphQLClient _getChatClient() {
   final Link link = HttpLink(
@@ -84,6 +82,36 @@ Future<bool> fetchAzsalesData() async {
   List<dynamic> replies = response.data['quickReply']['quickReplies'];
   replies.forEach((element) {
     AzsalesData.instance.addReply(QuickReply.fromJson(element));
+  });
+  return true;
+}
+
+Future<bool> fetchAllLabels() async {
+  final QueryOptions options = QueryOptions(
+    document: gql(
+      '''
+        query {
+          label {
+            labels {
+              _id,
+              title,
+              textColor,
+              color,
+            }
+          }
+        }
+      ''',
+    ),
+  );
+  final GraphQLClient client = _getChatClient();
+  final response = await client.query(options);
+  if (response.hasException) {
+    print(response.exception);
+    return false;
+  }
+  List<dynamic> labels = response.data['label']['labels'];
+  labels.forEach((element) {
+    AzsalesData.instance.addLabel(Label.fromJson(element));
   });
   return true;
 }
@@ -209,4 +237,46 @@ Future<MessagePage> fetchMessages({
   });
 
   return conversation.messages;
+}
+
+GraphQLClient _getSubscriptionClient() {
+  final WebSocketLink webSocketLink = WebSocketLink(
+    'wss://chat-service-dev.azsales.vn/graphql',
+    config: SocketClientConfig(
+      autoReconnect: true,
+      inactivityTimeout: Duration(seconds: 30),
+    ),
+  );
+  Link link = HttpLink(
+    'https://chat-service-dev.azsales.vn/graphql',
+    defaultHeaders: {
+      'access_token': AzsalesData.instance.azsalesAccessToken,
+    },
+  );
+  link = Link.split((request) => request.isSubscription, webSocketLink, link);
+  return GraphQLClient(
+    link: link,
+    cache: GraphQLCache(),
+  );
+}
+
+Future testSub() {
+  final GraphQLClient client = _getSubscriptionClient();
+  final SubscriptionOptions options = SubscriptionOptions(
+    document: gql(
+      '''
+        subscription {
+          conversationChanged {
+            _id,
+            label_ids,
+          }
+        }
+      ''',
+    ),
+  );
+
+  final subscription = client.subscribe(options);
+  subscription.listen((event) {
+    print('test: ' + event.data.toString());
+  });
 }

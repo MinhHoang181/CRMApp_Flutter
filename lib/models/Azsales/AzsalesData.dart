@@ -5,6 +5,8 @@ import 'package:cntt2_crm/models/Label.dart';
 import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:cntt2_crm/models/QuickReply.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/label_api.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/querry_api.dart';
 import 'package:flutter/material.dart';
 
 class AzsalesData extends ChangeNotifier {
@@ -29,19 +31,68 @@ class AzsalesData extends ChangeNotifier {
   AzsalesData._();
 
   //LABEL
-  void loadLabels(List<Label> labels) {
-    _labes.clear();
-    labels.forEach((element) {
-      _labes[element.id] = element;
-    });
-    notifyListeners();
-  }
-
-  void addLabel(Label label) {
+  bool addLabel(Label label) {
     if (!_labes.containsKey(label.id)) {
       _labes[label.id] = label;
       notifyListeners();
+      return true;
     }
+    return false;
+  }
+
+  bool deleteLabel(Label label) {
+    if (_labes.containsKey(label.id)) {
+      _labes.remove(label.id);
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> refreshLabels() async {
+    _labes.clear();
+    bool result = await fetchAllLabels();
+    return result;
+  }
+
+  Future<bool> createLabel(String name, String color) async {
+    Label label = await LabelAPI.createLabel(
+      labelName: name,
+      labelColor: color,
+    );
+    if (label != null) {
+      final check = addLabel(label);
+      return check;
+    }
+    return false;
+  }
+
+  Future<bool> updateLabel(String id, String name, String color) async {
+    Label label = await LabelAPI.updateLabel(
+      labelId: id,
+      labelName: name,
+      labelColor: color,
+    );
+    if (label != null) {
+      _labes[id] = label;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> removeLabel(String id) async {
+    if (_labes.containsKey(id)) {
+      bool check = await LabelAPI.removeLabel(labelId: id);
+      if (check) {
+        _labes.remove(id);
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
   }
 
   //REPLIES
