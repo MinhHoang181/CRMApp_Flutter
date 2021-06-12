@@ -8,13 +8,24 @@ import 'package:cntt2_crm/models/Paging/ConversationPage.dart';
 import 'package:cntt2_crm/models/Paging/MessagePage.dart';
 import 'package:cntt2_crm/models/Paging/PagingInfo.dart';
 import 'package:cntt2_crm/models/QuickReply.dart';
+import 'package:graphql/client.dart';
 import 'package:http/http.dart' as http;
 
-const azsales_chat_api_url = 'chat-service-dev.azsales.vn';
-const String unencodedPath = 'graphql';
+GraphQLClient _getChatClient() {
+  final Link link = HttpLink(
+    'https://chat-service-dev.azsales.vn/graphql',
+    defaultHeaders: {
+      'access_token': AzsalesData.instance.azsalesAccessToken,
+    },
+  );
+  return GraphQLClient(
+    link: link,
+    cache: GraphQLCache(),
+  );
+}
 
 Future<bool> fetchAzsalesData() async {
-  final String pages = """
+  final String pagesQuery = """
     page {
       pages {
         _id,
@@ -22,7 +33,7 @@ Future<bool> fetchAzsalesData() async {
       }
     } 
   """;
-  final String labels = """
+  final String labelsQuery = """
     label {
       labels {
         _id,
@@ -32,7 +43,7 @@ Future<bool> fetchAzsalesData() async {
       }
     }
   """;
-  final String quickReply = """
+  final String quickReplyQuery = """
     quickReply {
       quickReplies {
         _id,
@@ -41,115 +52,98 @@ Future<bool> fetchAzsalesData() async {
       }
     }
   """;
-  final String query = """
-    {
-      $pages
-      $labels
-      $quickReply
-    }
-  """;
-
-  final response = await http.get(
-    Uri.https(
-      azsales_chat_api_url,
-      unencodedPath,
-      {
-        'query': query,
-      },
+  final QueryOptions options = QueryOptions(
+    document: gql(
+      '''
+        query {
+          $pagesQuery,
+          $labelsQuery,
+          $quickReplyQuery,
+        }
+      ''',
     ),
-    headers: {
-      'access_token': AzsalesData.instance.azsalesAccessToken,
-    },
   );
+  final GraphQLClient client = _getChatClient();
 
-  if (response.statusCode == 200) {
-    //pages
-    List<dynamic> pages = jsonDecode(response.body)['data']['page']['pages'];
-    pages.forEach((element) {
-      AzsalesData.instance.addPage(FacebookPage.fromJson(element));
-    });
-    //labels
-    List<dynamic> labels = jsonDecode(response.body)['data']['label']['labels'];
-    labels.forEach((element) {
-      AzsalesData.instance.addLabel(Label.fromJson(element));
-    });
-    //QuickReply
-    List<dynamic> replies =
-        jsonDecode(response.body)['data']['quickReply']['quickReplies'];
-    replies.forEach((element) {
-      AzsalesData.instance.addReply(QuickReply.fromJson(element));
-    });
-    return true;
-  } else {
-    print(response.body);
+  final response = await client.query(options);
+  if (response.hasException) {
+    print(response.exception.toString());
     throw Exception('Lỗi lấy dữ liệu cơ bản trên Azsales');
   }
+  //pages
+  List<dynamic> pages = response.data['page']['pages'];
+  pages.forEach((element) {
+    AzsalesData.instance.addPage(FacebookPage.fromJson(element));
+  });
+  //labels
+  List<dynamic> labels = response.data['label']['labels'];
+  labels.forEach((element) {
+    AzsalesData.instance.addLabel(Label.fromJson(element));
+  });
+  //QuickReply
+  List<dynamic> replies = response.data['quickReply']['quickReplies'];
+  replies.forEach((element) {
+    AzsalesData.instance.addReply(QuickReply.fromJson(element));
+  });
+  return true;
 }
 
 Future<ConversationPage> fetchConversationsAllPages({
   int start,
   int min,
 }) async {
-  final String query = """
-    {
-      conversation {
-        conversationsPaging(start: $start, min: $min) {
-          pageInfo {
-            hasNextPage
-            next
-            start
-            min
-          }
-          items {
-            _id
-            page_id
-            participants {
-              _id
-              name
+  final QueryOptions options = QueryOptions(
+    document: gql(
+      '''
+        query {
+          conversation {
+            conversationsPaging(start: $start, min: $min) {
+              pageInfo {
+                hasNextPage
+                next
+                start
+                min
+              }
+              items {
+                _id
+                page_id
+                participants {
+                  _id
+                  name
+                }
+                snippet
+                is_read
+                is_replied
+                label_ids
+                page_id
+                updated_time
+                has_note
+                has_order
+                has_phone
+              }
             }
-            snippet
-            is_read
-            is_replied
-            label_ids
-            page_id
-            updated_time
-            has_note
-            has_order
-            has_phone
           }
         }
-      }
-    }
-  """;
-  final response = await http.get(
-    Uri.https(
-      azsales_chat_api_url,
-      unencodedPath,
-      {
-        'query': query,
-      },
+      ''',
     ),
-    headers: {
-      'access_token': AzsalesData.instance.azsalesAccessToken,
-    },
   );
-
-  if (response.statusCode == 200) {
-    Map<String, dynamic> json = jsonDecode(response.body);
-    List<dynamic> conversations =
-        json['data']['conversation']['conversationsPaging']['items'];
-    conversations.forEach((conversation) {
-      AzsalesData.instance.conversations
-          .add(Conversation.fromJson(conversation));
-    });
-    Map<String, dynamic> pageInfo =
-        json['data']['conversation']['conversationsPaging']['pageInfo'];
-    AzsalesData.instance.conversations.pageInfo = PagingInfo.fromJson(pageInfo);
-    return AzsalesData.instance.conversations;
-  } else {
-    print(response.body);
+  final GraphQLClient client = _getChatClient();
+  final response = await client.query(options);
+  if (response.hasException) {
+    print(response.exception.toString());
     throw Exception('Lỗi load thông tin danh sách tin nhắn của mọi Page');
   }
+
+  List<dynamic> conversations =
+      response.data['conversation']['conversationsPaging']['items'];
+  conversations.forEach((conversation) {
+    AzsalesData.instance.conversations.add(Conversation.fromJson(conversation));
+  });
+  Map<String, dynamic> pageInfo =
+      response.data['conversation']['conversationsPaging']['pageInfo'];
+  AzsalesData.instance.conversations.pageInfo = PagingInfo.fromJson(pageInfo);
+
+  return AzsalesData.instance.conversations;
 }
 
 Future<MessagePage> fetchMessages({
@@ -157,68 +151,62 @@ Future<MessagePage> fetchMessages({
   int start,
   int min,
 }) async {
-  final query = """
-  {
-    message {
-      messagesPaging(
-        start: $start
-        min: $min
-        filter: { conversation_id: "$conversationId" }
-      ) {
-        pageInfo {
-          hasNextPage
-          next
-          start
-          min
-        }
-        items {
-          _id
-          message
-          from {
-            _id
-          }
-          created_time
-          attachments {
-            _id
-            mime_type
-            name
-            image_data {
-              url
-              preview_url
-              image_type
-              render_as_sticker
+  final QueryOptions options = QueryOptions(
+    document: gql(
+      '''
+        query {
+          message {
+            messagesPaging(
+              start: $start
+              min: $min
+              filter: { conversation_id: "$conversationId" }
+            ) {
+              pageInfo {
+                hasNextPage
+                next
+                start
+                min
+              }
+              items {
+                _id
+                message
+                from {
+                  _id
+                }
+                created_time
+                attachments {
+                  _id
+                  mime_type
+                  name
+                  image_data {
+                    url
+                    preview_url
+                    image_type
+                    render_as_sticker
+                  }
+                }
+              }
             }
           }
         }
-      }
-    }
-  }
-  """;
-  final response = await http.get(
-    Uri.https(
-      azsales_chat_api_url,
-      unencodedPath,
-      {
-        'query': query,
-      },
+      ''',
     ),
-    headers: {
-      'access_token': AzsalesData.instance.azsalesAccessToken,
-    },
   );
-
-  if (response.statusCode == 200) {
-    final json = jsonDecode(response.body)['data']['message']['messagesPaging'];
-    Conversation conversation =
-        AzsalesData.instance.conversations.list[conversationId];
-    conversation.messages.pageInfo = PagingInfo.fromJson(json['pageInfo']);
-    List<dynamic> items = json['items'];
-    items.forEach((message) {
-      conversation.messages
-          .add(ChatMessage.fromJson(message, conversation.pageId));
-    });
-    return conversation.messages;
-  } else {
+  final GraphQLClient client = _getChatClient();
+  final response = await client.query(options);
+  if (response.hasException) {
+    print(response.exception.toString());
     throw Exception('Lỗi lấy dữ liệu tin nhắn');
   }
+  final json = response.data['message']['messagesPaging'];
+  Conversation conversation =
+      AzsalesData.instance.conversations.list[conversationId];
+  conversation.messages.pageInfo = PagingInfo.fromJson(json['pageInfo']);
+  List<dynamic> items = json['items'];
+  items.forEach((message) {
+    conversation.messages
+        .add(ChatMessage.fromJson(message, conversation.pageId));
+  });
+
+  return conversation.messages;
 }
