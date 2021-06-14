@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/components/progress_dialog.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/utilities/text_color.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,12 @@ class _LabelDetailState extends State<_LabelDetail> {
     }
   }
 
+  @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
   bool _canSave = false;
   Color _labelColor = Colors.red;
   final TextEditingController _textFieldController = TextEditingController();
@@ -71,7 +78,8 @@ class _LabelDetailState extends State<_LabelDetail> {
                 _colorTable(),
               ],
             ),
-            _futureSaveButton(),
+            //_futureSaveButton(),
+            _saveButton(),
           ],
         ),
       ),
@@ -134,28 +142,28 @@ class _LabelDetailState extends State<_LabelDetail> {
     }
   }
 
-  Future _onPressSaveButton() async {
+  Future<bool> _onPressSaveButton() async {
     bool check;
     if (widget.label == null) {
-      check = await AzsalesData.instance
+      check = await AzsalesData.instance.labels
           .createLabel(_textFieldController.text, colorToString(_labelColor));
     } else {
-      check = await AzsalesData.instance.updateLabel(widget.label.id,
-          _textFieldController.text, colorToString(_labelColor));
+      check = await widget.label
+          .update(_textFieldController.text, colorToString(_labelColor));
     }
+    if (!mounted) return false;
     if (check) {
-      Navigator.pop(context);
-    } else {
-      throw Exception();
+      return true;
     }
+    return false;
   }
 
-  Widget _futureSaveButton() {
+  Widget _saveButton() {
     return Align(
       alignment: Alignment.bottomCenter,
       child: SizedBox(
         width: double.infinity,
-        child: FutureCupertinoButton.filled(
+        child: ElevatedButton(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -172,7 +180,26 @@ class _LabelDetailState extends State<_LabelDetail> {
               ),
             ],
           ),
-          onPressed: _canSave ? _onPressSaveButton : null,
+          onPressed: _canSave
+              ? () => showDialog<bool>(
+                    context: context,
+                    builder: (context) => ProgressDialog(
+                      loading: widget.label == null
+                          ? 'Đang tạo nhãn'
+                          : 'Đang cập nhật',
+                      success: widget.label == null
+                          ? 'Tạo thành nhãn công'
+                          : 'Cập nhật thành công',
+                      falied: widget.label == null
+                          ? 'Tạo nhãn thất bại'
+                          : 'Cập nhật thất bại',
+                      future: _onPressSaveButton(),
+                    ),
+                    barrierDismissible: false,
+                  ).then(
+                    (value) => value ? Navigator.of(context).pop() : null,
+                  )
+              : null,
         ),
       ),
     );

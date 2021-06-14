@@ -4,14 +4,12 @@ import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 
 //Model
 import 'package:cntt2_crm/models/Label.dart';
+import 'package:provider/provider.dart';
 
 class LabelItem extends StatelessWidget {
-  const LabelItem({Key key, @required this.label}) : super(key: key);
-
-  final Label label;
-
   @override
   Widget build(BuildContext context) {
+    final label = Provider.of<Label>(context);
     return Container(
       margin: EdgeInsets.all(Layouts.SPACING),
       child: Row(

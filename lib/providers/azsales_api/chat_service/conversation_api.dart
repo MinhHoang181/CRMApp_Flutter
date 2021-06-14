@@ -1,13 +1,13 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
-import 'package:cntt2_crm/models/Paging/ConversationPage.dart';
-import 'package:cntt2_crm/models/Paging/PagingInfo.dart';
+import 'package:cntt2_crm/models/list_model/ConversationList.dart';
+import 'package:cntt2_crm/models/PagingInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 
 class ConversationAPI {
-  static Future<ConversationPage> fetchConversationsAllPages({
+  static Future<ConversationList> fetchConversationsAllPages({
     int start,
     int min,
   }) async {

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
-import 'package:cntt2_crm/models/Paging/MessagePage.dart';
+import 'package:cntt2_crm/models/list_model/MessageList.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class Conversation extends ChangeNotifier {
   bool hasOrder;
   bool hasPhone;
 
-  final MessagePage messages;
+  final MessageList messages;
 
   UnmodifiableListView get labelIds => UnmodifiableListView(_labelIds);
 
@@ -63,7 +63,7 @@ class Conversation extends ChangeNotifier {
     });
     List<String> labelIds = List.empty(growable: true);
     labels.forEach((element) {
-      if (AzsalesData.instance.labels.containsKey(element)) {
+      if (AzsalesData.instance.labels.map.containsKey(element)) {
         labelIds.add(element);
       }
     });
@@ -76,7 +76,7 @@ class Conversation extends ChangeNotifier {
       updatedTime: updatedTime,
       isRead: json['is_read'],
       isReplied: json['is_replied'],
-      messages: new MessagePage(conversationId: json['_id']),
+      messages: new MessageList(conversationId: json['_id']),
       labelIds: labelIds,
       hasNode: json['has_node'] != null ? json['has_node'] : false,
       hasOrder: json['has_order'] != null ? json['has_order'] : false,

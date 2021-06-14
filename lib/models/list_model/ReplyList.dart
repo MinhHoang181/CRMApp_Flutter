@@ -1,0 +1,55 @@
+import 'dart:collection';
+
+import 'package:cntt2_crm/models/QuickReply.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/reply_api.dart';
+import 'package:flutter/material.dart';
+
+class ReplyList extends ChangeNotifier {
+  Map<String, QuickReply> _list;
+  UnmodifiableMapView get map => UnmodifiableMapView(_list);
+  UnmodifiableListView get list => UnmodifiableListView(_list.values.toList());
+
+  void _addList(List<QuickReply> replies) {
+    replies.forEach((reply) {
+      if (!_list.containsKey(reply.id)) {
+        _list[reply.id] = reply;
+      }
+    });
+    notifyListeners();
+  }
+
+  bool _addReply(QuickReply reply) {
+    if (!_list.containsKey(reply.id)) {
+      _list[reply.id] = reply;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  Future<ReplyList> fetchData() async {
+    if (_list == null) {
+      _list = new Map<String, QuickReply>();
+      _addList(await ReplyAPI.fetchAllReplies());
+    }
+    return this;
+  }
+
+  Future<bool> refreshData() async {
+    _list.clear();
+    _addList(await ReplyAPI.fetchAllReplies());
+    return true;
+  }
+
+  Future<bool> createReply(String shortcut, String text) async {
+    QuickReply reply = await ReplyAPI.createReply(
+      shortcut: shortcut,
+      text: text,
+    );
+    if (reply != null) {
+      final check = _addReply(reply);
+      return check;
+    }
+    return false;
+  }
+}

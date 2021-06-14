@@ -6,8 +6,7 @@ import 'chat_input_field.dart';
 import 'message.dart';
 
 //Model
-import 'package:cntt2_crm/models/ChatMessage.dart';
-import 'package:cntt2_crm/models/Paging/MessagePage.dart';
+import 'package:cntt2_crm/models/list_model/MessageList.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -24,22 +23,23 @@ class Body extends StatelessWidget {
 class _ChatLog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final chatlog = Provider.of<MessagePage>(context);
+    final chatlog = Provider.of<MessageList>(context).list;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Layouts.SPACING),
         child: ListView.builder(
           reverse: true,
-          itemCount: chatlog.list.length,
+          itemCount: chatlog.length,
           itemBuilder: (context, index) {
-            return _buildRow(chatlog.list.values.toList(), index);
+            return _buildRow(context, index);
           },
         ),
       ),
     );
   }
 
-  Widget _buildRow(List<ChatMessage> chatlog, int index) {
+  Widget _buildRow(BuildContext context, int index) {
+    final chatlog = Provider.of<MessageList>(context).list;
     bool _isMutilLine = false;
     if (!chatlog[index].isSender && index != 0) {
       _isMutilLine = !chatlog[index - 1].isSender;

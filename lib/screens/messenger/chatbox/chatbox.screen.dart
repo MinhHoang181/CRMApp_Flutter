@@ -13,7 +13,7 @@ import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
-import 'package:cntt2_crm/models/Paging/MessagePage.dart';
+import 'package:cntt2_crm/models/list_model/MessageList.dart';
 
 class ChatboxScreen extends StatelessWidget {
   final Conversation conversation;
@@ -22,16 +22,14 @@ class ChatboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<MessagePage> futureListChatMessage =
-        conversation.messages.fetchData();
     return Scaffold(
       appBar: _chatboxScreenAppBar(context),
       body: Center(
-        child: FutureBuilder<MessagePage>(
-            future: futureListChatMessage,
+        child: FutureBuilder<MessageList>(
+            future: conversation.messages.fetchData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ChangeNotifierProvider.value(
+                return ChangeNotifierProvider<MessageList>.value(
                   value: snapshot.data,
                   child: Body(),
                 );

@@ -1,11 +1,10 @@
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Label.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 
 class LabelAPI {
-  static Future<bool> fetchAllLabels() async {
+  static Future<List<Label>> fetchAllLabels() async {
     final QueryOptions options = QueryOptions(
       document: gql(
         '''
@@ -14,7 +13,6 @@ class LabelAPI {
             labels {
               _id,
               title,
-              textColor,
               color,
             }
           }
@@ -26,13 +24,13 @@ class LabelAPI {
     final response = await client.query(options);
     if (response.hasException) {
       print(response.exception);
-      return false;
     }
-    List<dynamic> labels = response.data['label']['labels'];
-    labels.forEach((element) {
-      AzsalesData.instance.addLabel(Label.fromJson(element));
+    List<dynamic> labelsJson = response.data['label']['labels'];
+    List<Label> labels = List.empty(growable: true);
+    labelsJson.forEach((label) {
+      labels.add(Label.fromJson(label));
     });
-    return true;
+    return labels;
   }
 
   static Future<Label> createLabel({

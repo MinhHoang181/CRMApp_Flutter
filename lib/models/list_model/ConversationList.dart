@@ -1,15 +1,16 @@
 import 'dart:collection';
-import 'package:cntt2_crm/models/Paging/PagingInfo.dart';
+import 'package:cntt2_crm/models/PagingInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:flutter/material.dart';
 
 import '../Conversation.dart';
 
-class ConversationPage extends ChangeNotifier {
+class ConversationList extends ChangeNotifier {
   Map<String, Conversation> _list;
   PagingInfo pageInfo;
 
-  UnmodifiableMapView get list => UnmodifiableMapView(_list);
+  UnmodifiableListView get list => UnmodifiableListView(_list.values.toList());
+  UnmodifiableMapView get map => UnmodifiableMapView(_list);
 
   bool add(Conversation conversation) {
     if (!_list.containsKey(conversation.id)) {
@@ -20,7 +21,7 @@ class ConversationPage extends ChangeNotifier {
     return false;
   }
 
-  Future<ConversationPage> fetchData() async {
+  Future<ConversationList> fetchData() async {
     if (_list == null) {
       _list = new Map<String, Conversation>();
       return ConversationAPI.fetchConversationsAllPages(start: 0, min: 20);

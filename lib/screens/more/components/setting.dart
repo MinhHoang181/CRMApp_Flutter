@@ -1,4 +1,5 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/list_model/LabelList.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
@@ -64,8 +65,8 @@ class _SettingState extends State<Setting> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider.value(
-            value: AzsalesData.instance,
+          builder: (context) => ChangeNotifierProvider<LabelList>.value(
+            value: AzsalesData.instance.labels,
             child: LabelsScreen(),
           ),
         ),

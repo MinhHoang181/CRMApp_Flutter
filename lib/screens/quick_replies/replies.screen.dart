@@ -1,12 +1,15 @@
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/QuickReply.dart';
+import 'package:cntt2_crm/models/list_model/ReplyList.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 //Components
 import 'components/reply_item.dart';
 
 //Models
-import 'package:cntt2_crm/models/QuickReply.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 
 //Screens
 import 'reply_detail.screen.dart';
@@ -18,7 +21,10 @@ class RepliesScreen extends StatelessWidget {
       appBar: _answersScreenAppBar(context),
       body: Container(
         margin: EdgeInsets.only(top: Layouts.SPACING),
-        child: _ListReply(),
+        child: ChangeNotifierProvider<ReplyList>.value(
+          value: AzsalesData.instance.replies,
+          child: _ListReply(),
+        ),
       ),
     );
   }
@@ -41,24 +47,36 @@ class RepliesScreen extends StatelessWidget {
   }
 }
 
-class _ListReply extends StatefulWidget {
-  @override
-  __ListReplyState createState() => __ListReplyState();
-}
+class _ListReply extends StatelessWidget {
+  final RefreshController _refreshController = RefreshController();
 
-class __ListReplyState extends State<_ListReply> {
   @override
   Widget build(BuildContext context) {
-    final replies = AzsalesData.instance.replies;
-    return ListView.separated(
-      separatorBuilder: (context, index) => Divider(),
-      itemCount: replies.length,
-      itemBuilder: (context, index) =>
-          _buildRow(replies.values.elementAt(index)),
+    final replies = Provider.of<ReplyList>(context).list;
+    return SmartRefresher(
+      header: ClassicHeader(
+        idleText: 'Kéo xuống để làm mới danh sách tin nhắn mẫu',
+        releaseText: 'Thả ra để làm mới danh sách tin nhắn mẫu',
+        refreshingText: 'Đang làm mới danh sách tin nhắn mẫu',
+        completeText: 'Đã làm mới danh sách tin nhắn mẫu',
+        failedText: 'Làm mới danh sách tin nhắn mẫu thất bại',
+      ),
+      onRefresh: _onRefresh,
+      controller: _refreshController,
+      child: ListView.separated(
+        separatorBuilder: (context, index) => Divider(),
+        itemCount: replies.length,
+        itemBuilder: (context, index) =>
+            ChangeNotifierProvider<QuickReply>.value(
+          value: replies[index],
+          child: ReplyItem(),
+        ),
+      ),
     );
   }
 
-  Widget _buildRow(QuickReply reply) {
-    return ReplyItem(reply: reply);
+  void _onRefresh() async {
+    await AzsalesData.instance.replies.refreshData();
+    _refreshController.refreshCompleted();
   }
 }

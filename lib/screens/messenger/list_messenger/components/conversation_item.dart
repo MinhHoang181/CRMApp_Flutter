@@ -110,7 +110,7 @@ class ConversationItem extends StatelessWidget {
   }
 
   Widget _labelItem(String labelId) {
-    Label label = AzsalesData.instance.labels[labelId];
+    Label label = AzsalesData.instance.labels.map[labelId];
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: Layouts.SPACING / 6,

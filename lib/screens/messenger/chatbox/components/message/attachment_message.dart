@@ -91,7 +91,7 @@ class AttachmentMessage extends StatelessWidget {
   }
 
   Widget _sticker(String url) {
-    Container(
+    return Container(
       margin: message.isSender
           ? EdgeInsets.only(
               top: 1,

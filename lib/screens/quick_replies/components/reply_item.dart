@@ -3,39 +3,32 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 //Models
 import 'package:cntt2_crm/models/QuickReply.dart';
+import 'package:provider/provider.dart';
 
 //Screen
 import '../reply_detail.screen.dart';
 
-class ReplyItem extends StatefulWidget {
-  const ReplyItem({Key key, @required this.reply}) : super(key: key);
-
-  final QuickReply reply;
-
-  @override
-  _ReplyItemState createState() => _ReplyItemState();
-}
-
-class _ReplyItemState extends State<ReplyItem> {
+class ReplyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final reply = Provider.of<QuickReply>(context);
     return Slidable(
-      key: ValueKey(widget.reply.shortcut),
+      key: ValueKey(reply.shortcut),
       actionPane: SlidableScrollActionPane(),
       child: ListTile(
         title: Text(
-          widget.reply.shortcut,
+          reply.shortcut,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         subtitle: Text(
-          widget.reply.text,
+          reply.text,
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1.color.withOpacity(0.5),
           ),
         ),
-        onTap: () => Navigator.pop(context, widget.reply.text),
+        onTap: () => Navigator.pop(context, reply.text),
       ),
       secondaryActions: [
         IconSlideAction(
@@ -45,7 +38,7 @@ class _ReplyItemState extends State<ReplyItem> {
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ReplyDetailScreen(reply: widget.reply),
+              builder: (context) => ReplyDetailScreen(reply: reply),
             ),
           ),
         ),
