@@ -1,20 +1,13 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
+import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:graphql/client.dart';
-
-GraphQLClient _getAuthClient() {
-  final Link _link = HttpLink('https://auth-service-dev.azsales.vn/graphql');
-  return GraphQLClient(
-    link: _link,
-    cache: GraphQLCache(),
-  );
-}
 
 Future<AzsalesAccount> login(LoginData data) async {
   final _name = data.name;
   final _password = data.password;
 
-  final GraphQLClient _client = _getAuthClient();
+  final GraphQLClient _client = getAuthClient();
 
   final QueryOptions options = QueryOptions(
     document: gql(

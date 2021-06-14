@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Paging/MessagePage.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
 
@@ -24,12 +25,14 @@ class Conversation extends ChangeNotifier {
   String updatedTime;
   bool isRead;
   bool isReplied;
-  List<String> labelIds;
+  List<String> _labelIds;
   bool hasNode;
   bool hasOrder;
   bool hasPhone;
 
   final MessagePage messages;
+
+  UnmodifiableListView get labelIds => UnmodifiableListView(_labelIds);
 
   Conversation({
     @required this.id,
@@ -40,11 +43,13 @@ class Conversation extends ChangeNotifier {
     @required this.isRead,
     @required this.isReplied,
     @required this.messages,
-    this.labelIds,
+    @required List<String> labelIds,
     this.hasNode = false,
     this.hasOrder = false,
     this.hasPhone = false,
-  });
+  }) {
+    this._labelIds = labelIds;
+  }
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     List<dynamic> users = json['participants'];
@@ -77,5 +82,30 @@ class Conversation extends ChangeNotifier {
       hasOrder: json['has_order'] != null ? json['has_order'] : false,
       hasPhone: json['has_phone'] != null ? json['has_phone'] : false,
     );
+  }
+
+  void _updateLabels(List<String> labelIds) {
+    this._labelIds = labelIds;
+    notifyListeners();
+  }
+
+  Future<bool> setLabel(String labelId) async {
+    List<String> labelIds = await ConversationAPI.setLabel(
+        conversationId: this.id, labelId: labelId);
+    if (labelIds != null) {
+      _updateLabels(labelIds);
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> unsetLabel(String labelId) async {
+    List<String> labelIds = await ConversationAPI.unsetLabel(
+        conversationId: this.id, labelId: labelId);
+    if (labelIds != null) {
+      _updateLabels(labelIds);
+      return true;
+    }
+    return false;
   }
 }

@@ -1,20 +1,38 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Label.dart';
+import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 
 class LabelAPI {
-  static GraphQLClient _getChatClient() {
-    final Link link = HttpLink(
-      'https://chat-service-dev.azsales.vn/graphql',
-      defaultHeaders: {
-        'access_token': AzsalesData.instance.azsalesAccessToken,
-      },
+  static Future<bool> fetchAllLabels() async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          label {
+            labels {
+              _id,
+              title,
+              textColor,
+              color,
+            }
+          }
+        }
+      ''',
+      ),
     );
-    return GraphQLClient(
-      link: link,
-      cache: GraphQLCache(),
-    );
+    final GraphQLClient client = getChatClient();
+    final response = await client.query(options);
+    if (response.hasException) {
+      print(response.exception);
+      return false;
+    }
+    List<dynamic> labels = response.data['label']['labels'];
+    labels.forEach((element) {
+      AzsalesData.instance.addLabel(Label.fromJson(element));
+    });
+    return true;
   }
 
   static Future<Label> createLabel({
@@ -39,7 +57,7 @@ class LabelAPI {
       ),
     );
 
-    final GraphQLClient client = _getChatClient();
+    final GraphQLClient client = getChatClient();
     final response = await client.mutate(options);
     if (response.hasException) {
       print(response.exception.toString());
@@ -72,7 +90,7 @@ class LabelAPI {
       ),
     );
 
-    final GraphQLClient client = _getChatClient();
+    final GraphQLClient client = getChatClient();
     final response = await client.mutate(options);
     if (response.hasException) {
       print(response.exception.toString());
@@ -101,7 +119,7 @@ class LabelAPI {
       ),
     );
 
-    final GraphQLClient client = _getChatClient();
+    final GraphQLClient client = getChatClient();
     final response = await client.mutate(options);
     if (response.hasException) {
       print(response.exception.toString());

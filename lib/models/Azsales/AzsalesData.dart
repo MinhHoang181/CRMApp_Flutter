@@ -6,7 +6,6 @@ import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:cntt2_crm/models/QuickReply.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/label_api.dart';
-import 'package:cntt2_crm/providers/azsales_api/chat_service/querry_api.dart';
 import 'package:flutter/material.dart';
 
 class AzsalesData extends ChangeNotifier {
@@ -51,7 +50,7 @@ class AzsalesData extends ChangeNotifier {
 
   Future<bool> refreshLabels() async {
     _labes.clear();
-    bool result = await fetchAllLabels();
+    bool result = await LabelAPI.fetchAllLabels();
     return result;
   }
 
