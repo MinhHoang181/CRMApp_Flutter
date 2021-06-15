@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 //screen
 import 'package:cntt2_crm/screens/labels/select_label.screen.dart';
 import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
+import 'package:cntt2_crm/screens/messenger/conversation_info/conversation_info.screen.dart';
+
 //components
 import 'components/body.dart';
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
@@ -16,12 +18,11 @@ import 'package:cntt2_crm/models/Conversation.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
 
 class ChatboxScreen extends StatelessWidget {
-  final Conversation conversation;
-
-  const ChatboxScreen({Key key, @required this.conversation}) : super(key: key);
+  const ChatboxScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final conversation = Provider.of<Conversation>(context, listen: false);
     return Scaffold(
       appBar: _chatboxScreenAppBar(context),
       body: Center(
@@ -43,6 +44,7 @@ class ChatboxScreen extends StatelessWidget {
   }
 
   AppBar _chatboxScreenAppBar(BuildContext context) {
+    final conversation = Provider.of<Conversation>(context, listen: false);
     return AppBar(
       title: InkWell(
         child: Row(
@@ -62,7 +64,15 @@ class ChatboxScreen extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () => {},
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChangeNotifierProvider.value(
+              value: conversation,
+              child: ConversationInfoScreen(),
+            ),
+          ),
+        ),
       ),
       actions: [
         IconButton(

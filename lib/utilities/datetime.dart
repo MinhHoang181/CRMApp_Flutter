@@ -4,7 +4,7 @@ String readTimestamp(int timestamp) {
   var now = DateTime.now();
   var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
   var diff = now.difference(date);
-  var diffNearestSunday = now.difference(getNearestSunday());
+  var diffNearestSunday = now.difference(_getNearestSunday());
   var time = '';
 
   if (diff.inSeconds <= 0 ||
@@ -25,7 +25,7 @@ String readTimestamp(int timestamp) {
   return time;
 }
 
-DateTime getNearestSunday() {
+DateTime _getNearestSunday() {
   var sunday = 7;
   var now = DateTime.now();
   now.subtract(new Duration(days: 1));

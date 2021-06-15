@@ -58,7 +58,8 @@ class _OrdersPendingState extends State<OrdersPending> {
                 ),
                 title: Row(
                   children: [
-                    Text('Chờ duyệt',
+                    Text(
+                      'Chờ duyệt',
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                       ),
@@ -66,7 +67,8 @@ class _OrdersPendingState extends State<OrdersPending> {
                     Spacer(),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Text('$_orderCheck',
+                      child: Text(
+                        '$_orderCheck',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                         ),
@@ -74,7 +76,10 @@ class _OrdersPendingState extends State<OrdersPending> {
                     ),
                   ],
                 ),
-                trailing: Icon(Icons.arrow_forward_ios, color: Theme.of(context).accentColor,),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).accentColor,
+                ),
               ),
               Divider(),
               ListTile(
@@ -84,7 +89,8 @@ class _OrdersPendingState extends State<OrdersPending> {
                 ),
                 title: Row(
                   children: [
-                    Text('Chờ thanh toán',
+                    Text(
+                      'Chờ thanh toán',
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                       ),
@@ -92,7 +98,8 @@ class _OrdersPendingState extends State<OrdersPending> {
                     Spacer(),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Text('$_orderPayment',
+                      child: Text(
+                        '$_orderPayment',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                         ),
@@ -100,7 +107,10 @@ class _OrdersPendingState extends State<OrdersPending> {
                     ),
                   ],
                 ),
-                trailing: Icon(Icons.arrow_forward_ios, color: Theme.of(context).accentColor,),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).accentColor,
+                ),
               ),
               Divider(),
               ListTile(
@@ -110,7 +120,8 @@ class _OrdersPendingState extends State<OrdersPending> {
                 ),
                 title: Row(
                   children: [
-                    Text('Chờ đóng gói',
+                    Text(
+                      'Chờ đóng gói',
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                       ),
@@ -118,7 +129,8 @@ class _OrdersPendingState extends State<OrdersPending> {
                     Spacer(),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Text('$_orderPack',
+                      child: Text(
+                        '$_orderPack',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                         ),
@@ -126,7 +138,8 @@ class _OrdersPendingState extends State<OrdersPending> {
                     ),
                   ],
                 ),
-                trailing: Icon(Icons.arrow_forward_ios, color: Theme.of(context).accentColor),
+                trailing: Icon(Icons.arrow_forward_ios,
+                    color: Theme.of(context).accentColor),
               ),
               Divider(),
               ListTile(
@@ -136,14 +149,16 @@ class _OrdersPendingState extends State<OrdersPending> {
                 ),
                 title: Row(
                   children: [
-                    Text('Chờ vận chuyển',
+                    Text(
+                      'Chờ vận chuyển',
                       style: TextStyle(
-                      fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
                     Spacer(),
                     Align(
-                      child: Text('$_orderDelivery',
+                      child: Text(
+                        '$_orderDelivery',
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                         ),
@@ -152,7 +167,10 @@ class _OrdersPendingState extends State<OrdersPending> {
                     ),
                   ],
                 ),
-                trailing: Icon(Icons.arrow_forward_ios, color: Theme.of(context).accentColor,),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).accentColor,
+                ),
               ),
             ],
           ),

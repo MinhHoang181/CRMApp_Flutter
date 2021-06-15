@@ -103,7 +103,10 @@ class ConversationItem extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChatboxScreen(conversation: conversation),
+          builder: (context) => ChangeNotifierProvider.value(
+            value: conversation,
+            child: ChatboxScreen(),
+          ),
         ),
       ),
     );

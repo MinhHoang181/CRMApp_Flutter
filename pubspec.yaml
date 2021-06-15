@@ -21,7 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  future_button: ^0.1.1
+  implicitly_animated_reorderable_list: ^0.4.0
+  tuple: ^2.0.0
   graphql: ^4.0.0-beta
   pull_to_refresh: ^2.0.0
   select_dialog: ^2.0.0

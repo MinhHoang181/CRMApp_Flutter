@@ -6,6 +6,8 @@ import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.da
 import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
 
+import 'list_model/NoteList.dart';
+
 class Participant {
   final String id;
   final String name;
@@ -31,6 +33,7 @@ class Conversation extends ChangeNotifier {
   bool hasPhone;
 
   final MessageList messages;
+  final NoteList notes;
 
   UnmodifiableListView get labelIds => UnmodifiableListView(_labelIds);
 
@@ -43,6 +46,7 @@ class Conversation extends ChangeNotifier {
     @required this.isRead,
     @required this.isReplied,
     @required this.messages,
+    @required this.notes,
     @required List<String> labelIds,
     this.hasNode = false,
     this.hasOrder = false,
@@ -77,6 +81,7 @@ class Conversation extends ChangeNotifier {
       isRead: json['is_read'],
       isReplied: json['is_replied'],
       messages: new MessageList(conversationId: json['_id']),
+      notes: new NoteList(conversationId: json['_id']),
       labelIds: labelIds,
       hasNode: json['has_node'] != null ? json['has_node'] : false,
       hasOrder: json['has_order'] != null ? json['has_order'] : false,

@@ -3,7 +3,6 @@ import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/utilities/text_color.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-import 'package:future_button/future_button.dart';
 
 //Models
 import 'package:cntt2_crm/models/Label.dart';
