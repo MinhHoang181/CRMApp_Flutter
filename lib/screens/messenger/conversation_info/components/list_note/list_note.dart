@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
+import 'package:implicitly_animated_reorderable_list/transitions.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -34,7 +36,7 @@ class ListNode extends StatelessWidget {
 
   Widget _listNode(BuildContext context) {
     final noteList = Provider.of<NoteList>(context);
-    final notes = noteList.list;
+    List<Note> notes = noteList.sort(sort: NoteListSort.time, increase: false);
     return Container(
       color: Theme.of(context).colorScheme.onBackground,
       margin: EdgeInsets.only(top: Layouts.SPACING / 2),
@@ -56,12 +58,43 @@ class ListNode extends StatelessWidget {
         onRefresh: () => _onRefresh(noteList),
         onLoading: () => _onLoading(noteList),
         controller: _refreshController,
-        child: ListView.builder(
-          itemCount: notes.length,
-          itemBuilder: (context, index) => ChangeNotifierProvider<Note>.value(
-            value: notes[index],
-            child: NoteItem(),
-          ),
+        child: ImplicitlyAnimatedList<Note>(
+          physics: NeverScrollableScrollPhysics(),
+          items: notes,
+          areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
+          itemBuilder: (context, animation, item, i) {
+            return SizeFadeTransition(
+              sizeFraction: 0.7,
+              curve: Curves.easeInOut,
+              animation: animation,
+              child: ChangeNotifierProvider<Note>.value(
+                value: item,
+                child: NoteItem(),
+              ),
+            );
+          },
+          updateItemBuilder: (context, animation, item) {
+            return SizeFadeTransition(
+              sizeFraction: 0.7,
+              curve: Curves.easeInOut,
+              animation: animation,
+              child: ChangeNotifierProvider<Note>.value(
+                value: item,
+                child: NoteItem(),
+              ),
+            );
+          },
+          removeItemBuilder: (context, animation, item) {
+            return SizeFadeTransition(
+              sizeFraction: 0.7,
+              curve: Curves.easeInOut,
+              animation: animation,
+              child: ChangeNotifierProvider<Note>.value(
+                value: item,
+                child: NoteItem(),
+              ),
+            );
+          },
         ),
       ),
     );

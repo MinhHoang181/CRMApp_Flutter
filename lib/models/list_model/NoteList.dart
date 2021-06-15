@@ -21,6 +21,10 @@ class NotePagingInfo {
   }
 }
 
+enum NoteListSort {
+  time,
+}
+
 class NoteList extends ChangeNotifier {
   final String conversationId;
   NotePagingInfo pageInfo;
@@ -29,12 +33,36 @@ class NoteList extends ChangeNotifier {
   NoteList({@required this.conversationId});
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
-  UnmodifiableListView get list => UnmodifiableListView(_list.values.toList());
+  List<Note> get list => _list.values.toList();
+
+  List<Note> sort({@required NoteListSort sort, bool increase = true}) {
+    switch (sort) {
+      case NoteListSort.time:
+        return _sortTime(increase);
+      default:
+        return list;
+    }
+  }
+
+  List<Note> _sortTime(bool increase) {
+    List<Note> sort = list;
+    sort.sort((a, b) {
+      final dayA = a.timeUpdate != null ? a.timeUpdate : a.timeCreate;
+      final dayB = b.timeUpdate != null ? b.timeUpdate : b.timeCreate;
+      return increase ? dayA.compareTo(dayB) : dayB.compareTo(dayA);
+    });
+    return sort;
+  }
+
+  void noteUpdateNotify() {
+    notifyListeners();
+  }
 
   void _addList(List<Note> notes) {
     notes.forEach((note) {
       if (!_list.containsKey(note.id)) {
         _list[note.id] = note;
+        note.noteList = this;
       }
     });
     notifyListeners();

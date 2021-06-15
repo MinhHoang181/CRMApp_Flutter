@@ -15,19 +15,19 @@ class NoteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final note = Provider.of<Note>(context);
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minHeight: 100,
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: Layouts.SPACING / 2,
       ),
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: Layouts.SPACING / 2,
-        ),
-        child: Card(
-          elevation: 3,
-          child: Slidable(
-            key: ValueKey(note.id),
-            actionPane: SlidableScrollActionPane(),
+      child: Slidable(
+        key: ValueKey(note.id),
+        actionPane: SlidableScrollActionPane(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: 100,
+          ),
+          child: Card(
+            elevation: 3,
             child: Padding(
               padding: const EdgeInsets.all(Layouts.SPACING / 2),
               child: Row(
@@ -63,29 +63,29 @@ class NoteItem extends StatelessWidget {
                 ],
               ),
             ),
-            secondaryActions: [
-              IconSlideAction(
-                icon: Icons.edit_rounded,
-                caption: 'Sửa',
-                color: Colors.yellow,
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => _EditDialog(note: note),
-                ).then(
-                  (value) => value != null
-                      ? _showUpdateProgress(context, note, value)
-                      : null,
-                ),
-              ),
-              IconSlideAction(
-                icon: Icons.delete_rounded,
-                caption: 'Xoá',
-                color: Colors.red,
-                onTap: () => {},
-              ),
-            ],
           ),
         ),
+        secondaryActions: [
+          IconSlideAction(
+            icon: Icons.edit_rounded,
+            caption: 'Sửa',
+            color: Colors.yellow,
+            onTap: () => showDialog(
+              context: context,
+              builder: (context) => _EditDialog(note: note),
+            ).then(
+              (value) => value != null
+                  ? _showUpdateProgress(context, note, value)
+                  : null,
+            ),
+          ),
+          IconSlideAction(
+            icon: Icons.delete_rounded,
+            caption: 'Xoá',
+            color: Colors.red,
+            onTap: () => {},
+          ),
+        ],
       ),
     );
   }
