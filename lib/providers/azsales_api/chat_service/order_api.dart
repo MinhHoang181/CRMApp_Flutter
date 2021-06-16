@@ -100,6 +100,10 @@ class OrderAPI {
                   label,
                 }
                 status,
+                date_created,
+                created_by_user {
+                  display_name,
+                }
               }
             }
           }

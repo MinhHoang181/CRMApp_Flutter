@@ -57,12 +57,60 @@ class ListOrder extends StatelessWidget {
         onLoading: () => _onLoading(orderList),
         controller: _refreshController,
         child: ListView.builder(
-          itemCount: orders.length,
-          itemBuilder: (context, index) => ChangeNotifierProvider<Order>.value(
-            value: orders[index],
-            child: OrderItem(),
+            itemCount: orders.length,
+            itemBuilder: (context, index) {
+              return ChangeNotifierProvider<Order>.value(
+                value: orders[index],
+                child: OrderItem(),
+              );
+            }),
+      ),
+    );
+  }
+
+  Widget _headerList(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: Layouts.SPACING / 2,
+        vertical: Layouts.SPACING,
+      ),
+      child: Table(
+        children: [
+          TableRow(
+            children: [
+              Text(
+                'Mã đơn hàng',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Ngày tạo',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Tạo bởi',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Thành tiền',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Trạng thái',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
-        ),
+        ],
       ),
     );
   }
