@@ -13,7 +13,7 @@ const Color ON_PRIMARY = Colors.white;
 const Color CONTENT_LIGHT_THEME = Colors.black;
 const Color BACKGROUND_LIGHT_THEME = Colors.white;
 const Color ON_BACKGROUND_LIGHT_THEME = Color(0xFFF5F5F5);
-const Color SHADOW_LIGHT_THEME = Color(0xFF808080);
+const Color SHADOW_LIGHT_THEME = Color(0xFFC6C6C6);
 
 // Dark Theme
 const Color CONTENT_DARK_THEME = Colors.white;

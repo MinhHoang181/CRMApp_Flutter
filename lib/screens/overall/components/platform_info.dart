@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/images.dart' as Images;
+import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'package:cntt2_crm/constants/enum.dart';
 
@@ -13,6 +14,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       padding: EdgeInsets.all(Layouts.SPACING),
       margin: EdgeInsets.all(Layouts.SPACING),
       decoration: BoxDecoration(
@@ -20,8 +22,8 @@ class _PlatformInfoState extends State<PlatformInfo> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            blurRadius: 5,
-            spreadRadius: 1,
+            blurRadius: 3,
+            offset: Offset(0, 3),
             color: Theme.of(context).shadowColor,
           ),
         ],
@@ -84,9 +86,11 @@ class _PlatformInfoState extends State<PlatformInfo> {
           Row(
             children: [
               SizedBox(
-                width: 50,
-                height: 50,
-                child: Icon(Icons.mail),
+                width: 27,
+                height: 27,
+                child: Image(
+                  image: AssetImage(MyIcons.MESSAGE),
+                ),
               ),
               SizedBox(
                 width: Layouts.SPACING,
@@ -96,12 +100,17 @@ class _PlatformInfoState extends State<PlatformInfo> {
               _alertText(numberMess),
             ],
           ),
+          SizedBox(
+            height: 15,
+          ),
           Row(
             children: [
               SizedBox(
-                width: 50,
-                height: 50,
-                child: Icon(Icons.notifications),
+                width: 27,
+                height: 27,
+                child: Image(
+                  image: AssetImage(MyIcons.BELL),
+                ),
               ),
               SizedBox(
                 width: Layouts.SPACING,

@@ -26,8 +26,8 @@ class _SalesInfoState extends State<SalesInfo> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            blurRadius: 5,
-            spreadRadius: 1,
+            blurRadius: 3,
+            offset: Offset(0, 2),
             color: Theme.of(context).shadowColor,
           ),
         ],

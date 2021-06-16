@@ -1,1 +1,10 @@
-
+const String BELL = 'assets/icons/bell-icon.png';
+const String MESSAGE = 'assets/icons/message-icon.png';
+const String MONEY = 'assets/icons/money-icon.png';
+const String APPROVE = 'assets/icons/approve-icon.png';
+const String DELIVERY = 'assets/icons/delivery-icon.png';
+const String BOX = 'assets/icons/box-icon.png';
+const String ALL_BILL = 'assets/icons/all-bill-icon.png';
+const String ADD_BILL = 'assets/icons/add-bill-icon.png';
+const String MESSAGE_ALT = 'assets/icons/message-icon-2.png';
+const String PAY_BILL = 'assets/icons/pay-bill-icon.png';

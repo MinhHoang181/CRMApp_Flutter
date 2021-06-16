@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 
 class OrdersPending extends StatefulWidget {
   @override
@@ -43,8 +44,8 @@ class _OrdersPendingState extends State<OrdersPending> {
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                blurRadius: 5,
-                spreadRadius: 1,
+                blurRadius: 3,
+                offset: Offset(0, 3),
                 color: Theme.of(context).shadowColor,
               ),
             ],
@@ -52,9 +53,12 @@ class _OrdersPendingState extends State<OrdersPending> {
           child: Column(
             children: [
               ListTile(
-                leading: Icon(
-                  Icons.assignment_turned_in_rounded,
-                  color: Theme.of(context).accentColor,
+                leading: SizedBox(
+                  width: 35,
+                  height: 35,
+                  child: Image(
+                    image: AssetImage(MyIcons.APPROVE),
+                  ),
                 ),
                 title: Row(
                   children: [
@@ -78,9 +82,12 @@ class _OrdersPendingState extends State<OrdersPending> {
               ),
               Divider(),
               ListTile(
-                leading: Icon(
-                  Icons.payments_rounded,
-                  color: Theme.of(context).accentColor,
+                leading: SizedBox(
+                  width: 35,
+                  height: 35,
+                  child: Image(
+                    image: AssetImage(MyIcons.MONEY),
+                  ),
                 ),
                 title: Row(
                   children: [
@@ -104,9 +111,12 @@ class _OrdersPendingState extends State<OrdersPending> {
               ),
               Divider(),
               ListTile(
-                leading: Icon(
-                  Icons.shopping_basket_rounded,
-                  color: Theme.of(context).accentColor,
+                leading: SizedBox(
+                  width: 35,
+                  height: 35,
+                  child: Image(
+                    image: AssetImage(MyIcons.BOX),
+                  ),
                 ),
                 title: Row(
                   children: [
@@ -130,9 +140,12 @@ class _OrdersPendingState extends State<OrdersPending> {
               ),
               Divider(),
               ListTile(
-                leading: Icon(
-                  Icons.directions_car_rounded,
-                  color: Theme.of(context).accentColor,
+                leading: SizedBox(
+                  width: 35,
+                  height: 35,
+                  child: Image(
+                    image: AssetImage(MyIcons.DELIVERY),
+                  ),
                 ),
                 title: Row(
                   children: [
