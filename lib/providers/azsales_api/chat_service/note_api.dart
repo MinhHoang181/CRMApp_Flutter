@@ -15,7 +15,7 @@ class NoteAPI {
         '''
         query {
           note {
-            notesPaging(page: $page, filter: {reference_id: "$conversationId"}, sort: _ID_DESC) {
+            notesPaging(page: $page, filter: {reference_id: "$conversationId"}) {
               pageInfo {
                 hasNextPage,
                 currentPage,
@@ -88,6 +88,43 @@ class NoteAPI {
       return null;
     }
     final json = response.data['note']['updateNote']['record'];
+    return Note.fromJson(json);
+  }
+
+  static Future<Note> createNote({
+    @required String text,
+    @required String conversationId,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          note {
+            createNote(record: { text: "$text", reference_id: "$conversationId" }) {
+              record {
+                _id
+                text
+                reference_id
+                created_by_user {
+                  display_name
+                }
+                date_created
+                date_updated
+              }
+            }
+          }
+        }
+      ''',
+      ),
+    );
+
+    final GraphQLClient client = getChatClient();
+    final response = await client.mutate(options);
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    }
+    final json = response.data['note']['createNote']['record'];
     return Note.fromJson(json);
   }
 }

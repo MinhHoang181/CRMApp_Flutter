@@ -68,6 +68,15 @@ class NoteList extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _addNote(Note note) {
+    if (!_list.containsKey(note.id)) {
+      _list[note.id] = note;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
   Future<NoteList> fetchData() async {
     if (_list == null) {
       _list = new Map<String, Note>();
@@ -98,6 +107,18 @@ class NoteList extends ChangeNotifier {
       _addList(data.item1);
       this.pageInfo = data.item2;
       return count < _list.length ? true : false;
+    }
+    return false;
+  }
+
+  Future<bool> createNote(String text) async {
+    Note note = await NoteAPI.createNote(
+      text: text,
+      conversationId: this.conversationId,
+    );
+    if (note != null) {
+      final check = _addNote(note);
+      return check;
     }
     return false;
   }

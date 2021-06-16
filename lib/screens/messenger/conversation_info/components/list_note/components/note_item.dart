@@ -8,6 +8,7 @@ import 'package:cntt2_crm/models/Note.dart';
 
 //Components
 import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/screens/messenger/conversation_info/components/edit_dialog.dart';
 
 class NoteItem extends StatelessWidget {
   const NoteItem({Key key}) : super(key: key);
@@ -72,7 +73,7 @@ class NoteItem extends StatelessWidget {
             color: Colors.yellow,
             onTap: () => showDialog(
               context: context,
-              builder: (context) => _EditDialog(note: note),
+              builder: (context) => EditDialog(note: note),
             ).then(
               (value) => value != null
                   ? _showUpdateProgress(context, note, value)
@@ -101,74 +102,5 @@ class NoteItem extends StatelessWidget {
         falied: 'Cập nhật ghi chú thất bại',
       ),
     );
-  }
-}
-
-class _EditDialog extends StatefulWidget {
-  final Note note;
-  const _EditDialog({Key key, @required this.note}) : super(key: key);
-
-  @override
-  __EditDialogState createState() => __EditDialogState();
-}
-
-class __EditDialogState extends State<_EditDialog> {
-  final _controller = TextEditingController();
-  bool _canSave = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.text = widget.note.text;
-  }
-
-  @override
-  void setState(VoidCallback fn) {
-    if (!mounted) return;
-    super.setState(fn);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        'Sửa nội dung ghi chú',
-        style: TextStyle(
-          fontSize: 14,
-        ),
-      ),
-      content: TextField(
-        controller: _controller,
-        minLines: 1,
-        maxLines: 3,
-        decoration: InputDecoration(
-          filled: false,
-          border: UnderlineInputBorder(),
-        ),
-        onChanged: (value) => setState(() {
-          _checkCanSave(value);
-        }),
-      ),
-      actions: [
-        TextButton(
-          child: Text('Hủy'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          child: Text('Lưu'),
-          onPressed: _canSave
-              ? () {
-                  Navigator.of(context).pop(_controller.text);
-                }
-              : null,
-        )
-      ],
-    );
-  }
-
-  bool _checkCanSave(String text) {
-    return _canSave = text.isNotEmpty && text != widget.note.text;
   }
 }

@@ -58,43 +58,46 @@ class ListNode extends StatelessWidget {
         onRefresh: () => _onRefresh(noteList),
         onLoading: () => _onLoading(noteList),
         controller: _refreshController,
-        child: ImplicitlyAnimatedList<Note>(
-          physics: NeverScrollableScrollPhysics(),
-          items: notes,
-          areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
-          itemBuilder: (context, animation, item, i) {
-            return SizeFadeTransition(
-              sizeFraction: 0.7,
-              curve: Curves.easeInOut,
-              animation: animation,
-              child: ChangeNotifierProvider<Note>.value(
-                value: item,
-                child: NoteItem(),
-              ),
-            );
-          },
-          updateItemBuilder: (context, animation, item) {
-            return SizeFadeTransition(
-              sizeFraction: 0.7,
-              curve: Curves.easeInOut,
-              animation: animation,
-              child: ChangeNotifierProvider<Note>.value(
-                value: item,
-                child: NoteItem(),
-              ),
-            );
-          },
-          removeItemBuilder: (context, animation, item) {
-            return SizeFadeTransition(
-              sizeFraction: 0.7,
-              curve: Curves.easeInOut,
-              animation: animation,
-              child: ChangeNotifierProvider<Note>.value(
-                value: item,
-                child: NoteItem(),
-              ),
-            );
-          },
+        child: CustomScrollView(
+          slivers: [
+            SliverImplicitlyAnimatedList<Note>(
+              items: notes,
+              areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
+              itemBuilder: (context, animation, item, i) {
+                return SizeFadeTransition(
+                  sizeFraction: 0.7,
+                  curve: Curves.easeInOut,
+                  animation: animation,
+                  child: ChangeNotifierProvider<Note>.value(
+                    value: item,
+                    child: NoteItem(),
+                  ),
+                );
+              },
+              updateItemBuilder: (context, animation, item) {
+                return SizeFadeTransition(
+                  sizeFraction: 0.7,
+                  curve: Curves.easeInOut,
+                  animation: animation,
+                  child: ChangeNotifierProvider<Note>.value(
+                    value: item,
+                    child: NoteItem(),
+                  ),
+                );
+              },
+              removeItemBuilder: (context, animation, item) {
+                return SizeFadeTransition(
+                  sizeFraction: 0.7,
+                  curve: Curves.easeInOut,
+                  animation: animation,
+                  child: ChangeNotifierProvider<Note>.value(
+                    value: item,
+                    child: NoteItem(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

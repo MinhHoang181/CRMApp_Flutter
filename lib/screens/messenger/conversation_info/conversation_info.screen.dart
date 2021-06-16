@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'components/list_note/list_note.dart';
 import 'components/list_order.dart';
 import 'components/list_customer.dart';
+import 'package:cntt2_crm/screens/messenger/conversation_info/components/edit_dialog.dart';
+import 'package:cntt2_crm/components/progress_dialog.dart';
 
 //Models
 import 'package:cntt2_crm/models/Conversation.dart';
@@ -19,23 +21,53 @@ class ConversationInfoScreen extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: _conversationInfoAppbar(context),
-        body: TabBarView(
-          children: [
-            _listNote(context),
-            ListCustomer(),
-            ListOrder(),
-          ],
+        body: SafeArea(
+          child: TabBarView(
+            children: [
+              _listNote(context),
+              ListCustomer(),
+              ListOrder(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   AppBar _conversationInfoAppbar(BuildContext context) {
+    final noteList = Provider.of<Conversation>(context, listen: false).notes;
     return AppBar(
       title: Text('Thông tin hội thoại'),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: _tabBar(context),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.note_add_rounded),
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => EditDialog(),
+          ).then(
+            (value) => value != null
+                ? _showCreateProgress(context, noteList, value)
+                : null,
+          ),
+        )
+      ],
+    );
+  }
+
+  Future _showCreateProgress(
+      BuildContext context, NoteList noteList, String text) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => ProgressDialog(
+        future: noteList.createNote(text),
+        loading: 'Đang tạo ghi chú',
+        success: 'Tạo ghi chú thành công',
+        falied: 'Tạo ghi chú thất bại',
       ),
     );
   }
