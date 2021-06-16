@@ -27,13 +27,11 @@ String readTimestamp(int timestamp) {
 
 String readTimestampHHDM(int timestamp) {
   var now = DateTime.now();
+  now = DateTime(now.year, now.month, now.day);
   var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
   var diff = now.difference(date);
   var time = '';
-  if (diff.inSeconds <= 0 ||
-      diff.inSeconds > 0 && diff.inMinutes == 0 ||
-      diff.inMinutes > 0 && diff.inHours == 0 ||
-      diff.inHours > 0 && diff.inDays == 0) {
+  if (diff.isNegative) {
     time = DateFormat('HH:mm').format(date) + ', Hôm nay';
   } else {
     time = DateFormat('HH:mm').format(date) +

@@ -1,4 +1,4 @@
-import 'package:cntt2_crm/models/Order.dart';
+import 'package:cntt2_crm/models/Order/Order.dart';
 import 'package:cntt2_crm/models/list_model/OrderList.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +24,7 @@ class OrderAPI {
                 id,
                 conversation_id,
                 phone_number,
+                amount,
                 COD,
                 address,
                 city {
@@ -42,6 +43,19 @@ class OrderAPI {
                 date_created,
                 created_by_user {
                   display_name,
+                }
+                minetype,
+                cart_items {
+                  _id
+                  product_name
+                  product_id_ref
+                  variant_id
+                  qty
+                  price
+                  attributes {
+                    name
+                    value
+                  }
                 }
               }
             }
@@ -85,6 +99,7 @@ class OrderAPI {
                 id,
                 conversation_id,
                 phone_number,
+                amount,
                 COD,
                 address,
                 city {
@@ -103,6 +118,19 @@ class OrderAPI {
                 date_created,
                 created_by_user {
                   display_name,
+                }
+                minetype,
+                cart_items {
+                  _id
+                  product_name
+                  product_id_ref
+                  variant_id
+                  qty
+                  price
+                  attributes {
+                    name
+                    value
+                  }
                 }
               }
             }

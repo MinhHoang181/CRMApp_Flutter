@@ -1,10 +1,11 @@
+import 'package:cntt2_crm/models/Order/CartProduct.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Models
-import 'package:cntt2_crm/models/Order.dart';
+import 'package:cntt2_crm/models/Order/Order.dart';
 
 class OrderItem extends StatelessWidget {
   const OrderItem({Key key}) : super(key: key);
@@ -41,6 +42,10 @@ class OrderItem extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Spacer(),
+            Icon(order.type.icon),
+            SizedBox(width: Layouts.SPACING / 2),
+            Text(order.type.text),
           ],
         ),
       ),
@@ -51,6 +56,9 @@ class OrderItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(Layouts.SPACING / 2),
       child: Table(
+        columnWidths: const <int, TableColumnWidth>{
+          0: IntrinsicColumnWidth(flex: 0.4),
+        },
         children: [
           TableRow(
             children: [
@@ -67,11 +75,33 @@ class OrderItem extends StatelessWidget {
           TableRow(
             children: [
               Text('Tổng tiền:'),
-              Text(
-                NumberFormat('#,###').format(order.cod),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    NumberFormat('#,###').format(order.amount) + 'đ',
+                  ),
+                  Text(
+                    '(COD: ' + NumberFormat('#,###').format(order.cod) + 'đ)',
+                  ),
+                ],
               ),
             ],
-          )
+          ),
+          TableRow(
+            children: [
+              Text('Sản phẩm:'),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  order.products.length,
+                  (index) => _productText(
+                    order.products[index],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -90,6 +120,21 @@ class OrderItem extends StatelessWidget {
               color: order.status.color,
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _productText(CartProduct product) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            product.name + ' (' + product.attributesToString() + ')',
+          ),
+          Text('số lượng: ' + product.quantity.toString()),
+          Divider(height: 0),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cntt2_crm/models/Order.dart';
+import 'package:cntt2_crm/models/Order/Order.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/order_api.dart';
 import 'package:flutter/material.dart';
 

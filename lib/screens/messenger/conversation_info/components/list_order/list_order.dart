@@ -7,7 +7,7 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'components/order_item.dart';
 
 //Models
-import 'package:cntt2_crm/models/Order.dart';
+import 'package:cntt2_crm/models/Order/Order.dart';
 import 'package:cntt2_crm/models/list_model/OrderList.dart';
 
 class ListOrder extends StatelessWidget {
