@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 //Components
 import 'components/list_note/list_note.dart';
-import 'components/list_order.dart';
+import 'components/list_order/list_order.dart';
 import 'components/list_customer.dart';
 import 'package:cntt2_crm/screens/messenger/conversation_info/components/edit_dialog.dart';
 import 'package:cntt2_crm/components/progress_dialog.dart';
@@ -11,6 +11,7 @@ import 'package:cntt2_crm/components/progress_dialog.dart';
 //Models
 import 'package:cntt2_crm/models/Conversation.dart';
 import 'package:cntt2_crm/models/list_model/NoteList.dart';
+import 'package:cntt2_crm/models/list_model/OrderList.dart';
 
 class ConversationInfoScreen extends StatelessWidget {
   const ConversationInfoScreen({Key key}) : super(key: key);
@@ -26,7 +27,7 @@ class ConversationInfoScreen extends StatelessWidget {
             children: [
               _listNote(context),
               ListCustomer(),
-              ListOrder(),
+              _listOrder(context),
             ],
           ),
         ),
@@ -101,6 +102,26 @@ class ConversationInfoScreen extends StatelessWidget {
           return ChangeNotifierProvider<NoteList>.value(
             value: snapshot.data,
             child: ListNode(),
+          );
+        } else if (snapshot.hasError) {
+          print(snapshot.error);
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  Widget _listOrder(BuildContext context) {
+    final orders = Provider.of<Conversation>(context, listen: false).orders;
+    return FutureBuilder<OrderList>(
+      future: orders.fetchData(),
+      builder: (contex, snapshot) {
+        if (snapshot.hasData) {
+          return ChangeNotifierProvider<OrderList>.value(
+            value: snapshot.data,
+            child: ListOrder(),
           );
         } else if (snapshot.hasError) {
           print(snapshot.error);

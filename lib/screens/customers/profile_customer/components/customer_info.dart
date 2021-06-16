@@ -80,7 +80,7 @@ class CustomerInfo extends StatelessWidget {
             ),
           ),
           SizedBox(height: Layouts.SPACING / 2),
-          Text(address != null ? address.toString() : '---'),
+          Text(address != null ? address.fullAddress : '---'),
         ],
       ),
     );

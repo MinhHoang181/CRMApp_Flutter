@@ -7,6 +7,7 @@ import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
 
 import 'list_model/NoteList.dart';
+import 'list_model/OrderList.dart';
 
 class Participant {
   final String id;
@@ -34,6 +35,7 @@ class Conversation extends ChangeNotifier {
 
   final MessageList messages;
   final NoteList notes;
+  final OrderList orders;
 
   UnmodifiableListView get labelIds => UnmodifiableListView(_labelIds);
 
@@ -47,6 +49,7 @@ class Conversation extends ChangeNotifier {
     @required this.isReplied,
     @required this.messages,
     @required this.notes,
+    @required this.orders,
     @required List<String> labelIds,
     this.hasNode = false,
     this.hasOrder = false,
@@ -82,6 +85,7 @@ class Conversation extends ChangeNotifier {
       isReplied: json['is_replied'],
       messages: new MessageList(conversationId: json['_id']),
       notes: new NoteList(conversationId: json['_id']),
+      orders: new OrderList(conversationId: json['_id']),
       labelIds: labelIds,
       hasNode: json['has_node'] != null ? json['has_node'] : false,
       hasOrder: json['has_order'] != null ? json['has_order'] : false,

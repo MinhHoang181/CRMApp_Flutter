@@ -15,7 +15,7 @@ class MessageList extends ChangeNotifier {
   });
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
-  UnmodifiableListView get list => UnmodifiableListView(_list.values.toList());
+  List<ChatMessage> get list => _list.values.toList();
 
   Future<MessageList> fetchData() async {
     if (_list.isEmpty) {

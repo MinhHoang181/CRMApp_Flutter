@@ -9,7 +9,7 @@ class ConversationList extends ChangeNotifier {
   Map<String, Conversation> _list;
   PagingInfo pageInfo;
 
-  UnmodifiableListView get list => UnmodifiableListView(_list.values.toList());
+  List<Conversation> get list => _list.values.toList();
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
 
   bool add(Conversation conversation) {

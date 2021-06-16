@@ -9,7 +9,7 @@ class LabelList extends ChangeNotifier {
   Map<String, Label> _list;
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
-  UnmodifiableListView get list => UnmodifiableListView(_list.values.toList());
+  List<Label> get list => _list.values.toList();
 
   void _addList(List<Label> labels) {
     labels.forEach((label) {

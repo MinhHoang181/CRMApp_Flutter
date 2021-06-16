@@ -43,12 +43,12 @@ class NoteItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        note.dateUpdate == null
-                            ? note.dateCreate
-                            : note.dateUpdate,
-                      ),
-                      SizedBox(height: Layouts.SPACING / 2),
+                      if (note.dateUpdate != null) ...[
+                        Text(
+                          'Cập nhật: ' + note.dateUpdate,
+                        ),
+                        SizedBox(height: Layouts.SPACING),
+                      ],
                       Text(
                         note.createBy,
                         style: TextStyle(
@@ -58,6 +58,9 @@ class NoteItem extends StatelessWidget {
                               .color
                               .withOpacity(0.7),
                         ),
+                      ),
+                      Text(
+                        'Tạo: ' + note.dateCreate,
                       ),
                     ],
                   ),
