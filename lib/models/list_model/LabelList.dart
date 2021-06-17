@@ -38,9 +38,13 @@ class LabelList extends ChangeNotifier {
   }
 
   Future<bool> refreshLabels() async {
-    _list.clear();
-    _addList(await LabelAPI.fetchAllLabels());
-    return true;
+    final labels = await LabelAPI.fetchAllLabels();
+    if (labels != null) {
+      _list.clear();
+      _addList(labels);
+      return true;
+    }
+    return false;
   }
 
   Future<bool> createLabel(String name, String color) async {
@@ -62,8 +66,6 @@ class LabelList extends ChangeNotifier {
         _list.remove(id);
         notifyListeners();
         return true;
-      } else {
-        return false;
       }
     }
     return false;

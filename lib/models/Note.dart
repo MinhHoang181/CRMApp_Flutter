@@ -38,11 +38,11 @@ class Note extends ChangeNotifier {
       id: json['_id'],
       conversationId: json['t_1948069482022211'],
       createBy: json['created_by_user']['display_name'],
-      dateCreate: readTimestamp(json['date_created']),
+      dateCreate: readTimestampDM(json['date_created']),
       timeCreate: json['date_created'],
       text: json['text'],
       dateUpdate: json['date_updated'] != null
-          ? readTimestamp(json['date_updated'])
+          ? readTimestampDM(json['date_updated'])
           : null,
       timeUpdate: json['date_updated'],
     );

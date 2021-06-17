@@ -12,36 +12,49 @@ class ConversationList extends ChangeNotifier {
   List<Conversation> get list => _list.values.toList();
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
 
-  bool add(Conversation conversation) {
-    if (!_list.containsKey(conversation.id)) {
-      _list[conversation.id] = conversation;
-      notifyListeners();
-      return true;
-    }
-    return false;
+  void _addList(List<Conversation> conversations) {
+    conversations.forEach((conversation) {
+      if (!_list.containsKey(conversation.id)) {
+        _list[conversation.id] = conversation;
+      }
+    });
+    notifyListeners();
   }
 
   Future<ConversationList> fetchData() async {
     if (_list == null) {
       _list = new Map<String, Conversation>();
-      return ConversationAPI.fetchConversationsAllPages(start: 0, min: 20);
-    } else {
-      return this;
+      final data =
+          await ConversationAPI.fetchConversationsAllPages(start: 0, min: 20);
+      if (data != null) {
+        _addList(data.item1);
+        pageInfo = data.item2;
+      }
     }
+    return this;
   }
 
   Future<bool> refreshData() async {
     _list.clear();
-    await ConversationAPI.fetchConversationsAllPages(start: 0, min: 20);
-    return true;
+    final data =
+        await ConversationAPI.fetchConversationsAllPages(start: 0, min: 20);
+    if (data != null) {
+      _addList(data.item1);
+      pageInfo = data.item2;
+      return true;
+    }
+    return false;
   }
 
   Future<bool> loadMoreData() async {
     if (pageInfo.hasNextPage) {
-      final count = _list.length;
-      await ConversationAPI.fetchConversationsAllPages(
+      final data = await ConversationAPI.fetchConversationsAllPages(
           start: pageInfo.next, min: 20);
-      return count < _list.length ? true : false;
+      if (data != null) {
+        _addList(data.item1);
+        pageInfo = data.item2;
+        return true;
+      }
     }
     return false;
   }

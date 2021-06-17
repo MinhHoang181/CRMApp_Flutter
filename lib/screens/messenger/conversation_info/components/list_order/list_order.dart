@@ -15,7 +15,7 @@ class ListOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _listNode(context);
+    return _listOrder(context);
   }
 
   void _onRefresh(OrderList orderList) async {
@@ -32,9 +32,8 @@ class ListOrder extends StatelessWidget {
     }
   }
 
-  Widget _listNode(BuildContext context) {
-    final orderList = Provider.of<OrderList>(context);
-    List<Order> orders = orderList.list;
+  Widget _listOrder(BuildContext context) {
+    final orders = Provider.of<OrderList>(context);
     return Container(
       color: Theme.of(context).colorScheme.onBackground,
       margin: EdgeInsets.only(top: Layouts.SPACING / 2),
@@ -46,71 +45,24 @@ class ListOrder extends StatelessWidget {
           completeText: 'Đã làm mới danh sách đơn hàng',
           failedText: 'Làm mới danh sách đơn hàng thất bại',
         ),
-        enablePullUp: orderList.pageInfo.hasNextPage ? true : false,
+        enablePullUp: orders.pageInfo.hasNextPage ? true : false,
         footer: ClassicFooter(
           canLoadingText: 'Tải thêm đơn hàng',
           loadingText: 'Đang tải thêm đơn hàng',
           noDataText: 'Đã tải hết đơn hàng',
           failedText: 'Tải đơn hàng thất bại',
         ),
-        onRefresh: () => _onRefresh(orderList),
-        onLoading: () => _onLoading(orderList),
+        onRefresh: () => _onRefresh(orders),
+        onLoading: () => _onLoading(orders),
         controller: _refreshController,
         child: ListView.builder(
-            itemCount: orders.length,
+            itemCount: orders.map.length,
             itemBuilder: (context, index) {
               return ChangeNotifierProvider<Order>.value(
-                value: orders[index],
+                value: orders.map.values.elementAt(index),
                 child: OrderItem(),
               );
             }),
-      ),
-    );
-  }
-
-  Widget _headerList(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: Layouts.SPACING / 2,
-        vertical: Layouts.SPACING,
-      ),
-      child: Table(
-        children: [
-          TableRow(
-            children: [
-              Text(
-                'Mã đơn hàng',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Ngày tạo',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Tạo bởi',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Thành tiền',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Trạng thái',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

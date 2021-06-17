@@ -58,34 +58,6 @@ class ContactInfo extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: Layouts.SPACING / 2),
-              Row(
-                children: [
-                  Icon(
-                    Icons.email_rounded,
-                    color: customer.email != null
-                        ? Colors.blue
-                        : Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .color
-                            .withOpacity(0.5),
-                  ),
-                  SizedBox(width: Layouts.SPACING / 2),
-                  Text(
-                    customer.email != null ? customer.email : '---',
-                    style: TextStyle(
-                      color: customer.email != null
-                          ? Colors.blue
-                          : Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              .color
-                              .withOpacity(0.5),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ],

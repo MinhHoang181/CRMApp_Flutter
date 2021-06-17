@@ -10,12 +10,14 @@ import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
 import 'package:cntt2_crm/screens/messenger/conversation_info/conversation_info.screen.dart';
 
 //components
-import 'components/body.dart';
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
+import 'components/chatbox.dart';
+
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
+import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 
 class ChatboxScreen extends StatelessWidget {
   const ChatboxScreen({Key key}) : super(key: key);
@@ -25,20 +27,19 @@ class ChatboxScreen extends StatelessWidget {
     final conversation = Provider.of<Conversation>(context, listen: false);
     return Scaffold(
       appBar: _chatboxScreenAppBar(context),
-      body: Center(
-        child: FutureBuilder<MessageList>(
-            future: conversation.messages.fetchData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ChangeNotifierProvider<MessageList>.value(
-                  value: snapshot.data,
-                  child: Body(),
-                );
-              } else if (snapshot.hasError) {
-                print(snapshot.error);
-              }
-              return CircularProgressIndicator();
-            }),
+      body: FutureBuilder<MessageList>(
+        future: conversation.messages.fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ChangeNotifierProvider<MessageList>.value(
+              value: snapshot.data,
+              child: ChatBox(),
+            );
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          return Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
@@ -92,8 +93,12 @@ class ChatboxScreen extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider(
-                create: (context) => Cart(),
+              builder: (context) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<Cart>(create: (context) => Cart()),
+                  ChangeNotifierProvider<CustomerList>.value(
+                      value: conversation.customers),
+                ],
                 child: AddOrderScreen(),
               ),
             ),

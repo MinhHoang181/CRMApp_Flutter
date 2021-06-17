@@ -49,12 +49,12 @@ class _ListLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = Provider.of<LabelList>(context).list;
+    final labels = Provider.of<LabelList>(context);
     return ListView.separated(
       separatorBuilder: (context, index) => Divider(),
-      itemCount: labels.length,
+      itemCount: labels.map.length,
       itemBuilder: (context, index) => ChangeNotifierProvider<Label>.value(
-        value: labels[index],
+        value: labels.map.values.elementAt(index),
         child: _LabelItemSelect(),
       ),
     );

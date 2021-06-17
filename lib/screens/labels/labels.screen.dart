@@ -61,7 +61,7 @@ class _ListLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = Provider.of<LabelList>(context).list;
+    final labels = Provider.of<LabelList>(context);
     return SmartRefresher(
       header: ClassicHeader(
         idleText: 'Kéo xuống để làm mới danh sách nhãn',
@@ -74,8 +74,9 @@ class _ListLabel extends StatelessWidget {
       controller: _refreshController,
       child: ListView.separated(
         separatorBuilder: (context, index) => Divider(),
-        itemCount: labels.length,
-        itemBuilder: (context, index) => _buildRow(context, labels[index]),
+        itemCount: labels.map.length,
+        itemBuilder: (context, index) =>
+            _buildRow(context, labels.map.values.elementAt(index)),
       ),
     );
   }

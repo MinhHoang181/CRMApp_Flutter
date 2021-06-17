@@ -2,32 +2,57 @@ import 'dart:collection';
 
 import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:cntt2_crm/models/PagingInfo.dart';
-import 'package:cntt2_crm/providers/azsales_api/chat_service/querry_api.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/message_api.dart';
 import 'package:flutter/material.dart';
 
 class MessageList extends ChangeNotifier {
   final String conversationId;
-  final Map<String, ChatMessage> _list = new Map<String, ChatMessage>();
+  final String pageId;
+  Map<String, ChatMessage> _list;
   PagingInfo pageInfo;
 
   MessageList({
     @required this.conversationId,
+    @required this.pageId,
   });
+
+  void _addList(List<ChatMessage> messages) {
+    messages.forEach((message) {
+      if (!_list.containsKey(message.id)) {
+        _list[message.id] = message;
+      }
+    });
+    notifyListeners();
+  }
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
   List<ChatMessage> get list => _list.values.toList();
 
   Future<MessageList> fetchData() async {
-    if (_list.isEmpty) {
-      return fetchMessages(conversationId: conversationId, start: 0, min: 20);
+    if (_list == null) {
+      _list = new Map<String, ChatMessage>();
+      final data = await MessageAPI.fetchMessages(
+          conversationId: this.conversationId, pageId: this.pageId);
+      if (data != null) {
+        _addList(data.item1);
+        pageInfo = data.item2;
+      }
     }
     return this;
   }
 
-  void add(ChatMessage message) {
-    if (!_list.containsKey(message.id)) {
-      _list[message.id] = message;
-      notifyListeners();
+  Future<bool> loadMoreData() async {
+    if (pageInfo.hasNextPage) {
+      final data = await MessageAPI.fetchMessages(
+          conversationId: this.conversationId,
+          pageId: this.pageId,
+          start: pageInfo.next);
+      if (data != null) {
+        _addList(data.item1);
+        pageInfo = data.item2;
+        return true;
+      }
     }
+    return false;
   }
 }

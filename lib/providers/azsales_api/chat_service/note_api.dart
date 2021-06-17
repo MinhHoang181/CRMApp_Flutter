@@ -33,7 +33,7 @@ class NoteAPI {
             }
           }
         }
-      ''',
+        ''',
       ),
     );
     final GraphQLClient client = getChatClient();

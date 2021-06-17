@@ -1,10 +1,11 @@
+import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //Components
 import 'components/list_note/list_note.dart';
 import 'components/list_order/list_order.dart';
-import 'components/list_customer.dart';
+import 'components/list_customer/list_customer.dart';
 import 'package:cntt2_crm/screens/messenger/conversation_info/components/edit_dialog.dart';
 import 'package:cntt2_crm/components/progress_dialog.dart';
 
@@ -26,7 +27,7 @@ class ConversationInfoScreen extends StatelessWidget {
           child: TabBarView(
             children: [
               _listNote(context),
-              ListCustomer(),
+              _listCustomer(context),
               _listOrder(context),
             ],
           ),
@@ -102,6 +103,27 @@ class ConversationInfoScreen extends StatelessWidget {
           return ChangeNotifierProvider<NoteList>.value(
             value: snapshot.data,
             child: ListNode(),
+          );
+        } else if (snapshot.hasError) {
+          print(snapshot.error);
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  Widget _listCustomer(BuildContext context) {
+    final customers =
+        Provider.of<Conversation>(context, listen: false).customers;
+    return FutureBuilder<CustomerList>(
+      future: customers.fetchData(),
+      builder: (contex, snapshot) {
+        if (snapshot.hasData) {
+          return ChangeNotifierProvider<CustomerList>.value(
+            value: snapshot.data,
+            child: ListCustomer(),
           );
         } else if (snapshot.hasError) {
           print(snapshot.error);

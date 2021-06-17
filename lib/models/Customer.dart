@@ -2,22 +2,25 @@
 import 'package:cntt2_crm/models/Address.dart';
 import 'package:flutter/material.dart';
 
-class Customer {
+class Customer extends ChangeNotifier {
   String id;
   final String name;
   String phone;
-  String email;
   Address address;
-  String birthday;
-  String type;
 
   Customer({
-    this.id,
+    @required this.id,
     @required this.name,
-    this.phone,
-    this.email,
-    this.address,
-    this.birthday,
-    this.type,
+    @required this.phone,
+    @required this.address,
   });
+
+  factory Customer.fromJson(Map<String, dynamic> json) {
+    return Customer(
+      id: json['customer']['_id'],
+      name: json['customer']['customer_name'],
+      phone: json['customer']['phone_number'],
+      address: Address.fromJson(json),
+    );
+  }
 }

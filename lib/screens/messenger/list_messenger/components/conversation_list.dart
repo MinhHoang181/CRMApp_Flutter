@@ -49,10 +49,10 @@ class ListConversation extends StatelessWidget {
       onLoading: _onLoading,
       controller: _refreshController,
       child: ListView.builder(
-        itemCount: conversations.list.length,
+        itemCount: conversations.map.length,
         itemBuilder: (context, index) {
           return ChangeNotifierProvider<Conversation>.value(
-            value: conversations.list[index],
+            value: conversations.map.values.elementAt(index),
             child: ConversationItem(),
           );
         },

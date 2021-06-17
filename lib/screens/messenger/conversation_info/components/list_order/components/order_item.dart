@@ -102,6 +102,16 @@ class OrderItem extends StatelessWidget {
               ),
             ],
           ),
+          if (order.address.hasAddress) ...[
+            TableRow(
+              children: [
+                Text('Địa chỉ:'),
+                Text(
+                  order.address.fullAddress,
+                )
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -130,11 +140,19 @@ class OrderItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            product.name + ' (' + product.attributesToString() + ')',
+          Row(
+            children: [
+              Icon(
+                Icons.circle,
+                size: 5,
+              ),
+              SizedBox(width: Layouts.SPACING / 2),
+              Text(
+                product.name + ' (' + product.attributesToString() + ')',
+              ),
+            ],
           ),
           Text('số lượng: ' + product.quantity.toString()),
-          Divider(height: 0),
         ],
       ),
     );

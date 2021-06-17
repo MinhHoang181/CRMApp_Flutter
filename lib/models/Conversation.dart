@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:cntt2_crm/utilities/datetime.dart';
@@ -36,6 +37,7 @@ class Conversation extends ChangeNotifier {
   final MessageList messages;
   final NoteList notes;
   final OrderList orders;
+  final CustomerList customers;
 
   UnmodifiableListView get labelIds => UnmodifiableListView(_labelIds);
 
@@ -50,6 +52,7 @@ class Conversation extends ChangeNotifier {
     @required this.messages,
     @required this.notes,
     @required this.orders,
+    @required this.customers,
     @required List<String> labelIds,
     this.hasNode = false,
     this.hasOrder = false,
@@ -83,9 +86,11 @@ class Conversation extends ChangeNotifier {
       updatedTime: updatedTime,
       isRead: json['is_read'],
       isReplied: json['is_replied'],
-      messages: new MessageList(conversationId: json['_id']),
+      messages:
+          new MessageList(conversationId: json['_id'], pageId: json['page_id']),
       notes: new NoteList(conversationId: json['_id']),
       orders: new OrderList(conversationId: json['_id']),
+      customers: new CustomerList(conversationId: json['_id']),
       labelIds: labelIds,
       hasNode: json['has_node'] != null ? json['has_node'] : false,
       hasOrder: json['has_order'] != null ? json['has_order'] : false,
