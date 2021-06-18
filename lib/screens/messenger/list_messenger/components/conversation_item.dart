@@ -66,7 +66,7 @@ class ConversationItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   shape: BadgeShape.square,
                   badgeContent: Text(
-                    AzsalesData.instance.pages[conversation.pageId].name,
+                    AzsalesData.instance.pages.map[conversation.pageId].name,
                     style: TextStyle(
                       fontSize: 12,
                     ),

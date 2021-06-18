@@ -116,13 +116,13 @@ TextTheme textTheme(BuildContext context, Color color) {
           // normal text
           fontSize: 13,
           fontWeight: FontWeight.normal,
-          color: color.withOpacity(1),
+          color: color.withOpacity(0.5),
         ),
         bodyText2: TextStyle(
           // light text
           fontSize: 13,
           fontWeight: FontWeight.normal,
-          color: color.withOpacity(0.5),
+          color: color.withOpacity(1),
         ),
       );
 }

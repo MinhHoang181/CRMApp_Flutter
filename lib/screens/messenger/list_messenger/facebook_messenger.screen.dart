@@ -33,7 +33,7 @@ class _FacebookMessengerScreenState extends State<FacebookMessengerScreen> {
   AppBar _facebookMessengerScreenAppBar() {
     return AppBar(
       centerTitle: false,
-      title: Text('Tin nhắn'),
+      title: Text('Facebook'),
       actions: [
         PageSelect(),
         IconButton(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
-import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'package:cntt2_crm/constants/enum.dart';
 
 class PlatformInfo extends StatefulWidget {
@@ -113,7 +112,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
               ),
               Text(
                 'Tin nhắn',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
               _alertText(numberMess),
@@ -136,7 +135,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
               ),
               Text(
                 'Thông báo',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
               _alertText(numberNotifi),
@@ -155,7 +154,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
           children: [
             Text(
               '$numberAlert chưa đọc',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               width: Layouts.SPACING / 2,

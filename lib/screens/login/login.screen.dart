@@ -1,5 +1,4 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
-import 'package:cntt2_crm/providers/azsales_api/chat_service/querry_api.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:flutter_login/flutter_login.dart';
@@ -24,7 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       AzsalesData.instance.updateAzsalesAccount(user);
       AzsalesData.instance.azsalesAccessToken = user.accessToken;
-      return fetchAzsalesData().then((check) => null);
+      AzsalesData.instance.fetchData();
+      return null;
     });
   }
 

@@ -268,6 +268,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  image_stack:
+    dependency: "direct main"
+    description:
+      name: image_stack
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   implicitly_animated_reorderable_list:
     dependency: "direct main"
     description:
