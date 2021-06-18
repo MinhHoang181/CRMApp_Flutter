@@ -138,6 +138,39 @@ class ConversationAPI {
     return null;
   }
 
+  static Future<bool> notifyConversationChanged({
+    @required String conversationId,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          conversation {
+            notifyConversationChanged(conversationId: "$conversationId") {
+              success
+              error {
+                message
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+
+    final GraphQLClient client = getChatClient();
+    final response = await client.mutate(options);
+    if (response.hasException) {
+      print(response.exception.toString());
+      return false;
+    } else {
+      Map<String, dynamic> json =
+          response.data['conversation']['notifyConversationChanged'];
+      bool success = json['success'];
+      return success;
+    }
+  }
+
   //Subscriptions
   static void listenChangeConversation({
     @required ConversationList conversations,
