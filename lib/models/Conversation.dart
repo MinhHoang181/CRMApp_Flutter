@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
@@ -106,9 +104,22 @@ class Conversation extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateRead(bool isRead) {
+    this.isRead = isRead;
+    notifyListeners();
+  }
+
   void _updateLabels(List<String> labelIds) {
     this.labelIds = labelIds;
     notifyListeners();
+  }
+
+  Future<Conversation> fetchData() async {
+    messages.fetchData();
+    notes.fetchData();
+    orders.fetchData();
+    customers.fetchData();
+    return this;
   }
 
   Future<bool> setLabel(String labelId) async {

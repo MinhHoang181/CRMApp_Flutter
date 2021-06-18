@@ -61,8 +61,8 @@ class _PageSelectState extends State<PageSelect> {
     return Flexible(
       child: SingleChildScrollView(
         child: Wrap(
-          children: List.generate(pages.length,
-              (index) => _itemPage(pages.values.elementAt(index))),
+          children: List.generate(pages.map.length,
+              (index) => _itemPage(pages.map.values.elementAt(index))),
         ),
       ),
     );

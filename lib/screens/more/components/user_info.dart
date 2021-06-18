@@ -68,14 +68,14 @@ class _UserInfoState extends State<UserInfo> {
 
   Widget _listPage() {
     final pages = AzsalesData.instance.pages;
-    return pages.isEmpty
+    return pages.map.isEmpty
         ? _noConnectPage()
         : ListView(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             children: List.generate(
-              pages.length,
-              (index) => _itemPage(pages.values.elementAt(index)),
+              pages.map.length,
+              (index) => _itemPage(pages.map.values.elementAt(index)),
             ),
           );
   }

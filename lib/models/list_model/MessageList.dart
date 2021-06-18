@@ -28,9 +28,13 @@ class MessageList extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _add(ChatMessage message) {
+  bool add(ChatMessage message) {
     if (!_list.containsKey(message.id)) {
-      _list[message.id] = message;
+      final temp = <String, ChatMessage>{
+        message.id: message,
+      };
+      temp.addAll(_list);
+      _list = temp;
       notifyListeners();
       return true;
     }

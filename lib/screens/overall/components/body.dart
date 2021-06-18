@@ -17,7 +17,9 @@ class Body extends StatelessWidget {
             ShortCut(),
             PlatformInfo(),
             OrdersPending(),
-            SizedBox(height: 17,)
+            SizedBox(
+              height: 17,
+            )
           ],
         ),
       ),

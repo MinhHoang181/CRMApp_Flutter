@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
 import 'package:cntt2_crm/models/PagingInfo.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
@@ -174,7 +175,7 @@ class ConversationAPI {
   //Subscriptions
   static void listenChangeConversation({
     @required ConversationList conversations,
-  }) async {
+  }) {
     final SubscriptionOptions options = SubscriptionOptions(
       document: gql(
         '''
@@ -212,7 +213,96 @@ class ConversationAPI {
         return;
       }
       Map<String, dynamic> conversation = event.data['conversationChanged'];
-      conversations.listenUpdate(Conversation.fromJson(conversation));
+      if (conversation != null) {
+        conversations.listenUpdate(Conversation.fromJson(conversation));
+      }
+    });
+  }
+
+  static void listenIsReadChanged({
+    @required ConversationList conversations,
+  }) {
+    final SubscriptionOptions options = SubscriptionOptions(
+      document: gql(
+        '''
+        subscription {
+          conversationIsReadChanged {
+            _id,
+            is_read,
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getChatClient();
+    final subscription = client.subscribe(options);
+    subscription.listen((event) {
+      if (event.hasException) {
+        print(event.exception.toString());
+        return;
+      }
+      if (event.isLoading) {
+        return;
+      }
+      Map<String, dynamic> conversation =
+          event.data['conversationIsReadChanged'];
+      if (conversation != null) {
+        conversations.listenUpdateRead(
+            conversation['_id'], conversation['is_read']);
+      }
+    });
+  }
+
+  static void listenMessageChanged({
+    @required ConversationList conversationList,
+  }) {
+    final SubscriptionOptions options = SubscriptionOptions(
+      document: gql(
+        '''
+        subscription {
+          messageChanged {
+            _id
+            conversation_id,
+            message
+            from {
+              _id
+            }
+            created_time
+            attachments {
+              _id
+              mime_type
+              name
+              image_data {
+                url
+                preview_url
+                image_type
+                render_as_sticker
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getChatClient();
+    final subscription = client.subscribe(options);
+    subscription.listen((event) {
+      if (event.hasException) {
+        print(event.exception.toString());
+        return;
+      }
+      if (event.isLoading) {
+        return;
+      }
+      Map<String, dynamic> message = event.data['messageChanged'];
+      String conversationId = message['conversation_id'];
+      if (message != null) {
+        conversationList.listenReceiveMessage(
+          conversationId,
+          ChatMessage.fromJson(
+              message, conversationList.getPageId(conversationId)),
+        );
+      }
     });
   }
 }

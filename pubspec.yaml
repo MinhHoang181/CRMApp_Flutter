@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  image_stack: ^2.0.1
   smart_select: ^4.3.2
   card_settings: ^2.0.3
   implicitly_animated_reorderable_list: ^0.4.0

@@ -10,13 +10,13 @@ class OrdersPending extends StatefulWidget {
 class _OrdersPendingState extends State<OrdersPending> {
   int _orderCheck;
   int _orderPayment;
-  int _orderPack;
+  int _orderReturn;
   int _orderDelivery;
   @override
   Widget build(BuildContext context) {
     _orderCheck = 10;
     _orderPayment = 2;
-    _orderPack = 4;
+    _orderReturn = 4;
     _orderDelivery = 15;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,121 +52,131 @@ class _OrdersPendingState extends State<OrdersPending> {
           ),
           child: Column(
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 27,
-                    height: 27,
-                    child: Image(
-                      image: AssetImage(MyIcons.APPROVE),
-                    ),
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Text(
-                    'Chờ duyệt',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Spacer(),
-                  Text(
-                    '$_orderCheck',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ],
-              ),
-              SizedBox(height: Layouts.SPACING/2),
-              Divider(thickness: 0.5, indent: 0.5,),
-              SizedBox(height: Layouts.SPACING/2),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 27,
-                    height: 27,
-                    child: Image(
-                      image: AssetImage(MyIcons.MONEY),
-                    ),
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Text(
-                    'Chờ thanh toán',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Spacer(),
-                  Text(
-                    '$_orderPayment',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ],
-              ),
-              SizedBox(height: Layouts.SPACING/2),
-              Divider(thickness: 0.5, indent: 0.5,),
-              SizedBox(height: Layouts.SPACING/2),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 27,
-                    height: 27,
-                    child: Image(
-                      image: AssetImage(MyIcons.BOX),
-                    ),
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Text(
-                    'Chờ đóng gói',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Spacer(),
-                  Text(
-                    '$_orderPack',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ],
-              ),
-              SizedBox(height: Layouts.SPACING/2),
-              Divider(thickness: 0.5, indent: 0.5,),
-              SizedBox(height: Layouts.SPACING/2),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 27,
-                    height: 27,
-                    child: Image(
-                      image: AssetImage(MyIcons.DELIVERY),
-                    ),
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Text(
-                    'Chờ vận chuyển',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Spacer(),
-                  Text(
-                    '$_orderDelivery',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(width: Layouts.SPACING),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ],
-              ),
+              _orderWaitCheck(),
+              Divider(),
+              _orderWaitTranport(),
+              Divider(),
+              _orderWaitPayment(),
+              Divider(),
+              _orderWaitReturn(),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _orderWaitCheck() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 50,
+          height: 50,
+          child: Image(
+            image: AssetImage(MyIcons.APPROVE),
+          ),
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Text(
+          'Chờ duyệt',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Spacer(),
+        Text(
+          '$_orderCheck',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Icon(
+          Icons.arrow_forward_ios,
+          color: Theme.of(context).accentColor,
+        ),
+      ],
+    );
+  }
+
+  Widget _orderWaitTranport() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 50,
+          height: 50,
+          child: Image(
+            image: AssetImage(MyIcons.DELIVERY),
+          ),
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Text(
+          'Chờ vận chuyển',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Spacer(),
+        Text(
+          '$_orderDelivery',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Icon(
+          Icons.arrow_forward_ios,
+          color: Theme.of(context).accentColor,
+        ),
+      ],
+    );
+  }
+
+  Widget _orderWaitPayment() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 50,
+          height: 50,
+          child: Image(
+            image: AssetImage(MyIcons.MONEY),
+          ),
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Text(
+          'Chờ thanh toán',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Spacer(),
+        Text(
+          '$_orderPayment',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Icon(
+          Icons.arrow_forward_ios,
+          color: Theme.of(context).accentColor,
+        ),
+      ],
+    );
+  }
+
+  Widget _orderWaitReturn() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 50,
+          height: 50,
+          child: Image(
+            image: AssetImage(MyIcons.BOX),
+          ),
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Text(
+          'Chờ trả hàng',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Spacer(),
+        Text(
+          '$_orderReturn',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        SizedBox(width: Layouts.SPACING),
+        Icon(
+          Icons.arrow_forward_ios,
+          color: Theme.of(context).accentColor,
         ),
       ],
     );

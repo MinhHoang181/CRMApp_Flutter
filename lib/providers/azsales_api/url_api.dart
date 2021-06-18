@@ -5,7 +5,7 @@ final _chatWebSocketLink = WebSocketLink(
   'ws://chat-service-dev.azsales.vn/graphql',
   config: SocketClientConfig(
     autoReconnect: true,
-    inactivityTimeout: Duration(minutes: 30),
+    inactivityTimeout: const Duration(minutes: 30),
   ),
 );
 
