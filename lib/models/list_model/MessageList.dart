@@ -16,6 +16,9 @@ class MessageList extends ChangeNotifier {
     @required this.pageId,
   });
 
+  UnmodifiableMapView get map => UnmodifiableMapView(_list);
+  List<ChatMessage> get list => _list.values.toList();
+
   void _addList(List<ChatMessage> messages) {
     messages.forEach((message) {
       if (!_list.containsKey(message.id)) {
@@ -25,8 +28,14 @@ class MessageList extends ChangeNotifier {
     notifyListeners();
   }
 
-  UnmodifiableMapView get map => UnmodifiableMapView(_list);
-  List<ChatMessage> get list => _list.values.toList();
+  bool _add(ChatMessage message) {
+    if (!_list.containsKey(message.id)) {
+      _list[message.id] = message;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
 
   Future<MessageList> fetchData() async {
     if (_list == null) {
@@ -54,5 +63,9 @@ class MessageList extends ChangeNotifier {
       }
     }
     return false;
+  }
+
+  Future<bool> sendMessage() async {
+    return true;
   }
 }

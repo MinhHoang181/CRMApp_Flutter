@@ -21,9 +21,16 @@ class ConversationList extends ChangeNotifier {
     notifyListeners();
   }
 
+  void listenUpdate(Conversation conversation) {
+    if (_list.containsKey(conversation.id)) {
+      _list[conversation.id].update(conversation);
+    }
+  }
+
   Future<ConversationList> fetchData() async {
     if (_list == null) {
       _list = new Map<String, Conversation>();
+      ConversationAPI.listenChangeConversation(conversations: this);
       final data =
           await ConversationAPI.fetchConversationsAllPages(start: 0, min: 20);
       if (data != null) {

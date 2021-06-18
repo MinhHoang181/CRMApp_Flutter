@@ -29,7 +29,7 @@ class Conversation extends ChangeNotifier {
   String updatedTime;
   bool isRead;
   bool isReplied;
-  List<String> _labelIds;
+  List<String> labelIds;
   bool hasNode;
   bool hasOrder;
   bool hasPhone;
@@ -38,8 +38,6 @@ class Conversation extends ChangeNotifier {
   final NoteList notes;
   final OrderList orders;
   final CustomerList customers;
-
-  UnmodifiableListView get labelIds => UnmodifiableListView(_labelIds);
 
   Conversation({
     @required this.id,
@@ -53,13 +51,11 @@ class Conversation extends ChangeNotifier {
     @required this.notes,
     @required this.orders,
     @required this.customers,
-    @required List<String> labelIds,
+    @required this.labelIds,
     this.hasNode = false,
     this.hasOrder = false,
     this.hasPhone = false,
-  }) {
-    this._labelIds = labelIds;
-  }
+  });
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     List<dynamic> users = json['participants'];
@@ -98,8 +94,20 @@ class Conversation extends ChangeNotifier {
     );
   }
 
+  void update(Conversation conversation) {
+    this.snippet = conversation.snippet;
+    this.updatedTime = conversation.updatedTime;
+    this.isRead = conversation.isRead;
+    this.isReplied = conversation.isReplied;
+    this.labelIds = conversation.labelIds;
+    this.hasNode = conversation.hasNode;
+    this.hasOrder = conversation.hasOrder;
+    this.hasPhone = conversation.hasPhone;
+    notifyListeners();
+  }
+
   void _updateLabels(List<String> labelIds) {
-    this._labelIds = labelIds;
+    this.labelIds = labelIds;
     notifyListeners();
   }
 

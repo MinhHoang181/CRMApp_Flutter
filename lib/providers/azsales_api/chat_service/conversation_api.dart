@@ -1,5 +1,6 @@
 import 'package:cntt2_crm/models/Conversation.dart';
 import 'package:cntt2_crm/models/PagingInfo.dart';
+import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
@@ -135,5 +136,50 @@ class ConversationAPI {
       return conversationId == setLabel['_id'] ? labelIds : null;
     }
     return null;
+  }
+
+  //Subscriptions
+  static void listenChangeConversation({
+    @required ConversationList conversations,
+  }) async {
+    final SubscriptionOptions options = SubscriptionOptions(
+      document: gql(
+        '''
+        subscription {
+          conversationChanged {
+            _id
+            page_id
+            participants {
+              _id
+              name
+            }
+            snippet
+            is_read
+            is_replied
+            label_ids
+            page_id
+            updated_time
+            has_note
+            has_order
+            has_phone
+          }
+        }
+        ''',
+      ),
+    );
+
+    final GraphQLClient client = getChatClient();
+    final subscription = client.subscribe(options);
+    subscription.listen((event) {
+      if (event.hasException) {
+        print(event.exception.toString());
+        return;
+      }
+      if (event.isLoading) {
+        return;
+      }
+      Map<String, dynamic> conversation = event.data['conversationChanged'];
+      conversations.listenUpdate(Conversation.fromJson(conversation));
+    });
   }
 }
