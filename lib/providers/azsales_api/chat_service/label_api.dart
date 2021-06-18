@@ -25,13 +25,14 @@ class LabelAPI {
     if (response.hasException) {
       print(response.exception);
       return null;
+    } else {
+      List<dynamic> labelsJson = response.data['label']['labels'];
+      List<Label> labels = List.empty(growable: true);
+      labelsJson.forEach((label) {
+        labels.add(Label.fromJson(label));
+      });
+      return labels;
     }
-    List<dynamic> labelsJson = response.data['label']['labels'];
-    List<Label> labels = List.empty(growable: true);
-    labelsJson.forEach((label) {
-      labels.add(Label.fromJson(label));
-    });
-    return labels;
   }
 
   static Future<Label> createLabel({
@@ -61,9 +62,10 @@ class LabelAPI {
     if (response.hasException) {
       print(response.exception.toString());
       return null;
+    } else {
+      final json = response.data['label']['createLabel']['record'];
+      return Label.fromJson(json);
     }
-    final json = response.data['label']['createLabel']['record'];
-    return Label.fromJson(json);
   }
 
   static Future<Label> updateLabel({
@@ -94,9 +96,10 @@ class LabelAPI {
     if (response.hasException) {
       print(response.exception.toString());
       return null;
+    } else {
+      final json = response.data['label']['updateLabel']['record'];
+      return Label.fromJson(json);
     }
-    final json = response.data['label']['updateLabel']['record'];
-    return Label.fromJson(json);
   }
 
   static Future<bool> removeLabel({
@@ -123,8 +126,9 @@ class LabelAPI {
     if (response.hasException) {
       print(response.exception.toString());
       return false;
+    } else {
+      final id = response.data['label']['removeLabelById']['record']['_id'];
+      return labelId == id;
     }
-    final id = response.data['label']['removeLabelById']['record']['_id'];
-    return labelId == id;
   }
 }

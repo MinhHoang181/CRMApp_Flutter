@@ -7,10 +7,8 @@ import 'package:provider/provider.dart';
 //Components
 import 'no_product_order.dart';
 import 'total_cost_info.dart';
-import 'add_note.dart';
-import 'payment_method.dart';
-import 'customer_info.dart';
 import 'product_order.dart';
+import 'delivery_info.dart';
 
 //Screens
 import '../../select_product/select_product.screen.dart';
@@ -42,9 +40,7 @@ class Body extends StatelessWidget {
                   ProductOrder(),
                 ],
                 TotalCostInfo(),
-                CustomerInfo(),
-                PaymentMethod(),
-                AddNote(),
+                DeliveryInfo(),
               ],
             ),
           ),

@@ -89,12 +89,15 @@ class NoteList extends ChangeNotifier {
   }
 
   Future<bool> refreshData() async {
-    _list.clear();
     final data = await NoteAPI.fetchNotesOfConversation(
         conversationId: this.conversationId);
-    _addList(data.item1);
-    this.pageInfo = data.item2;
-    return true;
+    if (data != null) {
+      _list.clear();
+      _addList(data.item1);
+      this.pageInfo = data.item2;
+      return true;
+    }
+    return false;
   }
 
   Future<bool> loadMoreData() async {
@@ -104,9 +107,11 @@ class NoteList extends ChangeNotifier {
         conversationId: this.conversationId,
         page: pageInfo.currentPage + 1,
       );
-      _addList(data.item1);
-      this.pageInfo = data.item2;
-      return count < _list.length ? true : false;
+      if (data != null) {
+        _addList(data.item1);
+        this.pageInfo = data.item2;
+        return count < _list.length ? true : false;
+      }
     }
     return false;
   }

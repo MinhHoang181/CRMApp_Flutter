@@ -30,15 +30,22 @@ class ReplyList extends ChangeNotifier {
   Future<ReplyList> fetchData() async {
     if (_list == null) {
       _list = new Map<String, QuickReply>();
-      _addList(await ReplyAPI.fetchAllReplies());
+      final replies = await ReplyAPI.fetchAllReplies();
+      if (replies != null) {
+        _addList(replies);
+      }
     }
     return this;
   }
 
   Future<bool> refreshData() async {
-    _list.clear();
-    _addList(await ReplyAPI.fetchAllReplies());
-    return true;
+    final replies = await ReplyAPI.fetchAllReplies();
+    if (replies != null) {
+      _list.clear();
+      _addList(replies);
+      return true;
+    }
+    return false;
   }
 
   Future<bool> createReply(String shortcut, String text) async {

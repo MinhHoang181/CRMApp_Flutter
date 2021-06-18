@@ -82,7 +82,7 @@ class ConversationItem extends StatelessWidget {
                         ? 'Bạn: ' + conversation.snippet
                         : conversation.snippet,
                     style: conversation.isRead
-                        ? Theme.of(context).textTheme.bodyText2
+                        ? Theme.of(context).textTheme.bodyText1
                         : Theme.of(context).textTheme.bodyText1.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -155,15 +155,15 @@ class ConversationItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            if (!conversation.hasPhone) ...[
+            if (conversation.hasPhone) ...[
               Icon(Icons.phone_rounded),
               SizedBox(width: Layouts.SPACING / 4),
             ],
-            if (!conversation.hasNode) ...[
+            if (conversation.hasNote) ...[
               Icon(Icons.note_rounded),
               SizedBox(width: Layouts.SPACING / 4),
             ],
-            if (!conversation.hasOrder) ...[
+            if (conversation.hasOrder) ...[
               Icon(Icons.shopping_cart_sharp),
               SizedBox(width: Layouts.SPACING / 4),
             ],

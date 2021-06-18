@@ -40,16 +40,16 @@ class CustomerAPI {
     final GraphQLClient client = getPosClient();
     final response = await client.query(options);
 
-    List<Customer> customers = List.empty(growable: true);
-
     if (response.hasException) {
       print(response.exception);
+      return null;
     } else {
       List<dynamic> customersJson = response.data['order']['orders'];
+      List<Customer> customers = List.empty(growable: true);
       customersJson.forEach((customer) {
         customers.add(Customer.fromJson(customer));
       });
+      return customers;
     }
-    return customers;
   }
 }

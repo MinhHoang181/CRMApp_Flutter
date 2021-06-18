@@ -89,10 +89,9 @@ class ConversationAPI {
     final response = await client.mutate(options);
     if (response.hasException) {
       print(response.exception);
-      throw Exception('Lỗi set label cho hội thoại');
-    }
-    Map<String, dynamic> setLabel = response.data['conversation']['setLabel'];
-    if (setLabel != null) {
+      return null;
+    } else {
+      Map<String, dynamic> setLabel = response.data['conversation']['setLabel'];
       List<String> labelIds = List.empty(growable: true);
       List<dynamic> labels = setLabel['label_ids'];
       labels.forEach((label) {
@@ -100,7 +99,6 @@ class ConversationAPI {
       });
       return conversationId == setLabel['_id'] ? labelIds : null;
     }
-    return null;
   }
 
   static Future<List<String>> unsetLabel({
@@ -125,10 +123,10 @@ class ConversationAPI {
     final response = await client.mutate(options);
     if (response.hasException) {
       print(response.exception);
-      throw Exception('Lỗi unset label cho hội thoại');
-    }
-    Map<String, dynamic> setLabel = response.data['conversation']['unsetLabel'];
-    if (setLabel != null) {
+      return null;
+    } else {
+      Map<String, dynamic> setLabel =
+          response.data['conversation']['unsetLabel'];
       List<String> labelIds = List.empty(growable: true);
       List<dynamic> labels = setLabel['label_ids'];
       labels.forEach((label) {
@@ -136,7 +134,6 @@ class ConversationAPI {
       });
       return conversationId == setLabel['_id'] ? labelIds : null;
     }
-    return null;
   }
 
   static Future<bool> notifyConversationChanged({

@@ -24,14 +24,15 @@ class ReplyAPI {
     final response = await client.query(options);
     if (response.hasException) {
       print(response.exception);
-      throw Exception('Lỗi lấy tất cả câu trả lời mẫu');
+      return null;
+    } else {
+      List<dynamic> repliesJson = response.data['quickReply']['quickReplies'];
+      List<QuickReply> replies = List.empty(growable: true);
+      repliesJson.forEach((reply) {
+        replies.add(QuickReply.fromJson(reply));
+      });
+      return replies;
     }
-    List<dynamic> repliesJson = response.data['quickReply']['quickReplies'];
-    List<QuickReply> replies = List.empty(growable: true);
-    repliesJson.forEach((reply) {
-      replies.add(QuickReply.fromJson(reply));
-    });
-    return replies;
   }
 
   static Future<QuickReply> createReply({
@@ -60,9 +61,10 @@ class ReplyAPI {
     if (response.hasException) {
       print(response.exception);
       return null;
+    } else {
+      final json = response.data['quickReply']['createQuickReply']['record'];
+      return QuickReply.fromJson(json);
     }
-    final json = response.data['quickReply']['createQuickReply']['record'];
-    return QuickReply.fromJson(json);
   }
 
   static Future<QuickReply> updateReply({
@@ -92,8 +94,9 @@ class ReplyAPI {
     if (response.hasException) {
       print(response.exception);
       return null;
+    } else {
+      final json = response.data['quickReply']['updateQuickReply']['record'];
+      return QuickReply.fromJson(json);
     }
-    final json = response.data['quickReply']['updateQuickReply']['record'];
-    return QuickReply.fromJson(json);
   }
 }

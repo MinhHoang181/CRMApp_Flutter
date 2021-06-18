@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants/colors.dart' as Colors;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'constants/layouts.dart' as Layouts;
 
 ThemeData ligthThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
@@ -25,7 +26,7 @@ ThemeData ligthThemeData(BuildContext context) {
       selectedIconTheme: IconThemeData(color: Colors.PRIMARY),
       showUnselectedLabels: true,
     ),
-    inputDecorationTheme: inputDecorationTheme.copyWith(
+    inputDecorationTheme: inputDecorationTheme(context).copyWith(
       fillColor: Colors.ON_BACKGROUND_LIGHT_THEME,
     ),
     dividerTheme: DividerThemeData(
@@ -61,7 +62,7 @@ ThemeData darkThemeData(BuildContext context) {
       selectedIconTheme: IconThemeData(color: Colors.PRIMARY),
       showUnselectedLabels: true,
     ),
-    inputDecorationTheme: inputDecorationTheme.copyWith(
+    inputDecorationTheme: inputDecorationTheme(context).copyWith(
       fillColor: Colors.ON_BACKGROUND_DARK_THEME,
     ),
     dividerTheme: DividerThemeData(
@@ -77,13 +78,21 @@ ThemeData darkThemeData(BuildContext context) {
   );
 }
 
-final inputDecorationTheme = InputDecorationTheme(
-  filled: true,
-  border: OutlineInputBorder(
-    borderSide: BorderSide.none,
-    borderRadius: const BorderRadius.all(Radius.circular(50)),
-  ),
-);
+InputDecorationTheme inputDecorationTheme(BuildContext context) =>
+    InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: Layouts.SPACING / 2,
+        horizontal: Layouts.SPACING,
+      ),
+      filled: true,
+      border: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      hintStyle: Theme.of(context).textTheme.bodyText2,
+      labelStyle: Theme.of(context).textTheme.bodyText2,
+    );
 
 TextTheme textTheme(BuildContext context, Color color) {
   return Theme.of(context)

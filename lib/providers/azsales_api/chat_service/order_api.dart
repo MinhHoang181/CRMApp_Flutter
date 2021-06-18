@@ -68,15 +68,18 @@ class OrderAPI {
     final response = await client.query(options);
     if (response.hasException) {
       print(response.exception);
+      return null;
+    } else {
+      List<dynamic> ordersJson =
+          response.data['order']['ordersPaging']['items'];
+      List<Order> orders = List.empty(growable: true);
+      ordersJson.forEach((order) {
+        orders.add(Order.fromJson(order));
+      });
+      Map<String, dynamic> pageInfo =
+          response.data['order']['ordersPaging']['pageInfo'];
+      return Tuple2(orders, OrderPagingInfor.fromJson(pageInfo));
     }
-    List<dynamic> ordersJson = response.data['order']['ordersPaging']['items'];
-    List<Order> orders = List.empty(growable: true);
-    ordersJson.forEach((order) {
-      orders.add(Order.fromJson(order));
-    });
-    Map<String, dynamic> pageInfo =
-        response.data['order']['ordersPaging']['pageInfo'];
-    return Tuple2(orders, OrderPagingInfor.fromJson(pageInfo));
   }
 
   static Future<Tuple2<List<Order>, OrderPagingInfor>>
@@ -143,14 +146,17 @@ class OrderAPI {
     final response = await client.query(options);
     if (response.hasException) {
       print(response.exception);
+      return null;
+    } else {
+      List<dynamic> ordersJson =
+          response.data['order']['ordersPaging']['items'];
+      List<Order> orders = List.empty(growable: true);
+      ordersJson.forEach((order) {
+        orders.add(Order.fromJson(order));
+      });
+      Map<String, dynamic> pageInfo =
+          response.data['order']['ordersPaging']['pageInfo'];
+      return Tuple2(orders, OrderPagingInfor.fromJson(pageInfo));
     }
-    List<dynamic> ordersJson = response.data['order']['ordersPaging']['items'];
-    List<Order> orders = List.empty(growable: true);
-    ordersJson.forEach((order) {
-      orders.add(Order.fromJson(order));
-    });
-    Map<String, dynamic> pageInfo =
-        response.data['order']['ordersPaging']['pageInfo'];
-    return Tuple2(orders, OrderPagingInfor.fromJson(pageInfo));
   }
 }

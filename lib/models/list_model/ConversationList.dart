@@ -66,10 +66,10 @@ class ConversationList extends ChangeNotifier {
   }
 
   Future<bool> refreshData() async {
-    _list.clear();
     final data =
         await ConversationAPI.fetchConversationsAllPages(start: 0, min: 20);
     if (data != null) {
+      _list.clear();
       _addList(data.item1);
       pageInfo = data.item2;
       return true;

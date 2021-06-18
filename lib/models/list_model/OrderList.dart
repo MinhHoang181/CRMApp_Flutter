@@ -54,14 +54,17 @@ class OrderList extends ChangeNotifier {
   }
 
   Future<bool> refreshData() async {
-    _list.clear();
     final data = this.conversationId != null
         ? await OrderAPI.fetchOrdersOfConversation(
             conversationId: this.conversationId)
         : await OrderAPI.fetchOrders();
-    _addList(data.item1);
-    this.pageInfo = data.item2;
-    return true;
+    if (data != null) {
+      _list.clear();
+      _addList(data.item1);
+      this.pageInfo = data.item2;
+      return true;
+    }
+    return false;
   }
 
   Future<bool> loadMoreData() async {
@@ -75,9 +78,11 @@ class OrderList extends ChangeNotifier {
           : await OrderAPI.fetchOrders(
               page: pageInfo.currentPage + 1,
             );
-      _addList(data.item1);
-      this.pageInfo = data.item2;
-      return count < _list.length ? true : false;
+      if (data != null) {
+        _addList(data.item1);
+        this.pageInfo = data.item2;
+        return count < _list.length ? true : false;
+      }
     }
     return false;
   }

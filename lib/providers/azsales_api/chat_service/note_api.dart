@@ -40,15 +40,17 @@ class NoteAPI {
     final response = await client.query(options);
     if (response.hasException) {
       print(response.exception);
+      return null;
+    } else {
+      List<dynamic> notesJson = response.data['note']['notesPaging']['items'];
+      List<Note> notes = List.empty(growable: true);
+      notesJson.forEach((note) {
+        notes.add(Note.fromJson(note));
+      });
+      Map<String, dynamic> pageInfo =
+          response.data['note']['notesPaging']['pageInfo'];
+      return Tuple2(notes, NotePagingInfo.fromJson(pageInfo));
     }
-    List<dynamic> notesJson = response.data['note']['notesPaging']['items'];
-    List<Note> notes = List.empty(growable: true);
-    notesJson.forEach((note) {
-      notes.add(Note.fromJson(note));
-    });
-    Map<String, dynamic> pageInfo =
-        response.data['note']['notesPaging']['pageInfo'];
-    return Tuple2(notes, NotePagingInfo.fromJson(pageInfo));
   }
 
   static Future<Note> updateNote({
@@ -86,9 +88,10 @@ class NoteAPI {
     if (response.hasException) {
       print(response.exception.toString());
       return null;
+    } else {
+      final json = response.data['note']['updateNote']['record'];
+      return Note.fromJson(json);
     }
-    final json = response.data['note']['updateNote']['record'];
-    return Note.fromJson(json);
   }
 
   static Future<Note> createNote({
@@ -123,8 +126,9 @@ class NoteAPI {
     if (response.hasException) {
       print(response.exception.toString());
       return null;
+    } else {
+      final json = response.data['note']['createNote']['record'];
+      return Note.fromJson(json);
     }
-    final json = response.data['note']['createNote']['record'];
-    return Note.fromJson(json);
   }
 }

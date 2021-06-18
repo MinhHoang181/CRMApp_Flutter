@@ -28,7 +28,7 @@ class Conversation extends ChangeNotifier {
   bool isRead;
   bool isReplied;
   List<String> labelIds;
-  bool hasNode;
+  bool hasNote;
   bool hasOrder;
   bool hasPhone;
 
@@ -50,7 +50,7 @@ class Conversation extends ChangeNotifier {
     @required this.orders,
     @required this.customers,
     @required this.labelIds,
-    this.hasNode = false,
+    this.hasNote = false,
     this.hasOrder = false,
     this.hasPhone = false,
   });
@@ -86,7 +86,7 @@ class Conversation extends ChangeNotifier {
       orders: new OrderList(conversationId: json['_id']),
       customers: new CustomerList(conversationId: json['_id']),
       labelIds: labelIds,
-      hasNode: json['has_node'] != null ? json['has_node'] : false,
+      hasNote: json['has_note'] != null ? json['has_note'] : false,
       hasOrder: json['has_order'] != null ? json['has_order'] : false,
       hasPhone: json['has_phone'] != null ? json['has_phone'] : false,
     );
@@ -98,9 +98,9 @@ class Conversation extends ChangeNotifier {
     this.isRead = conversation.isRead;
     this.isReplied = conversation.isReplied;
     this.labelIds = conversation.labelIds;
-    this.hasNode = conversation.hasNode;
-    this.hasOrder = conversation.hasOrder;
-    this.hasPhone = conversation.hasPhone;
+    if (conversation.hasNote != null) this.hasNote = conversation.hasNote;
+    if (conversation.hasOrder != null) this.hasOrder = conversation.hasOrder;
+    if (conversation.hasPhone != null) this.hasPhone = conversation.hasPhone;
     notifyListeners();
   }
 
@@ -116,8 +116,14 @@ class Conversation extends ChangeNotifier {
 
   Future<Conversation> fetchData() async {
     messages.fetchData();
-    notes.fetchData();
-    orders.fetchData();
+    notes.fetchData().then((value) {
+      this.hasNote = value.map.isNotEmpty;
+      notifyListeners();
+    });
+    orders.fetchData().then((value) {
+      this.hasOrder = value.map.isNotEmpty;
+      notifyListeners();
+    });
     customers.fetchData();
     return this;
   }
@@ -140,7 +146,6 @@ class Conversation extends ChangeNotifier {
     List<String> labelIds = await ConversationAPI.unsetLabel(
         conversationId: this.id, labelId: labelId);
     if (labelIds != null) {
-      //_updateLabels(labelIds);
       bool success = await ConversationAPI.notifyConversationChanged(
           conversationId: this.id);
       if (!success) {

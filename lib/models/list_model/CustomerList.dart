@@ -53,12 +53,15 @@ class CustomerList extends ChangeNotifier {
   }
 
   Future<bool> refreshData() async {
-    _list.clear();
     if (conversationId != null) {
       final customers = await CustomerAPI.fetchAllCustomersOfConversation(
           conversationId: this.conversationId);
-      _addList(customers);
+      if (customers != null) {
+        _list.clear();
+        _addList(customers);
+        return true;
+      }
     }
-    return true;
+    return false;
   }
 }
