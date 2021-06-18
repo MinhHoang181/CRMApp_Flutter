@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,14 @@ class Body extends StatelessWidget {
       ),
       padding: EdgeInsets.all(Layouts.SPACING),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withOpacity(0.5),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+          Theme.of(context).primaryColor.withOpacity(0.5),
+          Theme.of(context).primaryColor.withOpacity(1),
+          ],
+        ),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -51,18 +59,17 @@ class Body extends StatelessWidget {
           width: double.infinity,
           child: Column(
             children: [
-              Icon(
-                Icons.add_shopping_cart_rounded,
-                color: Colors.white,
-                size: 60,
+              SizedBox(
+                width: 90,
+                height: 90,
+                child: Image(
+                  image: AssetImage(MyIcons.ADD_NEW_ORDER),
+                ),
               ),
-              SizedBox(height: Layouts.SPACING / 2),
+              SizedBox(height: Layouts.SPACING / 3),
               Text(
                 'Tạo đơn hàng mới',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: Fonts.SIZE_TEXT_LARGE),
+                style: Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.white)
               ),
             ],
           ),

@@ -8,4 +8,5 @@ const String BOX = 'assets/icons/box-icon.png';
 const String ALL_BILL = 'assets/icons/all-bill-icon.png';
 const String ADD_BILL = 'assets/icons/add-bill-icon.png';
 const String MESSAGE_ALT = 'assets/icons/message-icon-2.png';
+const String ADD_NEW_ORDER = 'assets/icons/add-new-order-icon.png';
 const String PAY_BILL = 'assets/icons/pay-bill-icon.png';

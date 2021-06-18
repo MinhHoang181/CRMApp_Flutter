@@ -34,6 +34,7 @@ ThemeData ligthThemeData(BuildContext context) {
       thickness: 0.3,
     ),
     //Color
+    backgroundColor :Colors.PRIMARY,
     accentColor: Colors.TEXT_BLACK,
     primaryColor: Colors.PRIMARY,
     scaffoldBackgroundColor: Colors.BACKGROUND_LIGHT_THEME,
@@ -116,7 +117,7 @@ TextTheme textTheme(BuildContext context, Color color) {
           // normal text
           fontSize: 13,
           fontWeight: FontWeight.normal,
-          color: color.withOpacity(1),
+          color: color.withOpacity(0.9),
         ),
         bodyText2: TextStyle(
           // light text

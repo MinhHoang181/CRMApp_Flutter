@@ -78,105 +78,92 @@ class _OrdersPendingState extends State<OrdersPending> {
                   ),
                 ],
               ),
-              Divider(),
-              ListTile(
-                leading: SizedBox(
-                  width: 35,
-                  height: 35,
-                  child: Image(
-                    image: AssetImage(MyIcons.MONEY),
+              SizedBox(height: Layouts.SPACING/2),
+              Divider(thickness: 0.5, indent: 0.5,),
+              SizedBox(height: Layouts.SPACING/2),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 27,
+                    height: 27,
+                    child: Image(
+                      image: AssetImage(MyIcons.MONEY),
+                    ),
                   ),
-                ),
-                title: Row(
-                  children: [
-                    Text(
-                      'Chờ thanh toán',
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    Spacer(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        '$_orderPayment',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).accentColor,
-                ),
+                  SizedBox(width: Layouts.SPACING),
+                  Text(
+                    'Chờ thanh toán',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Spacer(),
+                  Text(
+                    '$_orderPayment',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  SizedBox(width: Layouts.SPACING),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).accentColor,
+                  ),
+                ],
               ),
-              Divider(),
-              ListTile(
-                leading: SizedBox(
-                  width: 35,
-                  height: 35,
-                  child: Image(
-                    image: AssetImage(MyIcons.BOX),
+              SizedBox(height: Layouts.SPACING/2),
+              Divider(thickness: 0.5, indent: 0.5,),
+              SizedBox(height: Layouts.SPACING/2),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 27,
+                    height: 27,
+                    child: Image(
+                      image: AssetImage(MyIcons.BOX),
+                    ),
                   ),
-                ),
-                title: Row(
-                  children: [
-                    Text(
-                      'Chờ đóng gói',
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    Spacer(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        '$_orderPack',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                trailing: Icon(Icons.arrow_forward_ios,
-                    color: Theme.of(context).accentColor),
+                  SizedBox(width: Layouts.SPACING),
+                  Text(
+                    'Chờ đóng gói',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Spacer(),
+                  Text(
+                    '$_orderPack',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  SizedBox(width: Layouts.SPACING),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).accentColor,
+                  ),
+                ],
               ),
-              Divider(),
-              ListTile(
-                leading: SizedBox(
-                  width: 35,
-                  height: 35,
-                  child: Image(
-                    image: AssetImage(MyIcons.DELIVERY),
+              SizedBox(height: Layouts.SPACING/2),
+              Divider(thickness: 0.5, indent: 0.5,),
+              SizedBox(height: Layouts.SPACING/2),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 27,
+                    height: 27,
+                    child: Image(
+                      image: AssetImage(MyIcons.DELIVERY),
+                    ),
                   ),
-                ),
-                title: Row(
-                  children: [
-                    Text(
-                      'Chờ vận chuyển',
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    Spacer(),
-                    Align(
-                      child: Text(
-                        '$_orderDelivery',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      alignment: Alignment.centerRight,
-                    ),
-                  ],
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).accentColor,
-                ),
+                  SizedBox(width: Layouts.SPACING),
+                  Text(
+                    'Chờ vận chuyển',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Spacer(),
+                  Text(
+                    '$_orderDelivery',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  SizedBox(width: Layouts.SPACING),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).accentColor,
+                  ),
+                ],
               ),
             ],
           ),
