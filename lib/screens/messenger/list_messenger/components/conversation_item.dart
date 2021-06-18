@@ -38,11 +38,18 @@ class ConversationItem extends StatelessWidget {
               children: [
                 Text(
                   conversation.participants[0].name,
-                  style: TextStyle(
-                    fontWeight: conversation.isRead
-                        ? FontWeight.normal
-                        : FontWeight.bold,
-                  ),
+                  style: conversation.isRead
+                      ? Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText1.fontSize +
+                                    2,
+                          )
+                      : Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText1.fontSize +
+                                    2,
+                            fontWeight: FontWeight.bold,
+                          ),
                 ),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
@@ -67,7 +74,6 @@ class ConversationItem extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: Layouts.SPACING / 2),
             Row(
               children: [
                 Expanded(
@@ -75,18 +81,11 @@ class ConversationItem extends StatelessWidget {
                     conversation.isReplied
                         ? 'Bạn: ' + conversation.snippet
                         : conversation.snippet,
-                    style: TextStyle(
-                      fontWeight: conversation.isRead
-                          ? FontWeight.normal
-                          : FontWeight.bold,
-                      color: conversation.isRead
-                          ? Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              .color
-                              .withOpacity(0.5)
-                          : Theme.of(context).textTheme.bodyText1.color,
-                    ),
+                    style: conversation.isRead
+                        ? Theme.of(context).textTheme.bodyText2
+                        : Theme.of(context).textTheme.bodyText1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -103,7 +102,10 @@ class ConversationItem extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChatboxScreen(conversation: conversation),
+          builder: (context) => ChangeNotifierProvider.value(
+            value: conversation,
+            child: ChatboxScreen(),
+          ),
         ),
       ),
     );

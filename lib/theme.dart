@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants/colors.dart' as Colors;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+
 ThemeData ligthThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
     //Theme
@@ -91,34 +92,37 @@ TextTheme textTheme(BuildContext context, Color color) {
         bodyColor: color,
       )
       .copyWith(
-          headline1 : TextStyle(   // Header
-            fontSize: 27,
-            fontWeight: FontWeight.w400,
-          ),
-          headline2 : TextStyle(   // Header
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
-          ),
-          subtitle1: TextStyle(
-            fontSize: Fonts.SIZE_TEXT_LARGE,
-            fontWeight: FontWeight.bold,
-            color: color.withOpacity(1),
-          ),
-          subtitle2: TextStyle(
-            fontSize: Fonts.SIZE_TEXT_LARGE,
-            fontWeight: FontWeight.bold,
-            color: color.withOpacity(0.5),
-          ),
-          bodyText1: TextStyle(    // normal text
+        headline1: TextStyle(
+          // Header
+          fontSize: 27,
+          fontWeight: FontWeight.w400,
+        ),
+        headline2: TextStyle(
+          // Header
+          fontSize: 20,
+          fontWeight: FontWeight.w400,
+        ),
+        subtitle1: TextStyle(
+          fontSize: Fonts.SIZE_TEXT_LARGE,
+          fontWeight: FontWeight.bold,
+          color: color.withOpacity(1),
+        ),
+        subtitle2: TextStyle(
+          fontSize: Fonts.SIZE_TEXT_LARGE,
+          fontWeight: FontWeight.bold,
+          color: color.withOpacity(0.5),
+        ),
+        bodyText1: TextStyle(
+          // normal text
           fontSize: 13,
           fontWeight: FontWeight.normal,
-            color: color.withOpacity(1),
-          ),
-          bodyText2: TextStyle(    // light text
-            fontSize: 13,
-            fontWeight: FontWeight.normal,
-            color: color.withOpacity(0.5),
-          ),
-  );
-
+          color: color.withOpacity(1),
+        ),
+        bodyText2: TextStyle(
+          // light text
+          fontSize: 13,
+          fontWeight: FontWeight.normal,
+          color: color.withOpacity(0.5),
+        ),
+      );
 }

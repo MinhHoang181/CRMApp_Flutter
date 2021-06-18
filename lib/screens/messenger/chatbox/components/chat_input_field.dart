@@ -5,6 +5,10 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/screens/quick_replies/replies.screen.dart';
 
 class ChatInputField extends StatefulWidget {
+  final ScrollController scrollController;
+
+  const ChatInputField({Key key, @required this.scrollController})
+      : super(key: key);
   @override
   _ChatInputFieldState createState() => _ChatInputFieldState();
 }
@@ -18,15 +22,6 @@ class _ChatInputFieldState extends State<ChatInputField> {
         padding: EdgeInsets.symmetric(
           vertical: Layouts.SPACING / 2,
         ),
-        decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, -1),
-                blurRadius: 1,
-                color: Theme.of(context).shadowColor,
-              ),
-            ]),
         child: Row(
           children: [
             IconButton(
@@ -35,32 +30,35 @@ class _ChatInputFieldState extends State<ChatInputField> {
             ),
             IconButton(
               icon: Icon(Icons.chat_rounded),
-              onPressed: () =>
-                  _navigateToSelectAnswerScreenAndReceiveAnswer(context),
+              onPressed: () => _selectAnswer(context),
             ),
             Expanded(
               child: TextField(
+                maxLines: 6,
+                minLines: 1,
                 controller: _inputController,
+                textInputAction: TextInputAction.newline,
                 decoration: InputDecoration(
                   hintText: 'Nhập nội dung',
-                  suffixIcon: InkWell(
-                    child: Icon(Icons.send),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
+                onEditingComplete: () => _sendMessage(_inputController.text),
               ),
             ),
             IconButton(
-              icon: Icon(Icons.more_vert_rounded),
-              onPressed: () => {},
-            )
+              icon: Icon(Icons.send),
+              onPressed: () => _sendMessage(_inputController.text),
+            ),
           ],
         ),
       ),
     );
   }
 
-  void _navigateToSelectAnswerScreenAndReceiveAnswer(
-      BuildContext context) async {
+  void _selectAnswer(BuildContext context) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -68,5 +66,15 @@ class _ChatInputFieldState extends State<ChatInputField> {
       ),
     );
     _inputController.text = result;
+  }
+
+  void _sendMessage(String text) {
+    if (text.isNotEmpty) {
+      print(text);
+      setState(() {
+        widget.scrollController.jumpTo(0.0);
+        _inputController.clear();
+      });
+    }
   }
 }

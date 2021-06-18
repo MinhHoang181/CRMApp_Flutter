@@ -52,7 +52,7 @@ class _ListReply extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final replies = Provider.of<ReplyList>(context).list;
+    final replies = Provider.of<ReplyList>(context);
     return SmartRefresher(
       header: ClassicHeader(
         idleText: 'Kéo xuống để làm mới danh sách tin nhắn mẫu',
@@ -65,10 +65,10 @@ class _ListReply extends StatelessWidget {
       controller: _refreshController,
       child: ListView.separated(
         separatorBuilder: (context, index) => Divider(),
-        itemCount: replies.length,
+        itemCount: replies.map.length,
         itemBuilder: (context, index) =>
             ChangeNotifierProvider<QuickReply>.value(
-          value: replies[index],
+          value: replies.map.values.elementAt(index),
           child: ReplyItem(),
         ),
       ),

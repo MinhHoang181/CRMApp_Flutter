@@ -5,14 +5,19 @@ import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 //Components
 import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 
-//Models
-import 'package:cntt2_crm/models/Customer.dart';
-import 'package:provider/provider.dart';
+class CustomerInfo extends StatelessWidget {
+  const CustomerInfo({Key key}) : super(key: key);
 
-class ContactInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final customer = Provider.of<Customer>(context);
+    bool check = false;
+    return check ? _customerInfo(context) : _noCustomerInfo(context);
+  }
+
+  Widget _customerInfo(BuildContext context) {
+    String name = 'Nguyen van A';
+    String phone;
+    String address;
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       padding: EdgeInsets.all(Layouts.SPACING),
@@ -23,10 +28,11 @@ class ContactInfo extends StatelessWidget {
           ),
           SizedBox(width: Layouts.SPACING),
           Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                customer.name,
+                name,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: Fonts.SIZE_TEXT_MEDIUM,
@@ -36,7 +42,7 @@ class ContactInfo extends StatelessWidget {
               Row(
                 children: [
                   Icon(Icons.phone_rounded,
-                      color: customer.phone != null
+                      color: phone != null
                           ? Colors.blue
                           : Theme.of(context)
                               .textTheme
@@ -45,9 +51,37 @@ class ContactInfo extends StatelessWidget {
                               .withOpacity(0.5)),
                   SizedBox(width: Layouts.SPACING / 2),
                   Text(
-                    customer.phone != null ? customer.phone : '---',
+                    phone != null ? phone : '---',
                     style: TextStyle(
-                      color: customer.phone != null
+                      color: phone != null
+                          ? Colors.blue
+                          : Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              .color
+                              .withOpacity(0.5),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: Layouts.SPACING / 2),
+              Row(
+                children: [
+                  Icon(
+                    Icons.home_rounded,
+                    color: address != null
+                        ? Colors.blue
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            .color
+                            .withOpacity(0.5),
+                  ),
+                  SizedBox(width: Layouts.SPACING / 2),
+                  Text(
+                    address != null ? address : '---',
+                    style: TextStyle(
+                      color: address != null
                           ? Colors.blue
                           : Theme.of(context)
                               .textTheme
@@ -61,6 +95,16 @@ class ContactInfo extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _noCustomerInfo(BuildContext context) {
+    return Container(
+      height: 110,
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Center(
+        child: Text('Chưa tạo khách hàng'),
       ),
     );
   }
