@@ -115,8 +115,11 @@ class Conversation extends ChangeNotifier {
     List<String> labelIds = await ConversationAPI.setLabel(
         conversationId: this.id, labelId: labelId);
     if (labelIds != null) {
-      //_updateLabels(labelIds);
-      ConversationAPI.notifyConversationChanged(conversationId: this.id);
+      bool success = await ConversationAPI.notifyConversationChanged(
+          conversationId: this.id);
+      if (!success) {
+        _updateLabels(labelIds);
+      }
       return true;
     }
     return false;
@@ -127,7 +130,11 @@ class Conversation extends ChangeNotifier {
         conversationId: this.id, labelId: labelId);
     if (labelIds != null) {
       //_updateLabels(labelIds);
-      ConversationAPI.notifyConversationChanged(conversationId: this.id);
+      bool success = await ConversationAPI.notifyConversationChanged(
+          conversationId: this.id);
+      if (!success) {
+        _updateLabels(labelIds);
+      }
       return true;
     }
     return false;
