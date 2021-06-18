@@ -115,7 +115,8 @@ class Conversation extends ChangeNotifier {
     List<String> labelIds = await ConversationAPI.setLabel(
         conversationId: this.id, labelId: labelId);
     if (labelIds != null) {
-      _updateLabels(labelIds);
+      //_updateLabels(labelIds);
+      ConversationAPI.notifyConversationChanged(conversationId: this.id);
       return true;
     }
     return false;
@@ -125,7 +126,8 @@ class Conversation extends ChangeNotifier {
     List<String> labelIds = await ConversationAPI.unsetLabel(
         conversationId: this.id, labelId: labelId);
     if (labelIds != null) {
-      _updateLabels(labelIds);
+      //_updateLabels(labelIds);
+      ConversationAPI.notifyConversationChanged(conversationId: this.id);
       return true;
     }
     return false;
