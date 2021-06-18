@@ -13,28 +13,47 @@ class PlatformInfo extends StatefulWidget {
 class _PlatformInfoState extends State<PlatformInfo> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-      padding: EdgeInsets.all(Layouts.SPACING),
-      margin: EdgeInsets.all(Layouts.SPACING),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 3,
-            offset: Offset(0, 3),
-            color: Theme.of(context).shadowColor,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            top: Layouts.SPACING,
+            left: Layouts.SPACING,
+            right: Layouts.SPACING,
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _platformRow(Platform.facebook, 1, 1),
-          Divider(),
-          _platformRow(Platform.zalo, 5, 3),
-        ],
-      ),
+          padding: EdgeInsets.symmetric(horizontal: Layouts.SPACING),
+          child: Text(
+            'Đơn hàng chờ xử lý',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ),
+        SizedBox(
+          height: Layouts.SPACING,
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: Layouts.SPACING),
+          padding: EdgeInsets.all(Layouts.SPACING),
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 3,
+                offset: Offset(0, 3),
+                color: Theme.of(context).shadowColor,
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              _platformRow(Platform.facebook, 1, 1),
+              Divider(),
+              _platformRow(Platform.zalo, 5, 3),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -92,7 +111,10 @@ class _PlatformInfoState extends State<PlatformInfo> {
               SizedBox(
                 width: Layouts.SPACING,
               ),
-              Text('Tin nhắn',  style: Theme.of(context).textTheme.bodyText1,),
+              Text(
+                'Tin nhắn',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
               Spacer(),
               _alertText(numberMess),
             ],
@@ -112,7 +134,10 @@ class _PlatformInfoState extends State<PlatformInfo> {
               SizedBox(
                 width: Layouts.SPACING,
               ),
-              Text('Thông báo',  style: Theme.of(context).textTheme.bodyText1,),
+              Text(
+                'Thông báo',
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
               Spacer(),
               _alertText(numberNotifi),
             ],
@@ -128,7 +153,10 @@ class _PlatformInfoState extends State<PlatformInfo> {
         alignment: Alignment.centerRight,
         child: Row(
           children: [
-            Text('$numberAlert chưa đọc',  style: Theme.of(context).textTheme.bodyText1, ),
+            Text(
+              '$numberAlert chưa đọc',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
             SizedBox(
               width: Layouts.SPACING / 2,
             ),
