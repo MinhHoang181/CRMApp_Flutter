@@ -21,12 +21,13 @@ class ShortCut  extends StatelessWidget {
                     image: AssetImage(MyIcons.ADD_BILL),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                ),
                 Text(
                   'Thêm \n đơn hàng',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13 ,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),
@@ -39,12 +40,13 @@ class ShortCut  extends StatelessWidget {
                     image: AssetImage(MyIcons.PAY_BILL),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                ),
                 Text(
                   'Hóa đơn đã \n thanh toán',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13 ,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),
@@ -57,12 +59,13 @@ class ShortCut  extends StatelessWidget {
                     image: AssetImage(MyIcons.MESSAGE_ALT),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                ),
                 Text(
                   'Tin nhắn \n tổng hợp',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13 ,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),
@@ -75,13 +78,13 @@ class ShortCut  extends StatelessWidget {
                     image: AssetImage(MyIcons.ALL_BILL),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                ),
                 Text(
                   'Tất cả \n hóa đơn',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 13 ,
-
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),

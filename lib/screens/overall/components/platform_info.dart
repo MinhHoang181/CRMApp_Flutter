@@ -73,10 +73,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
               ),
               Text(
                 _namePlatform,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Fonts.SIZE_TEXT_LARGE,
-                ),
+                style: Theme.of(context).textTheme.subtitle1,
               )
             ],
           ),
@@ -89,13 +86,13 @@ class _PlatformInfoState extends State<PlatformInfo> {
                 width: 27,
                 height: 27,
                 child: Image(
-                  image: AssetImage(MyIcons.MESSAGE),
+                  image: AssetImage(MyIcons.CONVERSATION),
                 ),
               ),
               SizedBox(
                 width: Layouts.SPACING,
               ),
-              Text('Tin nhắn'),
+              Text('Tin nhắn',  style: Theme.of(context).textTheme.bodyText1,),
               Spacer(),
               _alertText(numberMess),
             ],
@@ -115,7 +112,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
               SizedBox(
                 width: Layouts.SPACING,
               ),
-              Text('Thông báo'),
+              Text('Thông báo',  style: Theme.of(context).textTheme.bodyText1,),
               Spacer(),
               _alertText(numberNotifi),
             ],
@@ -131,7 +128,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
         alignment: Alignment.centerRight,
         child: Row(
           children: [
-            Text('$numberAlert chưa đọc'),
+            Text('$numberAlert chưa đọc',  style: Theme.of(context).textTheme.bodyText1, ),
             SizedBox(
               width: Layouts.SPACING / 2,
             ),

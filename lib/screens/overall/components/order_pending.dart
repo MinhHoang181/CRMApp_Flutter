@@ -27,10 +27,7 @@ class _OrdersPendingState extends State<OrdersPending> {
           padding: EdgeInsets.symmetric(horizontal: Layouts.SPACING),
           child: Text(
             'Đơn hàng chờ xử lý',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: Fonts.SIZE_TEXT_LARGE,
-            ),
+            style: Theme.of(context).textTheme.subtitle1,y
           ),
         ),
         SizedBox(

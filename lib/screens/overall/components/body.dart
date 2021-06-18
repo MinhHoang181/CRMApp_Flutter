@@ -15,7 +15,6 @@ class Body extends StatelessWidget {
           children: [
             SalesInfo(),
             ShortCut(),
-           
             PlatformInfo(),
             OrdersPending(),
             SizedBox(height: 17,)

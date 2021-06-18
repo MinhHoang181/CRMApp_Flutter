@@ -1,5 +1,6 @@
 const String BELL = 'assets/icons/bell-icon.png';
 const String MESSAGE = 'assets/icons/message-icon.png';
+const String CONVERSATION = 'assets/icons/conversation-icon.png';
 const String MONEY = 'assets/icons/money-icon.png';
 const String APPROVE = 'assets/icons/approve-icon.png';
 const String DELIVERY = 'assets/icons/delivery-icon.png';
