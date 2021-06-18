@@ -1,13 +1,23 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:graphql/client.dart';
 
+final _chatWebSocketLink = WebSocketLink(
+  'ws://chat-service-dev.azsales.vn/graphql',
+  config: SocketClientConfig(
+    autoReconnect: true,
+    inactivityTimeout: Duration(minutes: 30),
+  ),
+);
+
 GraphQLClient getChatClient() {
-  final Link link = HttpLink(
+  Link link = HttpLink(
     'https://chat-service-dev.azsales.vn/graphql',
     defaultHeaders: {
       'access_token': AzsalesData.instance.azsalesAccessToken,
     },
   );
+  link =
+      Link.split((request) => request.isSubscription, _chatWebSocketLink, link);
   return GraphQLClient(
     link: link,
     cache: GraphQLCache(),

@@ -1,13 +1,14 @@
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Conversation.dart';
-import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/models/PagingInfo.dart';
+import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
+import 'package:tuple/tuple.dart';
 
 class ConversationAPI {
-  static Future<ConversationList> fetchConversationsAllPages({
+  static Future<Tuple2<List<Conversation>, PagingInfo>>
+      fetchConversationsAllPages({
     int start,
     int min,
   }) async {
@@ -48,21 +49,21 @@ class ConversationAPI {
     );
     final GraphQLClient client = getChatClient();
     final response = await client.query(options);
+
     if (response.hasException) {
       print(response.exception.toString());
-      throw Exception('Lỗi load thông tin danh sách tin nhắn của mọi Page');
+      return null;
+    } else {
+      List<Conversation> conversations = List.empty(growable: true);
+      List<dynamic> conversationsJson =
+          response.data['conversation']['conversationsPaging']['items'];
+      conversationsJson.forEach((conversation) {
+        conversations.add(Conversation.fromJson(conversation));
+      });
+      Map<String, dynamic> pageInfo =
+          response.data['conversation']['conversationsPaging']['pageInfo'];
+      return Tuple2(conversations, PagingInfo.fromJson(pageInfo));
     }
-    List<dynamic> conversations =
-        response.data['conversation']['conversationsPaging']['items'];
-    conversations.forEach((conversation) {
-      AzsalesData.instance.conversations
-          .add(Conversation.fromJson(conversation));
-    });
-    Map<String, dynamic> pageInfo =
-        response.data['conversation']['conversationsPaging']['pageInfo'];
-    AzsalesData.instance.conversations.pageInfo = PagingInfo.fromJson(pageInfo);
-
-    return AzsalesData.instance.conversations;
   }
 
   static Future<List<String>> setLabel({
@@ -135,5 +136,50 @@ class ConversationAPI {
       return conversationId == setLabel['_id'] ? labelIds : null;
     }
     return null;
+  }
+
+  //Subscriptions
+  static void listenChangeConversation({
+    @required ConversationList conversations,
+  }) async {
+    final SubscriptionOptions options = SubscriptionOptions(
+      document: gql(
+        '''
+        subscription {
+          conversationChanged {
+            _id
+            page_id
+            participants {
+              _id
+              name
+            }
+            snippet
+            is_read
+            is_replied
+            label_ids
+            page_id
+            updated_time
+            has_note
+            has_order
+            has_phone
+          }
+        }
+        ''',
+      ),
+    );
+
+    final GraphQLClient client = getChatClient();
+    final subscription = client.subscribe(options);
+    subscription.listen((event) {
+      if (event.hasException) {
+        print(event.exception.toString());
+        return;
+      }
+      if (event.isLoading) {
+        return;
+      }
+      Map<String, dynamic> conversation = event.data['conversationChanged'];
+      conversations.listenUpdate(Conversation.fromJson(conversation));
+    });
   }
 }

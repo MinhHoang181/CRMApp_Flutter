@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
+//Models
+
 class CustomerInfo extends StatefulWidget {
   @override
   _CustomerInfoState createState() => _CustomerInfoState();
 }
 
 class _CustomerInfoState extends State<CustomerInfo> {
+  @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,26 +42,22 @@ class _CustomerInfoState extends State<CustomerInfo> {
             ),
           ),
           SizedBox(height: Layouts.SPACING / 2),
-          ListTile(
-            leading: Icon(Icons.person_add_alt_rounded, color: Theme.of(context).accentColor,),
-            title: Text(
-              'Thêm khách hàng',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor.withOpacity(0.7),
-              ),
-            ),
-            trailing: Icon(Icons.arrow_forward_ios, color: Theme.of(context).accentColor,),
-          ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.payment_rounded,color: Theme.of(context).accentColor,),
+            leading: Icon(
+              Icons.payment_rounded,
+              color: Theme.of(context).accentColor,
+            ),
             title: Text(
               'Giá bán lẻ',
               style: TextStyle(
                 color: Theme.of(context).primaryColor.withOpacity(0.7),
               ),
             ),
-            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).accentColor,
+            ),
           )
         ],
       ),

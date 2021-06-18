@@ -24,6 +24,7 @@ class LabelAPI {
     final response = await client.query(options);
     if (response.hasException) {
       print(response.exception);
+      return null;
     }
     List<dynamic> labelsJson = response.data['label']['labels'];
     List<Label> labels = List.empty(growable: true);
@@ -84,7 +85,7 @@ class LabelAPI {
             }
           }
         }
-      ''',
+        ''',
       ),
     );
 

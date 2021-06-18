@@ -1,10 +1,14 @@
 import 'dart:collection';
 
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
+
+import 'list_model/NoteList.dart';
+import 'list_model/OrderList.dart';
 
 class Participant {
   final String id;
@@ -25,14 +29,15 @@ class Conversation extends ChangeNotifier {
   String updatedTime;
   bool isRead;
   bool isReplied;
-  List<String> _labelIds;
+  List<String> labelIds;
   bool hasNode;
   bool hasOrder;
   bool hasPhone;
 
   final MessageList messages;
-
-  UnmodifiableListView get labelIds => UnmodifiableListView(_labelIds);
+  final NoteList notes;
+  final OrderList orders;
+  final CustomerList customers;
 
   Conversation({
     @required this.id,
@@ -43,13 +48,14 @@ class Conversation extends ChangeNotifier {
     @required this.isRead,
     @required this.isReplied,
     @required this.messages,
-    @required List<String> labelIds,
+    @required this.notes,
+    @required this.orders,
+    @required this.customers,
+    @required this.labelIds,
     this.hasNode = false,
     this.hasOrder = false,
     this.hasPhone = false,
-  }) {
-    this._labelIds = labelIds;
-  }
+  });
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     List<dynamic> users = json['participants'];
@@ -76,7 +82,11 @@ class Conversation extends ChangeNotifier {
       updatedTime: updatedTime,
       isRead: json['is_read'],
       isReplied: json['is_replied'],
-      messages: new MessageList(conversationId: json['_id']),
+      messages:
+          new MessageList(conversationId: json['_id'], pageId: json['page_id']),
+      notes: new NoteList(conversationId: json['_id']),
+      orders: new OrderList(conversationId: json['_id']),
+      customers: new CustomerList(conversationId: json['_id']),
       labelIds: labelIds,
       hasNode: json['has_node'] != null ? json['has_node'] : false,
       hasOrder: json['has_order'] != null ? json['has_order'] : false,
@@ -84,8 +94,20 @@ class Conversation extends ChangeNotifier {
     );
   }
 
+  void update(Conversation conversation) {
+    this.snippet = conversation.snippet;
+    this.updatedTime = conversation.updatedTime;
+    this.isRead = conversation.isRead;
+    this.isReplied = conversation.isReplied;
+    this.labelIds = conversation.labelIds;
+    this.hasNode = conversation.hasNode;
+    this.hasOrder = conversation.hasOrder;
+    this.hasPhone = conversation.hasPhone;
+    notifyListeners();
+  }
+
   void _updateLabels(List<String> labelIds) {
-    this._labelIds = labelIds;
+    this.labelIds = labelIds;
     notifyListeners();
   }
 

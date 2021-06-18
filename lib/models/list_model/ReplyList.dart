@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class ReplyList extends ChangeNotifier {
   Map<String, QuickReply> _list;
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
-  UnmodifiableListView get list => UnmodifiableListView(_list.values.toList());
+  List<QuickReply> get list => _list.values.toList();
 
   void _addList(List<QuickReply> replies) {
     replies.forEach((reply) {
