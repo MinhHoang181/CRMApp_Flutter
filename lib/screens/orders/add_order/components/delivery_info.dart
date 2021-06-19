@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
@@ -18,13 +19,10 @@ class DeliveryInfo extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _header(context),
-          SizedBox(height: Layouts.SPACING),
-          _body(context),
-        ],
+      child: ExpandablePanel(
+        header: _header(context),
+        collapsed: _collapsedDeliveryInfo(context),
+        expanded: _body(context),
       ),
     );
   }
@@ -36,15 +34,38 @@ class DeliveryInfo extends StatelessWidget {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _collapsedDeliveryInfo(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _customer(context),
+        SizedBox(height: Layouts.SPACING),
+        _address(context),
+      ],
+    );
+  }
+
+  Widget _customer(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+          child: Text(
+            'Khách hàng',
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                ),
+          ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
         TextField(
           style: Theme.of(context).textTheme.bodyText2,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.person),
             filled: false,
-            labelText: 'Khách hàng',
+            labelText: 'Tên khách hàng',
           ),
         ),
         SizedBox(height: Layouts.SPACING),
@@ -56,10 +77,93 @@ class DeliveryInfo extends StatelessWidget {
             labelText: 'Số điện thoại',
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _address(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+          child: Text(
+            'Địa chỉ giao hàng',
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                ),
+          ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
+        AddressInfo(),
+      ],
+    );
+  }
+
+  Widget _note(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+          child: Text(
+            'Ghi chú',
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                ),
+          ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: TextField(
+                minLines: 4,
+                maxLines: 6,
+                textAlignVertical: TextAlignVertical.center,
+                style: Theme.of(context).textTheme.bodyText2,
+                decoration: InputDecoration(
+                  filled: false,
+                  labelText: 'Ghi chú nội bộ',
+                  alignLabelWithHint: true,
+                ),
+              ),
+            ),
+            SizedBox(width: Layouts.SPACING),
+            Expanded(
+              flex: 1,
+              child: TextField(
+                minLines: 4,
+                maxLines: 6,
+                textAlignVertical: TextAlignVertical.center,
+                style: Theme.of(context).textTheme.bodyText2,
+                decoration: InputDecoration(
+                  filled: false,
+                  labelText: 'Ghi chú khách',
+                  alignLabelWithHint: true,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _body(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _customer(context),
         SizedBox(height: Layouts.SPACING),
         DropDownTypeOrder(),
         SizedBox(height: Layouts.SPACING),
-        AddressInfo(),
+        _address(context),
+        SizedBox(height: Layouts.SPACING),
+        _note(context),
       ],
     );
   }
@@ -81,7 +185,19 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+          child: Text(
+            'Loại đơn hàng',
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                ),
+          ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
         DropdownButtonFormField(
           style: Theme.of(context).textTheme.bodyText2,
           value: _typeOrder,
@@ -122,7 +238,19 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+          child: Text(
+            'Người nhận hàng',
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                ),
+          ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
         DropdownButtonFormField(
           style: Theme.of(context).textTheme.bodyText2,
           value: _whoReceive,
@@ -149,7 +277,19 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
 
   Widget _recipientInfo(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+          child: Text(
+            'Thông tin người nhận',
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                ),
+          ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
         TextField(
           style: Theme.of(context).textTheme.bodyText2,
           decoration: InputDecoration(

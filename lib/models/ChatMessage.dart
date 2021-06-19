@@ -52,7 +52,8 @@ class Attachment {
 class ChatMessage {
   String id;
   final String message;
-  String createdTime;
+  String dateCreated;
+  int timeCreated;
   List<Attachment> attachments = List.empty(growable: true);
   final MessageType messageType;
   final bool isSender;
@@ -61,7 +62,8 @@ class ChatMessage {
   ChatMessage({
     this.id,
     @required this.message,
-    this.createdTime,
+    this.dateCreated,
+    this.timeCreated,
     this.attachments,
     @required this.messageType,
     @required this.isSender,
@@ -88,7 +90,8 @@ class ChatMessage {
     return ChatMessage(
       id: json['_id'],
       message: json['message'],
-      createdTime: readTimestamp(json['created_time']),
+      dateCreated: readTimestamp(json['created_time']),
+      timeCreated: json['created_time'],
       attachments: attachments,
       messageType: messageType,
       isSender: isSender,
@@ -98,7 +101,8 @@ class ChatMessage {
   void update(ChatMessage message) {
     if (isUpdate == false) {
       this.id = message.id;
-      this.createdTime = message.createdTime;
+      this.dateCreated = message.dateCreated;
+      this.timeCreated = message.timeCreated;
       this.attachments = message.attachments;
       isUpdate = true;
     }
