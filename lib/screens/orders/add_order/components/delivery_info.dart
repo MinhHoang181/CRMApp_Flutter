@@ -71,6 +71,7 @@ class DeliveryInfo extends StatelessWidget {
         SizedBox(height: Layouts.SPACING),
         TextField(
           style: Theme.of(context).textTheme.bodyText2,
+          keyboardType: TextInputType.phone,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone),
             filled: false,

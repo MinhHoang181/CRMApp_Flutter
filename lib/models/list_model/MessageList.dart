@@ -23,7 +23,7 @@ class MessageList extends ChangeNotifier {
   List<ChatMessage> get list {
     List<ChatMessage> chatlog = _unUpdateList.toList();
     chatlog.addAll(_list.values);
-    return _sortTime(chatlog);
+    return chatlog;
   }
 
   List<ChatMessage> _sortTime(List<ChatMessage> sortList) {
