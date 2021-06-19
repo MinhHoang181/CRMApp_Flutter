@@ -53,7 +53,7 @@ class Order extends ChangeNotifier {
       phone: json['phone_number'],
       status: new StatusOrder(code: json['status']),
       type: new TypeOrder(code: json['minetype']),
-      dateCreated: readTimestampHHDM(json['date_created']),
+      dateCreated: readTimestampHHDMYYYY(json['date_created']),
       timeCreated: json['date_created'],
       products: products,
     );

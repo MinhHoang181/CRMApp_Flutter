@@ -78,7 +78,7 @@ class ConversationInfoScreen extends StatelessWidget {
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: TabBar(
-        labelColor: Theme.of(context).textTheme.bodyText1.color,
+        labelColor: Theme.of(context).textTheme.bodyText2.color,
         tabs: [
           Tab(
             text: ' Ghi chú',

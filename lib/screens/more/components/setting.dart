@@ -111,10 +111,11 @@ class _SettingState extends State<Setting> {
             ),
           ),
           onPressed: () {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (context) => LoginScreen(),
               ),
+              ModalRoute.withName('/'),
             );
           },
         ),
