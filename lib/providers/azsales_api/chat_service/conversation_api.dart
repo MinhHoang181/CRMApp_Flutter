@@ -1,5 +1,5 @@
 import 'package:cntt2_crm/models/ChatMessage.dart';
-import 'package:cntt2_crm/models/Conversation.dart';
+import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 import 'package:cntt2_crm/models/PagingInfo.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';

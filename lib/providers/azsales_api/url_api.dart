@@ -44,3 +44,16 @@ GraphQLClient getPosClient() {
     cache: GraphQLCache(),
   );
 }
+
+GraphQLClient getShippingClient() {
+  final Link _link = HttpLink(
+    'https://shipping-service-dev.azsales.vn/graphql',
+    defaultHeaders: {
+      'access_token': AzsalesData.instance.azsalesAccessToken,
+    },
+  );
+  return GraphQLClient(
+    link: _link,
+    cache: GraphQLCache(),
+  );
+}

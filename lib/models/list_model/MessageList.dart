@@ -8,16 +8,23 @@ import 'package:flutter/material.dart';
 class MessageList extends ChangeNotifier {
   final String conversationId;
   final String pageId;
+  final String recipentId;
   Map<String, ChatMessage> _list;
+  Queue<ChatMessage> _unUpdateList = new Queue<ChatMessage>();
   PagingInfo pageInfo;
 
   MessageList({
     @required this.conversationId,
     @required this.pageId,
+    @required this.recipentId,
   });
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
-  List<ChatMessage> get list => _list.values.toList();
+  List<ChatMessage> get list {
+    List<ChatMessage> chatlog = _unUpdateList.toList();
+    chatlog.addAll(_list.values);
+    return chatlog;
+  }
 
   void _addList(List<ChatMessage> messages) {
     messages.forEach((message) {
@@ -30,6 +37,13 @@ class MessageList extends ChangeNotifier {
 
   bool add(ChatMessage message) {
     if (!_list.containsKey(message.id)) {
+      _unUpdateList.any((element) {
+        if (element.id == message.id) {
+          _unUpdateList.remove(element);
+          return true;
+        }
+        return false;
+      });
       final temp = <String, ChatMessage>{
         message.id: message,
       };
@@ -37,8 +51,11 @@ class MessageList extends ChangeNotifier {
       _list = temp;
       notifyListeners();
       return true;
+    } else {
+      _list[message.id].update(message);
+      notifyListeners();
+      return true;
     }
-    return false;
   }
 
   Future<MessageList> fetchData() async {
@@ -69,7 +86,22 @@ class MessageList extends ChangeNotifier {
     return false;
   }
 
-  Future<bool> sendMessage() async {
-    return true;
+  Future<bool> sendMessage(ChatMessage message) async {
+    _unUpdateList.addFirst(message);
+    notifyListeners();
+    String id = await MessageAPI.sendMessage(
+      pageId: this.pageId,
+      recipientId: this.recipentId,
+      message: message,
+    );
+    if (id != null) {
+      message.id = id;
+      add(message);
+      return true;
+    } else {
+      _unUpdateList.remove(message);
+      notifyListeners();
+      return false;
+    }
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
+//Components
+import 'package:cntt2_crm/components/address_info.dart';
+
 class DeliveryInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,20 +40,26 @@ class DeliveryInfo extends StatelessWidget {
     return Column(
       children: [
         TextField(
+          style: Theme.of(context).textTheme.bodyText2,
           decoration: InputDecoration(
+            prefixIcon: Icon(Icons.person),
             filled: false,
             labelText: 'Khách hàng',
           ),
         ),
-        SizedBox(height: Layouts.SPACING / 2),
+        SizedBox(height: Layouts.SPACING),
         TextField(
+          style: Theme.of(context).textTheme.bodyText2,
           decoration: InputDecoration(
+            prefixIcon: Icon(Icons.phone),
             filled: false,
             labelText: 'Số điện thoại',
           ),
         ),
-        SizedBox(height: Layouts.SPACING / 2),
+        SizedBox(height: Layouts.SPACING),
         DropDownTypeOrder(),
+        SizedBox(height: Layouts.SPACING),
+        AddressInfo(),
       ],
     );
   }
@@ -90,7 +99,7 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
           },
         ),
         if (_typeOrder != 1) ...[
-          SizedBox(height: Layouts.SPACING / 2),
+          SizedBox(height: Layouts.SPACING),
           DropDownWhoReceive(),
         ],
       ],
@@ -131,7 +140,7 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
           },
         ),
         if (_whoReceive == 2) ...[
-          SizedBox(height: Layouts.SPACING / 2),
+          SizedBox(height: Layouts.SPACING),
           _recipientInfo(context),
         ],
       ],
@@ -142,14 +151,18 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
     return Column(
       children: [
         TextField(
+          style: Theme.of(context).textTheme.bodyText2,
           decoration: InputDecoration(
+            prefixIcon: Icon(Icons.person),
             filled: false,
             labelText: 'Người nhận hàng',
           ),
         ),
-        SizedBox(height: Layouts.SPACING / 2),
+        SizedBox(height: Layouts.SPACING),
         TextField(
+          style: Theme.of(context).textTheme.bodyText2,
           decoration: InputDecoration(
+            prefixIcon: Icon(Icons.phone),
             filled: false,
             labelText: 'Số điện thoại',
           ),

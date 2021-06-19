@@ -1,17 +1,37 @@
 import 'dart:collection';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:cntt2_crm/models/PagingInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:flutter/material.dart';
-
-import '../Conversation.dart';
+import '../Conversation/Conversation.dart';
 
 class ConversationList extends ChangeNotifier {
   Map<String, Conversation> _list;
   PagingInfo pageInfo;
 
-  List<Conversation> get list => _list.values.toList();
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
+
+  List<Conversation> sort({bool increase = true}) {
+    final sortList = _list.values
+        .where((conversation) =>
+            AzsalesData.instance.pages.map[conversation.pageId].isSelected)
+        .toList();
+    return _sortTime(sortList, increase);
+  }
+
+  List<Conversation> _sortTime(List<Conversation> sortList, bool increase) {
+    sortList.sort((a, b) {
+      final dayA = a.timeUpdate;
+      final dayB = b.timeUpdate;
+      return increase ? dayA.compareTo(dayB) : dayB.compareTo(dayA);
+    });
+    return sortList;
+  }
+
+  void notifyChanged() {
+    notifyListeners();
+  }
 
   void _addList(List<Conversation> conversations) {
     conversations.forEach((conversation) async {
@@ -24,7 +44,10 @@ class ConversationList extends ChangeNotifier {
 
   void listenUpdate(Conversation conversation) {
     if (_list.containsKey(conversation.id)) {
-      _list[conversation.id].update(conversation);
+      final check = _list[conversation.id].update(conversation);
+      if (check) {
+        notifyListeners();
+      }
     }
   }
 
@@ -42,7 +65,6 @@ class ConversationList extends ChangeNotifier {
 
   String getPageId(String conversationId) {
     if (_list.containsKey(conversationId)) {
-      print(_list[conversationId].pageId);
       return _list[conversationId].pageId;
     } else {
       return '';

@@ -10,7 +10,7 @@ import 'package:cntt2_crm/screens/messenger/conversation_info/components/edit_di
 import 'package:cntt2_crm/components/progress_dialog.dart';
 
 //Models
-import 'package:cntt2_crm/models/Conversation.dart';
+import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 import 'package:cntt2_crm/models/list_model/NoteList.dart';
 import 'package:cntt2_crm/models/list_model/OrderList.dart';
 

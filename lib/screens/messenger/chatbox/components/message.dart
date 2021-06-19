@@ -52,6 +52,9 @@ class Message extends StatelessWidget {
           Flexible(
             child: _getTypeMessage(message),
           ),
+          if (message.isSender && !message.isUpdate) ...[
+            CircularProgressIndicator.adaptive(),
+          ]
         ],
       ),
     );

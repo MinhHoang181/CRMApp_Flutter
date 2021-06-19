@@ -5,8 +5,8 @@ import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.da
 import 'package:cntt2_crm/utilities/datetime.dart';
 import 'package:flutter/material.dart';
 
-import 'list_model/NoteList.dart';
-import 'list_model/OrderList.dart';
+import '../list_model/NoteList.dart';
+import '../list_model/OrderList.dart';
 
 class Participant {
   final String id;
@@ -24,7 +24,8 @@ class Conversation extends ChangeNotifier {
   final List<Participant> participants;
 
   String snippet;
-  String updatedTime;
+  String dateUpdate;
+  int timeUpdate;
   bool isRead;
   bool isReplied;
   List<String> labelIds;
@@ -42,7 +43,8 @@ class Conversation extends ChangeNotifier {
     @required this.pageId,
     @required this.participants,
     @required this.snippet,
-    @required this.updatedTime,
+    @required this.timeUpdate,
+    @required this.dateUpdate,
     @required this.isRead,
     @required this.isReplied,
     @required this.messages,
@@ -71,17 +73,21 @@ class Conversation extends ChangeNotifier {
         labelIds.add(element);
       }
     });
-    final updatedTime = readTimestamp(json['updated_time']);
+    final dateUpdate = readTimestamp(json['updated_time']);
     return Conversation(
       id: json['_id'],
       pageId: json['page_id'],
       participants: participants,
       snippet: json['snippet'],
-      updatedTime: updatedTime,
+      timeUpdate: json['updated_time'],
+      dateUpdate: dateUpdate,
       isRead: json['is_read'],
       isReplied: json['is_replied'],
-      messages:
-          new MessageList(conversationId: json['_id'], pageId: json['page_id']),
+      messages: new MessageList(
+        conversationId: json['_id'],
+        pageId: json['page_id'],
+        recipentId: participants[0].id,
+      ),
       notes: new NoteList(conversationId: json['_id']),
       orders: new OrderList(conversationId: json['_id']),
       customers: new CustomerList(conversationId: json['_id']),
@@ -92,16 +98,24 @@ class Conversation extends ChangeNotifier {
     );
   }
 
-  void update(Conversation conversation) {
+  bool update(Conversation conversation) {
     this.snippet = conversation.snippet;
-    this.updatedTime = conversation.updatedTime;
+    this.dateUpdate = conversation.dateUpdate;
     this.isRead = conversation.isRead;
     this.isReplied = conversation.isReplied;
     this.labelIds = conversation.labelIds;
     if (conversation.hasNote != null) this.hasNote = conversation.hasNote;
     if (conversation.hasOrder != null) this.hasOrder = conversation.hasOrder;
     if (conversation.hasPhone != null) this.hasPhone = conversation.hasPhone;
-    notifyListeners();
+
+    if (this.timeUpdate != conversation.timeUpdate) {
+      notifyListeners();
+      this.timeUpdate = conversation.timeUpdate;
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
   }
 
   void updateRead(bool isRead) {

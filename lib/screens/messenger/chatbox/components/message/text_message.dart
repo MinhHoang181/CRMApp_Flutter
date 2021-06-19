@@ -34,12 +34,14 @@ class TextMessage extends StatelessWidget {
       ),
       child: Text(
         message.message,
-        style: TextStyle(
-          color: message.isSender
-              ? Colors.white
-              : Theme.of(context).textTheme.bodyText1.color,
-          fontSize: Fonts.SIZE_TEXT_MEDIUM,
-        ),
+        style: message.isSender
+            ? Theme.of(context).textTheme.bodyText2.copyWith(
+                  color: Colors.white,
+                  fontSize: Fonts.SIZE_TEXT_MEDIUM,
+                )
+            : Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontSize: Fonts.SIZE_TEXT_MEDIUM,
+                ),
       ),
     );
   }

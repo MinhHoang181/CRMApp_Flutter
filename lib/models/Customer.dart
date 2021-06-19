@@ -1,5 +1,5 @@
 //Models
-import 'package:cntt2_crm/models/Address.dart';
+import 'package:cntt2_crm/models/Location/Address.dart';
 import 'package:flutter/material.dart';
 
 class Customer extends ChangeNotifier {

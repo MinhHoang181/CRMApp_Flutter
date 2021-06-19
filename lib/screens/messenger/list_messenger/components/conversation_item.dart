@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Models
-import 'package:cntt2_crm/models/Conversation.dart';
+import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Label.dart';
 
@@ -149,7 +149,7 @@ class ConversationItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(conversation.updatedTime),
+        Text(conversation.dateUpdate),
         SizedBox(height: Layouts.SPACING / 2),
         Row(
           mainAxisSize: MainAxisSize.min,

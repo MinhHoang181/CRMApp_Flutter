@@ -15,7 +15,7 @@ import 'components/chatbox.dart';
 
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
-import 'package:cntt2_crm/models/Conversation.dart';
+import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
 import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 

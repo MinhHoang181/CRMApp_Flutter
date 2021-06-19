@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //Models
 import 'package:cntt2_crm/models/Label.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
-import 'package:cntt2_crm/models/Conversation.dart';
+import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 import 'package:cntt2_crm/models/list_model/LabelList.dart';
 
 //Components

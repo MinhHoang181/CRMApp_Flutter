@@ -1,8 +1,11 @@
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:flutter/material.dart';
 
 class FacebookPage {
   final String id;
   final String name;
+  bool _isSelected = true;
+  bool get isSelected => _isSelected;
 
   FacebookPage({
     @required this.id,
@@ -14,5 +17,10 @@ class FacebookPage {
       id: json['_id'],
       name: json['name'],
     );
+  }
+
+  void toggleSelect() {
+    _isSelected = _isSelected ? false : true;
+    AzsalesData.instance.conversations.notifyChanged();
   }
 }

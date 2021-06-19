@@ -13,22 +13,22 @@ enum MessageType {
 }
 
 class Attachment {
-  final String id;
-  final String mimeType;
-  final String name;
-  final String url;
-  final String reviewUrl;
-  final bool sticker;
-  final AttachmentType attachmentType;
+  String id;
+  String mimeType;
+  String name;
+  String url;
+  String reviewUrl;
+  bool sticker;
+  AttachmentType attachmentType;
 
   Attachment({
-    @required this.id,
-    @required this.mimeType,
-    @required this.name,
-    @required this.url,
-    @required this.reviewUrl,
-    @required this.sticker,
-    @required this.attachmentType,
+    this.id,
+    this.mimeType,
+    this.name,
+    this.url,
+    this.reviewUrl,
+    this.sticker,
+    this.attachmentType,
   });
 
   factory Attachment.fromJson(Map<String, dynamic> json) {
@@ -50,20 +50,22 @@ class Attachment {
 }
 
 class ChatMessage {
-  final String id;
+  String id;
   final String message;
-  final String createdTime;
+  String createdTime;
   List<Attachment> attachments = List.empty(growable: true);
   final MessageType messageType;
   final bool isSender;
+  bool isUpdate;
 
   ChatMessage({
-    @required this.id,
+    this.id,
     @required this.message,
-    @required this.createdTime,
-    @required final this.attachments,
-    @required final this.messageType,
-    @required final this.isSender,
+    this.createdTime,
+    this.attachments,
+    @required this.messageType,
+    @required this.isSender,
+    this.isUpdate = true,
   });
 
   factory ChatMessage.fromJson(Map<String, dynamic> json, String pageId) {
@@ -91,5 +93,14 @@ class ChatMessage {
       messageType: messageType,
       isSender: isSender,
     );
+  }
+
+  void update(ChatMessage message) {
+    if (isUpdate == false) {
+      this.id = message.id;
+      this.createdTime = message.createdTime;
+      this.attachments = message.attachments;
+      isUpdate = true;
+    }
   }
 }

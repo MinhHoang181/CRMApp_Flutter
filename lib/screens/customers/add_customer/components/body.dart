@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //Components
-import 'address_info.dart';
+import '../../../../components/address_info.dart';
 
 class Body extends StatefulWidget {
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dvhcvn/dvhcvn.dart' as Location;
 
 class Address {
   String address;
@@ -26,27 +25,12 @@ class Address {
   Address({
     @required this.address,
     this.city,
-    @required this.cityCode,
+    this.cityCode,
     this.district,
-    @required this.districtCode,
+    this.districtCode,
     this.ward,
-    @required this.wardCode,
-  }) {
-    if (this.city == null && this.cityCode != null) {
-      this.city = Location.findLevel1ById(cityCode.toString()).name;
-      if (this.district == null && this.districtCode != null) {
-        this.district = Location.findLevel1ById(cityCode.toString())
-            .findLevel2ById(districtCode.toString())
-            .name;
-        if (this.ward == null && this.wardCode != null) {
-          this.ward = Location.findLevel1ById(cityCode.toString())
-              .findLevel2ById(districtCode.toString())
-              .findLevel3ById(wardCode.toString())
-              .name;
-        }
-      }
-    }
-  }
+    this.wardCode,
+  });
 
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
@@ -57,14 +41,6 @@ class Address {
       district: json['district'] != null ? json['district']['label'] : null,
       wardCode: json['ward'] != null ? json['ward']['_id'] : null,
       ward: json['ward'] != null ? json['ward']['label'] : null,
-    );
-  }
-  factory Address.fromJsonByCode(Map<String, dynamic> json) {
-    return Address(
-      address: json['address'],
-      cityCode: json['city_code'],
-      districtCode: json['district_code'],
-      wardCode: json['ward_code'],
     );
   }
 }

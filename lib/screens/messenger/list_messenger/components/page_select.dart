@@ -3,14 +3,9 @@ import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
-class PageSelect extends StatefulWidget {
+class PageSelect extends StatelessWidget {
   const PageSelect({Key key}) : super(key: key);
 
-  @override
-  _PageSelectState createState() => _PageSelectState();
-}
-
-class _PageSelectState extends State<PageSelect> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,20 +56,42 @@ class _PageSelectState extends State<PageSelect> {
     return Flexible(
       child: SingleChildScrollView(
         child: Wrap(
-          children: List.generate(pages.map.length,
-              (index) => _itemPage(pages.map.values.elementAt(index))),
+          children: List.generate(
+            pages.map.length,
+            (index) => PageItemSelect(
+              page: pages.map.values.elementAt(index),
+            ),
+          ),
         ),
       ),
     );
   }
+}
 
-  Widget _itemPage(FacebookPage page) {
+class PageItemSelect extends StatefulWidget {
+  final FacebookPage page;
+  const PageItemSelect({Key key, @required this.page}) : super(key: key);
+
+  @override
+  _PageItemSelectState createState() => _PageItemSelectState();
+}
+
+class _PageItemSelectState extends State<PageItemSelect> {
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
-      title: Text(page.name),
-      trailing: Icon(
-        Icons.check_rounded,
-        color: Colors.blue,
-      ),
+      title: Text(widget.page.name),
+      trailing: widget.page.isSelected
+          ? Icon(
+              Icons.check_rounded,
+              color: Colors.blue,
+            )
+          : null,
+      onTap: () {
+        setState(() {
+          widget.page.toggleSelect();
+        });
+      },
     );
   }
 }

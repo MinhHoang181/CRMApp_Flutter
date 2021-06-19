@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,8 @@ class ChatBox extends StatelessWidget {
   }
 
   Widget _chatlog(BuildContext context) {
-    final chatlog = Provider.of<MessageList>(context);
+    final messageList = Provider.of<MessageList>(context);
+    final chatlog = messageList.list;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Layouts.SPACING),
@@ -60,14 +62,14 @@ class ChatBox extends StatelessWidget {
                 return Container();
             },
           ),
-          onLoading: () => _onLoading(chatlog),
+          onLoading: () => _onLoading(messageList),
           controller: _refreshController,
           child: ListView.builder(
             controller: _scrollController,
             reverse: true,
-            itemCount: chatlog.map.length,
+            itemCount: chatlog.length,
             itemBuilder: (context, index) {
-              return _buildRow(context, index);
+              return _buildRow(context, chatlog, index);
             },
           ),
         ),
@@ -75,16 +77,15 @@ class ChatBox extends StatelessWidget {
     );
   }
 
-  Widget _buildRow(BuildContext context, int index) {
-    final chatlog = Provider.of<MessageList>(context);
+  Widget _buildRow(BuildContext context, List<ChatMessage> chatlog, int index) {
     bool _isMutilLine = false;
-    if (!chatlog.map.values.elementAt(index).isSender && index != 0) {
-      _isMutilLine = !chatlog.map.values.elementAt(index - 1).isSender;
-    } else if (chatlog.map.values.elementAt(index).isSender && index != 0) {
-      _isMutilLine = chatlog.map.values.elementAt(index - 1).isSender;
+    if (!chatlog[index].isSender && index != 0) {
+      _isMutilLine = !chatlog[index - 1].isSender;
+    } else if (chatlog[index].isSender && index != 0) {
+      _isMutilLine = chatlog[index - 1].isSender;
     }
     return Message(
-      message: chatlog.map.values.elementAt(index),
+      message: chatlog[index],
       isMutilLine: _isMutilLine,
     );
   }
