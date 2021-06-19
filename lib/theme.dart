@@ -118,9 +118,9 @@ TextTheme textTheme(BuildContext context, Color color) {
           color: color.withOpacity(1),
         ),
         subtitle2: TextStyle(
-          fontSize: Fonts.SIZE_TEXT_LARGE,
+          fontSize: Fonts.SIZE_TEXT_LARGE -3,
           fontWeight: FontWeight.bold,
-          color: color.withOpacity(0.5),
+          color: color.withOpacity(0.55),
         ),
         bodyText1: TextStyle(
           // normal text
