@@ -35,6 +35,7 @@ ThemeData ligthThemeData(BuildContext context) {
       thickness: 0.3,
     ),
     //Color
+    backgroundColor :Colors.PRIMARY,
     accentColor: Colors.TEXT_BLACK,
     primaryColor: Colors.PRIMARY,
     scaffoldBackgroundColor: Colors.BACKGROUND_LIGHT_THEME,

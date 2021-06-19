@@ -18,6 +18,13 @@ class OverallScreen extends StatelessWidget {
         'AZSales',
         style: Theme.of(context).textTheme.headline1,
       ),
+      flexibleSpace: Image(
+        image: AssetImage('assets/images/appbar-background.png'),
+        fit: BoxFit.cover,
+      ),
+    elevation: 0,
     );
   }
+
+
 }

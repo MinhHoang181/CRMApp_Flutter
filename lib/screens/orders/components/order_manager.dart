@@ -38,7 +38,7 @@ class _OrdersManagerState extends State<OrdersManager> {
             leading: Icon(Icons.list_rounded,color: Theme.of(context).accentColor,),
             title: Row(
               children: [
-                Text('Danh sách đơn hàng'),
+                Text('Danh sách đơn hàng', style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500),),
                 SizedBox(width: Layouts.SPACING),
                 Badge(
                   padding: EdgeInsets.all(Layouts.SPACING / 3),
@@ -63,7 +63,7 @@ class _OrdersManagerState extends State<OrdersManager> {
             leading: Icon(Icons.remove_shopping_cart_rounded,color: Theme.of(context).accentColor,),
             title: Row(
               children: [
-                Text('Khách trả hàng'),
+                Text('Khách trả hàng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500)),
                 SizedBox(width: Layouts.SPACING),
                 Badge(
                   padding: EdgeInsets.all(Layouts.SPACING / 3),
@@ -82,7 +82,7 @@ class _OrdersManagerState extends State<OrdersManager> {
             leading: Icon(Icons.drive_eta_rounded,color: Theme.of(context).accentColor,),
             title: Row(
               children: [
-                Text('Quản lý giao hàng'),
+                Text('Quản lý giao hàng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500)),
                 SizedBox(width: Layouts.SPACING),
                 Badge(
                   padding: EdgeInsets.all(Layouts.SPACING / 3),
