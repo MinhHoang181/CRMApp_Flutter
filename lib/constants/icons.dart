@@ -10,3 +10,6 @@ const String ADD_BILL = 'assets/icons/add-bill-icon.png';
 const String MESSAGE_ALT = 'assets/icons/message-icon-2.png';
 const String ADD_NEW_ORDER = 'assets/icons/add-new-order-icon.png';
 const String PAY_BILL = 'assets/icons/pay-bill-icon.png';
+const String ALL_BILLS = 'assets/icons/all-bills-icon.png';
+const String CAR_DELIVERY = 'assets/icons/car-delivery-icon.png';
+const String REFUND_BOX = 'assets/icons/refund-box-icon.png';

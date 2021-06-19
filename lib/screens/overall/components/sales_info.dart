@@ -46,11 +46,8 @@ class _SalesInfoState extends State<SalesInfo> {
            crossAxisAlignment: CrossAxisAlignment.start,
            children: [
              Text(
-               'Doanh Thu Ngày',
-               style: TextStyle(
-                 fontSize: Fonts.SIZE_TEXT_LARGE,
-                 fontWeight: FontWeight.bold,
-               ),
+               'DOANH THU NGÀY',
+               style: Theme.of(context).textTheme.subtitle2 ,
              ),
              Text(
                '$_moneyTotal',
@@ -66,11 +63,8 @@ class _SalesInfoState extends State<SalesInfo> {
                    Column(
                      children: [
                        Text(
-                         'Đơn mới',
-                         style: TextStyle(
-                             fontSize: Fonts.SIZE_TEXT_MEDIUM,
-                             fontWeight: FontWeight.bold
-                         ),
+                         'Đơn hàng mới',
+                         style: Theme.of(context).textTheme.bodyText2 ,
                        ),
                        Text(
                          '$_newOrder',
@@ -84,10 +78,7 @@ class _SalesInfoState extends State<SalesInfo> {
                      children: [
                        Text(
                          'Đơn hủy',
-                         style: TextStyle(
-                             fontSize: Fonts.SIZE_TEXT_MEDIUM,
-                             fontWeight: FontWeight.bold
-                         ),
+                         style: Theme.of(context).textTheme.bodyText2 ,
                        ),
                        Text(
                          '$_cancelOrder',
@@ -101,10 +92,7 @@ class _SalesInfoState extends State<SalesInfo> {
                      children: [
                        Text(
                          'Đơn trả về',
-                         style: TextStyle(
-                             fontSize: Fonts.SIZE_TEXT_MEDIUM,
-                             fontWeight: FontWeight.bold
-                         ),
+                         style:   Theme.of(context).textTheme.bodyText2 ,
                        ),
                        Text(
                          '$_returnOrder',
