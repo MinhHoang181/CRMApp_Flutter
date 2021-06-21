@@ -3,6 +3,7 @@ import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
 import 'package:cntt2_crm/models/list_model/FacebookPageList.dart';
 import 'package:cntt2_crm/models/list_model/LabelList.dart';
 import 'package:cntt2_crm/models/list_model/Location.dart';
+import 'package:cntt2_crm/models/list_model/ProductList.dart';
 import 'package:cntt2_crm/models/list_model/ReplyList.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class AzsalesData extends ChangeNotifier {
   final ReplyList replies = new ReplyList();
   final FacebookPageList pages = new FacebookPageList();
   final Location location = new Location();
+  final ProductList products = new ProductList();
 
   //Chat - Conversation
   final ConversationList conversations = new ConversationList();

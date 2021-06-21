@@ -1,25 +1,9 @@
 import 'dart:collection';
 
 import 'package:cntt2_crm/models/Note.dart';
+import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/note_api.dart';
 import 'package:flutter/material.dart';
-
-class NotePagingInfo {
-  bool hasNextPage = false;
-  int currentPage = 1;
-
-  NotePagingInfo({
-    @required this.hasNextPage,
-    @required this.currentPage,
-  });
-
-  factory NotePagingInfo.fromJson(Map<String, dynamic> json) {
-    return NotePagingInfo(
-      hasNextPage: json['hasNextPage'],
-      currentPage: json['currentPage'],
-    );
-  }
-}
 
 enum NoteListSort {
   time,
@@ -27,7 +11,7 @@ enum NoteListSort {
 
 class NoteList extends ChangeNotifier {
   final String conversationId;
-  NotePagingInfo pageInfo;
+  PageInfo pageInfo;
   Map<String, Note> _list;
 
   NoteList({@required this.conversationId});

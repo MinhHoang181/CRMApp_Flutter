@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/ChatMessage.dart';
-import 'package:cntt2_crm/models/PagingInfo.dart';
+import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:flutter/material.dart';
 import '../Conversation/Conversation.dart';

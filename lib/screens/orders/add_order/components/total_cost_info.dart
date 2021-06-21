@@ -6,12 +6,7 @@ import 'package:provider/provider.dart';
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
 
-class TotalCostInfo extends StatefulWidget {
-  @override
-  _TotalCostInfoState createState() => _TotalCostInfoState();
-}
-
-class _TotalCostInfoState extends State<TotalCostInfo> {
+class TotalCostInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
@@ -20,7 +15,6 @@ class _TotalCostInfoState extends State<TotalCostInfo> {
     int _totalDiscount = 0;
     int _feeship = 0;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: Layouts.SPACING / 2),
       padding: EdgeInsets.all(Layouts.SPACING),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,

@@ -12,25 +12,25 @@ import 'messenger/messenger.screen.dart';
 import 'more/more.screen.dart';
 
 class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
-  static List<Widget> _bodyOption = <Widget>[
+  final List<Widget> _bodyOption = <Widget>[
     OverallScreen(),
     OrdersScreen(),
     CustomersScreen(),
     MessengerScreen(),
     MoreScreen(),
   ];
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     var _messNotfiCount = min(10, 999);
     return Scaffold(
-      body: _bodyOption.elementAt(_selectedIndex),
+      body: widget._bodyOption.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           new BottomNavigationBarItem(

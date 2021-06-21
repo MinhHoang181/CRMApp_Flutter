@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
-import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'package:provider/provider.dart';
 
 //Components
@@ -42,8 +41,8 @@ class Body extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-          Theme.of(context).primaryColor.withOpacity(0.5),
-          Theme.of(context).primaryColor.withOpacity(1),
+            Theme.of(context).primaryColor.withOpacity(0.5),
+            Theme.of(context).primaryColor.withOpacity(1),
           ],
         ),
         borderRadius: BorderRadius.circular(10),
@@ -67,10 +66,11 @@ class Body extends StatelessWidget {
                 ),
               ),
               SizedBox(height: Layouts.SPACING / 3),
-              Text(
-                'Tạo đơn hàng mới',
-                style: Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.white)
-              ),
+              Text('Tạo đơn hàng mới',
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(color: Colors.white)),
             ],
           ),
         ),

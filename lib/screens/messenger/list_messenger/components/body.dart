@@ -6,7 +6,7 @@ import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 
 //Components
-import 'package:cntt2_crm/screens/messenger/list_messenger/components/conversation_list.dart';
+import 'list_conversation.dart';
 
 class Body extends StatelessWidget {
   const Body({Key key}) : super(key: key);

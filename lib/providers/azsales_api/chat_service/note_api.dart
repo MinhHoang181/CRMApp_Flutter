@@ -1,12 +1,12 @@
 import 'package:cntt2_crm/models/Note.dart';
-import 'package:cntt2_crm/models/list_model/NoteList.dart';
+import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 import 'package:tuple/tuple.dart';
 
 class NoteAPI {
-  static Future<Tuple2<List<Note>, NotePagingInfo>> fetchNotesOfConversation({
+  static Future<Tuple2<List<Note>, PageInfo>> fetchNotesOfConversation({
     @required String conversationId,
     int page = 0,
   }) async {
@@ -49,7 +49,7 @@ class NoteAPI {
       });
       Map<String, dynamic> pageInfo =
           response.data['note']['notesPaging']['pageInfo'];
-      return Tuple2(notes, NotePagingInfo.fromJson(pageInfo));
+      return Tuple2(notes, PageInfo.fromJson(pageInfo));
     }
   }
 

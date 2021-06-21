@@ -2,22 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 
-class OrdersPending extends StatefulWidget {
-  @override
-  _OrdersPendingState createState() => _OrdersPendingState();
-}
-
-class _OrdersPendingState extends State<OrdersPending> {
-  int _orderCheck;
-  int _orderPayment;
-  int _orderReturn;
-  int _orderDelivery;
+class OrdersPending extends StatelessWidget {
+  final int _orderCheck = 10;
+  final int _orderPayment = 1;
+  final int _orderReturn = 4;
+  final int _orderDelivery = 1;
   @override
   Widget build(BuildContext context) {
-    _orderCheck = 10;
-    _orderPayment = 2;
-    _orderReturn = 4;
-    _orderDelivery = 15;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -52,13 +43,13 @@ class _OrdersPendingState extends State<OrdersPending> {
           ),
           child: Column(
             children: [
-              _orderWaitCheck(),
+              _orderWaitCheck(context),
               Divider(),
-              _orderWaitTranport(),
+              _orderWaitTranport(context),
               Divider(),
-              _orderWaitPayment(),
+              _orderWaitPayment(context),
               Divider(),
-              _orderWaitReturn(),
+              _orderWaitReturn(context),
             ],
           ),
         ),
@@ -66,7 +57,7 @@ class _OrdersPendingState extends State<OrdersPending> {
     );
   }
 
-  Widget _orderWaitCheck() {
+  Widget _orderWaitCheck(BuildContext context) {
     return Row(
       children: [
         SizedBox(
@@ -95,7 +86,7 @@ class _OrdersPendingState extends State<OrdersPending> {
     );
   }
 
-  Widget _orderWaitTranport() {
+  Widget _orderWaitTranport(BuildContext context) {
     return Row(
       children: [
         SizedBox(
@@ -124,7 +115,7 @@ class _OrdersPendingState extends State<OrdersPending> {
     );
   }
 
-  Widget _orderWaitPayment() {
+  Widget _orderWaitPayment(BuildContext context) {
     return Row(
       children: [
         SizedBox(
@@ -153,7 +144,7 @@ class _OrdersPendingState extends State<OrdersPending> {
     );
   }
 
-  Widget _orderWaitReturn() {
+  Widget _orderWaitReturn(BuildContext context) {
     return Row(
       children: [
         SizedBox(

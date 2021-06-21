@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-import 'Product.dart';
+import 'Product/Product.dart';
 
 class Cart extends ChangeNotifier {
   final Map<Product, int> _products = new Map<Product, int>();

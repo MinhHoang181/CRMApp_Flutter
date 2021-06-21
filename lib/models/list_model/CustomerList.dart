@@ -1,30 +1,14 @@
 import 'dart:collection';
 
 import 'package:cntt2_crm/models/Customer.dart';
+import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/customer_api.dart';
 import 'package:flutter/material.dart';
-
-class CustomerPagingInfor {
-  bool hasNextPage = false;
-  int currentPage = 1;
-
-  CustomerPagingInfor({
-    @required this.hasNextPage,
-    @required this.currentPage,
-  });
-
-  factory CustomerPagingInfor.fromJson(Map<String, dynamic> json) {
-    return CustomerPagingInfor(
-      hasNextPage: json['hasNextPage'],
-      currentPage: json['currentPage'],
-    );
-  }
-}
 
 class CustomerList extends ChangeNotifier {
   Map<String, dynamic> _list;
   final String conversationId;
-  CustomerPagingInfor pageInfo;
+  PageInfo pageInfo;
 
   CustomerList({this.conversationId});
 

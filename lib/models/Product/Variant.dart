@@ -1,38 +1,35 @@
 import 'package:cntt2_crm/models/Product/Attribute.dart';
 import 'package:flutter/material.dart';
 
-class CartProduct {
-  final String id;
-  final String productId;
-  final String name;
-  final int variantId;
-  int quantity;
+class Variant {
+  final int id;
+  final String barcode;
   final int price;
+  final int inPrice;
+  final int salePrice;
   final List<Attribute> attributes;
 
-  CartProduct({
+  Variant({
     @required this.id,
-    @required this.productId,
-    @required this.name,
-    @required this.variantId,
+    @required this.barcode,
     @required this.price,
-    @required this.quantity,
+    @required this.inPrice,
+    @required this.salePrice,
     @required this.attributes,
   });
 
-  factory CartProduct.fromJson(Map<String, dynamic> json) {
+  factory Variant.fromJson(Map<String, dynamic> json) {
     List<dynamic> attributesJson = json['attributes'];
     List<Attribute> attributes = List.empty(growable: true);
     attributesJson.forEach((attribute) {
       attributes.add(Attribute.fromJson(attribute));
     });
-    return CartProduct(
-      id: json['_id'],
-      productId: json['product_id_ref'],
-      name: json['product_name'],
-      variantId: json['variant_id'],
+    return Variant(
+      id: json['id'],
+      barcode: json['barcode'],
       price: json['price'],
-      quantity: json['qty'],
+      inPrice: json['in_price'],
+      salePrice: json['sale_price'],
       attributes: attributes,
     );
   }
@@ -40,7 +37,7 @@ class CartProduct {
   String attributesToString() {
     String text = '';
     for (var i = 0; i < attributes.length; i++) {
-      text += attributes[i].name + ':' + attributes[i].value;
+      text += attributes[i].name + ': ' + attributes[i].value;
       if (i < attributes.length - 1) {
         text += '; ';
       }

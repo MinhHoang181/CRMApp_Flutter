@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 //Components
 import '../../../../components/address_info.dart';
 
-class Body extends StatefulWidget {
-  @override
-  _BodyState createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
+class Body extends StatelessWidget {
   String _name;
   String _phone;
   String _email;

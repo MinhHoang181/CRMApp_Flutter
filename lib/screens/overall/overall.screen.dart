@@ -22,9 +22,7 @@ class OverallScreen extends StatelessWidget {
         image: AssetImage('assets/images/appbar-background.png'),
         fit: BoxFit.cover,
       ),
-    elevation: 0,
+      elevation: 0,
     );
   }
-
-
 }

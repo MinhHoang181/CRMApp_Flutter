@@ -14,17 +14,7 @@ class SelectProductScreen extends StatefulWidget {
 }
 
 class _SelectProductScreenState extends State<SelectProductScreen> {
-  List<String> _dropdownList = [
-    'Tất cả sản phẩm',
-  ];
-  String _filter;
   bool _isMutil = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _filter = _dropdownList.first;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +22,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       appBar: _selectProductScreenAppBar(context),
       body: Provider.value(
         value: _isMutil,
-        child: Body(),
+        child: const Body(),
       ),
       bottomNavigationBar: _isMutil ? _selectOptionButton(context) : null,
     );
@@ -43,7 +33,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       centerTitle: false,
       title: _searchBar(),
       bottom: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: Size.fromHeight(50),
         child: _toolBar(),
       ),
     );
@@ -53,14 +43,15 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
     return Container(
       height: 45,
       child: TextField(
-        textAlignVertical: TextAlignVertical.bottom,
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
-            color: Theme.of(context).accentColor,
-          ),
-          hintText: "Tên, SKU, Barcode",
-        ),
+            prefixIcon: Icon(
+              Icons.search,
+              color: Theme.of(context).accentColor,
+            ),
+            hintText: "Tên, SKU, Barcode",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+            )),
       ),
     );
   }
@@ -74,21 +65,6 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       ),
       child: Row(
         children: [
-          DropdownButton<String>(
-            elevation: 0,
-            value: _filter,
-            items: _dropdownList.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (String newValue) {
-              setState(() {
-                _filter = newValue;
-              });
-            },
-          ),
           Spacer(),
           Text(
             'Chọn nhiều',

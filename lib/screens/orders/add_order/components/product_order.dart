@@ -5,18 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:cntt2_crm/constants/images.dart' as Images;
 
 //Models
-import 'package:cntt2_crm/models/Product.dart';
+import 'package:cntt2_crm/models/Product/Product.dart';
 import 'package:cntt2_crm/models/Cart.dart';
 
 //Screens
-import 'package:cntt2_crm/screens/orders/select_product/select_product.screen.dart';
+import '../select_product/select_product.screen.dart';
 
-class ProductOrder extends StatefulWidget {
-  @override
-  _ProductOrderState createState() => _ProductOrderState();
-}
-
-class _ProductOrderState extends State<ProductOrder> {
+class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);
@@ -72,9 +67,9 @@ class _ProductOrderState extends State<ProductOrder> {
   Widget _buildRow(BuildContext context, Product product) {
     int _total = Provider.of<Cart>(context).products[product];
     return ListTile(
-      leading: product.image.isEmpty
+      leading: product.photos.isEmpty
           ? Image.asset(Images.IMAGE_HOLDER)
-          : Image.network(product.image),
+          : Image.network(product.photos[0].url),
       title: Text(
         product.name,
         style: TextStyle(
@@ -85,7 +80,7 @@ class _ProductOrderState extends State<ProductOrder> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'SKU: ' + product.sku,
+            'SKU: ' + product.numberId.toString(),
             style: Theme.of(context).textTheme.subtitle2,
           ),
           Text(
