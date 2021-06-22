@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:cntt2_crm/constants/images.dart' as Images;
+import 'package:cntt2_crm/constants/images.dart' as MyImage;
 
 //Models
-import 'package:cntt2_crm/models/Product/Product.dart';
 import 'package:cntt2_crm/models/Cart.dart';
+import 'package:cntt2_crm/models/Product/Photo.dart';
+import 'package:cntt2_crm/models/Product/Variant.dart';
 
 //Screens
 import '../select_product/select_product.screen.dart';
@@ -15,32 +16,19 @@ class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);
-    final products = cart.products.keys.toList();
-
     return Container(
-      padding: EdgeInsets.only(
-        top: Layouts.SPACING,
-        left: Layouts.SPACING,
-        right: Layouts.SPACING,
-      ),
-      margin: EdgeInsets.only(bottom: Layouts.SPACING / 2),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).shadowColor,
-            blurRadius: 10,
-          ),
-        ],
-      ),
+      margin: EdgeInsets.all(Layouts.SPACING / 2),
       child: Column(
         children: [
-          ListView.separated(
+          ListView(
             shrinkWrap: true,
-            separatorBuilder: (context, index) => const Divider(),
-            itemCount: products.length,
-            itemBuilder: (context, index) =>
-                _buildRow(context, products[index]),
+            children: List.generate(
+              cart.products.length,
+              (index) => _buildRow(
+                context,
+                cart.products.keys.elementAt(index),
+              ),
+            ),
           ),
           TextButton(
             child: Text(
@@ -64,32 +52,99 @@ class ProductOrder extends StatelessWidget {
     );
   }
 
-  Widget _buildRow(BuildContext context, Product product) {
-    int _total = Provider.of<Cart>(context).products[product];
-    return ListTile(
-      leading: product.photos.isEmpty
-          ? Image.asset(Images.IMAGE_HOLDER)
-          : Image.network(product.photos[0].url),
-      title: Text(
-        product.name,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
+  Widget _buildRow(BuildContext context, Variant variant) {
+    final cart = Provider.of<Cart>(context);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(Layouts.SPACING / 2),
+        child: Row(
+          children: [
+            _imageProduct(variant.product.photos),
+            SizedBox(width: Layouts.SPACING),
+            Expanded(
+              child: _productInfo(context, variant),
+            ),
+            SizedBox(width: Layouts.SPACING),
+            _quantity(context, cart, variant)
+          ],
         ),
       ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'SKU: ' + product.numberId.toString(),
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
-          Text(
-            NumberFormat('#,###').format(product.price),
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-        ],
-      ),
-      trailing: Text('$_total'),
+    );
+  }
+
+  Widget _imageProduct(List<Photo> photos) {
+    final double size = 60;
+    if (photos.isEmpty) {
+      return Image.asset(
+        MyImage.IMAGE_HOLDER,
+        height: size,
+        width: size,
+      );
+    } else {
+      return Image.network(
+        photos[0].url,
+        height: size,
+        width: size,
+        errorBuilder: (context, error, stackTrace) => Image.asset(
+          MyImage.IMAGE_HOLDER,
+          height: size,
+          width: size,
+        ),
+      );
+    }
+  }
+
+  Widget _productInfo(BuildContext context, Variant variant) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          variant.product.name,
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 2,
+                color: Colors.blue,
+              ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
+        Text(
+          variant.attributesToString(),
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 2,
+              ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
+        Text(
+          NumberFormat('#,### đ').format(variant.finalPrice),
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 4,
+                color: Colors.yellow[700],
+              ),
+        ),
+      ],
+    );
+  }
+
+  Widget _quantity(BuildContext context, Cart cart, Variant variant) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(
+          iconSize: 20,
+          icon: Icon(Icons.remove),
+          onPressed: () => cart.remove(variant),
+        ),
+        Text(
+          cart.products[variant].toString(),
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 4,
+              ),
+        ),
+        IconButton(
+          iconSize: 20,
+          icon: Icon(Icons.add),
+          onPressed: () => cart.add(variant),
+        ),
+      ],
     );
   }
 }

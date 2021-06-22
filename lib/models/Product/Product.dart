@@ -11,6 +11,9 @@ class Product {
   final int salePrice;
   final List<Photo> photos;
   final VariantList variants;
+  final int total;
+
+  int get finalPrice => salePrice != null ? salePrice : price;
 
   Product({
     @required this.id,
@@ -21,6 +24,7 @@ class Product {
     @required this.salePrice,
     @required this.photos,
     @required this.variants,
+    @required this.total,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -39,6 +43,7 @@ class Product {
       salePrice: json['sale_price'],
       photos: photos,
       variants: new VariantList(productId: json['_id']),
+      total: json['stockData'] != null ? json['stockData']['total'] : 0,
     );
   }
 }

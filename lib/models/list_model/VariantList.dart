@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Product/Variant.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/product_api.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,9 @@ class VariantList {
   Future<VariantList> fetchData() async {
     if (_list == null) {
       _list = new Map<int, Variant>();
-      final variants =
-          await ProductAPI.fetchVariantOfProduct(productId: this.productId);
+      final variants = await ProductAPI.fetchVariantOfProduct(
+        product: AzsalesData.instance.products.map[this.productId],
+      );
       if (variants != null) {
         _addList(variants);
       }

@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -30,6 +31,7 @@ class ListProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productList = Provider.of<ProductList>(context);
+    final cart = Provider.of<Cart>(context);
     return SmartRefresher(
       header: ClassicHeader(
         idleText: 'Kéo xuống để làm mới danh sách sản phẩm',
@@ -51,8 +53,12 @@ class ListProduct extends StatelessWidget {
       child: ListView.builder(
         itemCount: productList.map.length,
         itemBuilder: (context, index) {
-          return Provider<Product>.value(
-            value: productList.map.values.elementAt(index),
+          return MultiProvider(
+            providers: [
+              Provider<Product>.value(
+                  value: productList.map.values.elementAt(index)),
+              ChangeNotifierProvider<Cart>.value(value: cart),
+            ],
             child: ProductItem(),
           );
         },

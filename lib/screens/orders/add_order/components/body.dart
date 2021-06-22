@@ -19,38 +19,41 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-    return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                if (cart.products.isEmpty) ...[
-                  InkWell(
-                    child: NoProductOrder(),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ChangeNotifierProvider.value(
-                          value: cart,
-                          child: SelectProductScreen(),
+    return Container(
+      color: Theme.of(context).shadowColor.withOpacity(0.4),
+      child: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  if (cart.products.isEmpty) ...[
+                    InkWell(
+                      child: NoProductOrder(),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChangeNotifierProvider.value(
+                            value: cart,
+                            child: SelectProductScreen(),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ] else ...[
-                  ProductOrder(),
+                  ] else ...[
+                    ProductOrder(),
+                  ],
+                  TotalCostInfo(),
+                  SizedBox(height: Layouts.SPACING / 2),
+                  DeliveryInfo(),
+                  SizedBox(height: Layouts.SPACING / 2),
+                  PaymentInfo(),
+                  SizedBox(height: 50),
                 ],
-                TotalCostInfo(),
-                SizedBox(height: Layouts.SPACING / 2),
-                DeliveryInfo(),
-                SizedBox(height: Layouts.SPACING / 2),
-                PaymentInfo(),
-                SizedBox(height: 50),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
@@ -70,26 +69,6 @@ class DeliveryInfo extends StatelessWidget {
             labelText: 'Số điện thoại',
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _address(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
-          child: Text(
-            'Địa chỉ giao hàng',
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
-                ),
-          ),
-        ),
-        SizedBox(height: Layouts.SPACING / 2),
-        AddressInfo(),
       ],
     );
   }

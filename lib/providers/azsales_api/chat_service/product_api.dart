@@ -31,6 +31,9 @@ class ProductAPI {
                   _id,
                   url,
                 }
+                stockData {
+                  total,
+                }
               }
             }
           }
@@ -57,14 +60,14 @@ class ProductAPI {
   }
 
   static Future<List<Variant>> fetchVariantOfProduct({
-    @required String productId,
+    @required Product product,
   }) async {
     final QueryOptions options = QueryOptions(
       document: gql(
         '''
         query {
           product {
-            productById(_id: "$productId") {
+            productById(_id: "${product.id}") {
               variants {
                 id
                 barcode
@@ -76,6 +79,9 @@ class ProductAPI {
                   value
                 }
               }
+            }
+            productQtyById(_id: "${product.id}") {
+              qty_by_variant
             }
           }
         }
@@ -92,7 +98,8 @@ class ProductAPI {
           response.data['product']['productById']['variants'];
       List<Variant> variants = List.empty(growable: true);
       variantsJson.forEach((variant) {
-        variants.add(Variant.fromJson(variant));
+        Map<String, dynamic> total = response.data['product']['productQtyById'];
+        variants.add(Variant.fromJson(product, variant, total));
       });
       return variants;
     }

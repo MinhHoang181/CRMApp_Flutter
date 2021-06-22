@@ -1,11 +1,12 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Product/Variant.dart';
 import 'package:flutter/material.dart';
 
 import 'Product/Product.dart';
 
 class Cart extends ChangeNotifier {
-  final Map<Product, int> _products = new Map<Product, int>();
+  final Map<Variant, int> _products = new Map<Variant, int>();
 
   UnmodifiableMapView get products => UnmodifiableMapView(_products);
 
@@ -19,8 +20,8 @@ class Cart extends ChangeNotifier {
 
   int getTotalPrice() {
     int _total = 0;
-    _products.forEach((key, value) {
-      _total += key.price * value;
+    _products.forEach((variant, number) {
+      _total += variant.finalPrice * number;
     });
     return _total;
   }
@@ -32,21 +33,23 @@ class Cart extends ChangeNotifier {
     return _total;
   }
 
-  void add(Product product) {
-    if (_products.containsKey(product)) {
-      _products[product]++;
+  void add(Variant variant) {
+    if (_products.containsKey(variant)) {
+      if (variant.total > _products[variant]) {
+        _products[variant]++;
+      }
     } else {
-      _products.putIfAbsent(product, () => 1);
+      _products.putIfAbsent(variant, () => 1);
     }
     notifyListeners();
   }
 
-  void remove(Product product) {
-    if (_products.containsKey(product)) {
-      if (_products[product] <= 1) {
-        _products.remove(product);
+  void remove(Variant variant) {
+    if (_products.containsKey(variant)) {
+      if (_products[variant] <= 1) {
+        _products.remove(variant);
       } else {
-        _products[product]--;
+        _products[variant]--;
       }
       notifyListeners();
     }
@@ -55,5 +58,15 @@ class Cart extends ChangeNotifier {
   void removeAll() {
     _products.clear();
     notifyListeners();
+  }
+
+  int totalSelectOfProduct(Product product) {
+    int total = 0;
+    product.variants.map.values.forEach((variant) {
+      if (products.containsKey(variant)) {
+        total += products[variant];
+      }
+    });
+    return total;
   }
 }
