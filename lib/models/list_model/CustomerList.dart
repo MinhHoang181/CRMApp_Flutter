@@ -30,7 +30,9 @@ class CustomerList extends ChangeNotifier {
       if (conversationId != null) {
         final customers = await CustomerAPI.fetchAllCustomersOfConversation(
             conversationId: this.conversationId);
-        _addList(customers);
+        if (customers != null) {
+          _addList(customers);
+        }
       }
     }
     return this;

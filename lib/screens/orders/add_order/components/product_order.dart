@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:cntt2_crm/constants/images.dart' as MyImage;
@@ -54,21 +55,32 @@ class ProductOrder extends StatelessWidget {
 
   Widget _buildRow(BuildContext context, Variant variant) {
     final cart = Provider.of<Cart>(context);
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(Layouts.SPACING / 2),
-        child: Row(
-          children: [
-            _imageProduct(variant.product.photos),
-            SizedBox(width: Layouts.SPACING),
-            Expanded(
-              child: _productInfo(context, variant),
-            ),
-            SizedBox(width: Layouts.SPACING),
-            _quantity(context, cart, variant)
-          ],
+    return Slidable(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(Layouts.SPACING / 2),
+          child: Row(
+            children: [
+              _imageProduct(variant.product.photos),
+              SizedBox(width: Layouts.SPACING),
+              Expanded(
+                child: _productInfo(context, variant),
+              ),
+              SizedBox(width: Layouts.SPACING),
+              _quantity(context, cart, variant)
+            ],
+          ),
         ),
       ),
+      secondaryActions: [
+        IconSlideAction(
+          icon: Icons.delete_rounded,
+          caption: 'Xoá',
+          color: Colors.red,
+          onTap: () => cart.delete(variant),
+        ),
+      ],
+      actionPane: SlidableScrollActionPane(),
     );
   }
 

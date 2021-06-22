@@ -66,8 +66,10 @@ class NoteList extends ChangeNotifier {
       _list = new Map<String, Note>();
       final data = await NoteAPI.fetchNotesOfConversation(
           conversationId: this.conversationId);
-      _addList(data.item1);
-      pageInfo = data.item2;
+      if (data != null) {
+        _addList(data.item1);
+        pageInfo = data.item2;
+      }
     }
     return this;
   }

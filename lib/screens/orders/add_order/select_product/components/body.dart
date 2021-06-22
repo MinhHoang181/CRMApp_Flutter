@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 //Models
 import 'package:cntt2_crm/models/list_model/ProductList.dart';
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:provider/provider.dart';
 
 //Components
@@ -13,9 +12,10 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<ProductList>(context);
     return SafeArea(
       child: FutureBuilder<ProductList>(
-        future: AzsalesData.instance.products.fetchData(),
+        future: products.fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ChangeNotifierProvider<ProductList>.value(

@@ -1,12 +1,17 @@
-import 'package:cntt2_crm/models/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'package:flutter/services.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 
 //Components
 import 'components/body.dart';
+
+//Models
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Cart.dart';
+import 'package:cntt2_crm/models/list_model/ProductList.dart';
 
 class SelectProductScreen extends StatefulWidget {
   @override
@@ -15,13 +20,20 @@ class SelectProductScreen extends StatefulWidget {
 
 class _SelectProductScreenState extends State<SelectProductScreen> {
   bool _isMutil = false;
-
+  final TextEditingController _search = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _selectProductScreenAppBar(context),
-      body: Provider.value(
-        value: _isMutil,
+      body: MultiProvider(
+        providers: [
+          Provider.value(
+            value: _isMutil,
+          ),
+          ChangeNotifierProvider<ProductList>.value(
+            value: AzsalesData.instance.products,
+          ),
+        ],
         child: const Body(),
       ),
       bottomNavigationBar: _isMutil ? _selectOptionButton(context) : null,
@@ -43,15 +55,19 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
     return Container(
       height: 45,
       child: TextField(
+        controller: _search,
         decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.search,
-              color: Theme.of(context).accentColor,
-            ),
-            hintText: "Tên, SKU, Barcode",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-            )),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).accentColor,
+          ),
+          hintText: "Tên, Barcode",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+        onEditingComplete: () =>
+            AzsalesData.instance.products.searchProduct(_search.text),
       ),
     );
   }
@@ -78,8 +94,6 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
             onToggle: (val) {
               setState(() {
                 _isMutil = val;
-                if (!_isMutil)
-                  Provider.of<Cart>(context, listen: false).removeAll();
               });
             },
           )

@@ -8,7 +8,8 @@ import '../Conversation/Conversation.dart';
 
 class ConversationList extends ChangeNotifier {
   Map<String, Conversation> _list;
-  PagingInfo pageInfo;
+  PagingInfo pageInfo =
+      new PagingInfo(hasNextPage: false, next: 1, start: 1, min: 20);
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
 

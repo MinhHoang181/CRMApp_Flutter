@@ -7,7 +7,7 @@ import 'package:graphql/client.dart';
 import 'package:tuple/tuple.dart';
 
 class ProductAPI {
-  static Future<Tuple2<List<Product>, PageInfo>> fetchAllProduct({
+  static Future<Tuple2<List<Product>, PageInfo>> fetchProductPaging({
     int page = 1,
   }) async {
     final QueryOptions options = QueryOptions(
@@ -59,6 +59,59 @@ class ProductAPI {
     }
   }
 
+  static Future<List<Product>> fetchProducts({String text = ''}) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          product {
+            lookup(text: "$text") {
+              _id
+              id
+              name
+              price
+              in_price
+              sale_price
+              photos {
+                _id
+                url
+              }
+              variants {
+                id
+                barcode
+                price
+                in_price
+                sale_price
+                attributes {
+                  name
+                  value
+                }
+              }
+              stockData {
+                total
+                qty_by_variant
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options);
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      List<dynamic> productsJson = response.data['product']['lookup'];
+      List<Product> products = List.empty(growable: true);
+      productsJson.forEach((product) {
+        products.add(Product.fromJsonSearch(product));
+      });
+      return products;
+    }
+  }
+
   static Future<List<Variant>> fetchVariantOfProduct({
     @required Product product,
   }) async {
@@ -94,9 +147,12 @@ class ProductAPI {
       print(response.exception.toString());
       return null;
     } else {
+      List<Variant> variants = List.empty(growable: true);
+      if (response.data['product']['productById'] == null) return variants;
+
       List<dynamic> variantsJson =
           response.data['product']['productById']['variants'];
-      List<Variant> variants = List.empty(growable: true);
+
       variantsJson.forEach((variant) {
         Map<String, dynamic> total = response.data['product']['productQtyById'];
         variants.add(Variant.fromJson(product, variant, total));

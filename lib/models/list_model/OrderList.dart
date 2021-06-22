@@ -31,8 +31,10 @@ class OrderList extends ChangeNotifier {
           ? await OrderAPI.fetchOrdersOfConversation(
               conversationId: this.conversationId)
           : await OrderAPI.fetchOrders();
-      _addList(data.item1);
-      pageInfo = data.item2;
+      if (data != null) {
+        _addList(data.item1);
+        pageInfo = data.item2;
+      }
     }
     return this;
   }

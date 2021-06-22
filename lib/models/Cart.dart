@@ -55,6 +55,13 @@ class Cart extends ChangeNotifier {
     }
   }
 
+  void delete(Variant variant) {
+    if (_products.containsKey(variant)) {
+      _products.remove(variant);
+      notifyListeners();
+    }
+  }
+
   void removeAll() {
     _products.clear();
     notifyListeners();
@@ -62,9 +69,10 @@ class Cart extends ChangeNotifier {
 
   int totalSelectOfProduct(Product product) {
     int total = 0;
-    product.variants.map.values.forEach((variant) {
-      if (products.containsKey(variant)) {
-        total += products[variant];
+    if (_products.isEmpty) return 0;
+    _products.forEach((variant, number) {
+      if (variant.product == product) {
+        total += number;
       }
     });
     return total;
