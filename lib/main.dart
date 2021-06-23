@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: "Du an CNTT2 - Cham soc khach hang",
       debugShowCheckedModeBanner: false,
       theme: ligthThemeData(context),
-      darkTheme: darkThemeData(context),
+      //darkTheme: darkThemeData(context),
       home: LoginScreen(),
     );
   }

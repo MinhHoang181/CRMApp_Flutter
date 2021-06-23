@@ -1,16 +1,20 @@
 import 'package:badges/badges.dart';
-import 'package:cntt2_crm/models/Cart.dart';
-import 'package:cntt2_crm/models/list_model/VariantList.dart';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:cntt2_crm/constants/images.dart' as MyImage;
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Models
 import 'package:cntt2_crm/models/Product/Product.dart';
 import 'package:cntt2_crm/models/Product/Variant.dart';
+import 'package:cntt2_crm/models/Cart.dart';
+import 'package:cntt2_crm/models/Product/Photo.dart';
+import 'package:cntt2_crm/models/list_model/VariantList.dart';
+
+//Components
+import 'package:cntt2_crm/components/image_item.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({Key key}) : super(key: key);
@@ -58,11 +62,7 @@ class ProductItem extends StatelessWidget {
           ),
           badgeColor: Colors.blueAccent,
           padding: EdgeInsets.all(8),
-          child: Image.asset(
-            MyImage.IMAGE_HOLDER,
-            height: 80,
-            width: 80,
-          ),
+          child: _imageProduct(product.photos),
         ),
         SizedBox(width: Layouts.SPACING),
         Expanded(
@@ -233,13 +233,14 @@ class ProductItem extends StatelessWidget {
     if (!isMutil) Navigator.of(context).pop();
   }
 
-  Widget _price(BuildContext context, int salePrice, int price, int total) {
+  Widget _price(
+      BuildContext context, double salePrice, double price, int total) {
     return total > 0
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (salePrice == null) ...[
+              if (salePrice == null && price != null) ...[
                 Text(
                   NumberFormat('#,### đ').format(price),
                 ),
@@ -258,6 +259,14 @@ class ProductItem extends StatelessWidget {
             ],
           )
         : _outOfStock(context);
+  }
+
+  Widget _imageProduct(List<Photo> photos) {
+    final double size = 80;
+    return ImageItem(
+      url: photos.isNotEmpty ? photos[0].url : null,
+      size: Size(size, size),
+    );
   }
 
   Widget _noVariant() {

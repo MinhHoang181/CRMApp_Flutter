@@ -7,25 +7,35 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'product_item.dart';
 
 //Models
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Product/Product.dart';
 import 'package:cntt2_crm/models/list_model/ProductList.dart';
 
-class ListProduct extends StatelessWidget {
-  final RefreshController _refreshController = RefreshController();
+class ListProduct extends StatefulWidget {
+  const ListProduct({Key key}) : super(key: key);
 
-  void _onRefresh() async {
-    await AzsalesData.instance.products.refreshData();
-    _refreshController.refreshCompleted();
+  @override
+  _ListProductState createState() => _ListProductState();
+}
+
+class _ListProductState extends State<ListProduct> {
+  final RefreshController _refreshController = RefreshController();
+  void _onRefresh(ProductList products) async {
+    bool check = await products.refreshData();
+    if (check) {
+      _refreshController.refreshCompleted();
+      return;
+    }
+    _refreshController.refreshFailed();
   }
 
-  void _onLoading() async {
-    bool check = await AzsalesData.instance.products.loadMoreData();
+  void _onLoading(ProductList products) async {
+    bool check = await products.loadMoreData();
+    if (mounted) setState(() {});
     if (check) {
       _refreshController.loadComplete();
-    } else {
-      _refreshController.loadNoData();
+      return;
     }
+    _refreshController.loadFailed();
   }
 
   @override
@@ -45,10 +55,12 @@ class ListProduct extends StatelessWidget {
         canLoadingText: 'Tải thêm sản phẩm',
         loadingText: 'Đang tải thêm sản phẩm',
         noDataText: 'Đã tải hết sản phẩm',
-        failedText: 'Tải tin nhắn sản phẩm',
+        failedText: 'Tải sản phẩm thất bại',
       ),
-      onRefresh: _onRefresh,
-      onLoading: _onLoading,
+      onRefresh: () => _onRefresh(productList),
+      onLoading: () {
+        _onLoading(productList);
+      },
       controller: _refreshController,
       child: ListView.builder(
         itemCount: productList.map.length,

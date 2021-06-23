@@ -35,7 +35,7 @@ ThemeData ligthThemeData(BuildContext context) {
       thickness: 0.3,
     ),
     //Color
-    backgroundColor :Colors.PRIMARY,
+    backgroundColor: Colors.PRIMARY,
     accentColor: Colors.TEXT_BLACK,
     primaryColor: Colors.PRIMARY,
     scaffoldBackgroundColor: Colors.BACKGROUND_LIGHT_THEME,
@@ -93,6 +93,8 @@ InputDecorationTheme inputDecorationTheme(BuildContext context) =>
       ),
       hintStyle: Theme.of(context).textTheme.bodyText2,
       labelStyle: Theme.of(context).textTheme.bodyText2,
+      errorStyle:
+          Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.ERROR),
     );
 
 TextTheme textTheme(BuildContext context, Color color) {
@@ -118,7 +120,7 @@ TextTheme textTheme(BuildContext context, Color color) {
           color: color.withOpacity(1),
         ),
         subtitle2: TextStyle(
-          fontSize: Fonts.SIZE_TEXT_LARGE -3,
+          fontSize: Fonts.SIZE_TEXT_LARGE - 3,
           fontWeight: FontWeight.bold,
           color: color.withOpacity(0.55),
         ),

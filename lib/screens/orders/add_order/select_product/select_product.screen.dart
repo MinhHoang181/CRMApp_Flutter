@@ -1,7 +1,7 @@
+import 'package:cntt2_crm/components/progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
-import 'package:flutter/services.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 
@@ -42,33 +42,44 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
 
   Widget _selectProductScreenAppBar(BuildContext context) {
     return AppBar(
-      centerTitle: false,
       title: _searchBar(),
       bottom: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: Size.fromHeight(60),
         child: _toolBar(),
       ),
     );
   }
 
   Widget _searchBar() {
-    return Container(
-      height: 45,
-      child: TextField(
-        controller: _search,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
-            color: Theme.of(context).accentColor,
-          ),
-          hintText: "Tên, Barcode",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
+    return TextField(
+      controller: _search,
+      style: Theme.of(context).textTheme.bodyText2,
+      decoration: InputDecoration(
+        prefixIcon: Icon(
+          Icons.search,
+          color: Theme.of(context).accentColor,
         ),
-        onEditingComplete: () =>
-            AzsalesData.instance.products.searchProduct(_search.text),
+        hintText: "Tên, Barcode",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
       ),
+      onEditingComplete: () {
+        if (_search.text.isNotEmpty) {
+          showDialog<bool>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => ProgressDialog(
+              future: AzsalesData.instance.products.searchProduct(_search.text),
+              loading: 'Đang tìm kiếm sản phẩm',
+              success: 'Tìm kiếm sản phẩm thành công',
+              falied: 'Tìm kiếm sản phẩm thất bại',
+            ),
+          ).then(
+            (value) => value ? _search.text = '' : null,
+          );
+        }
+      },
     );
   }
 
@@ -81,24 +92,59 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       ),
       child: Row(
         children: [
+          _filterDropdown(),
           Spacer(),
-          Text(
-            'Chọn nhiều',
-            style: TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM),
-          ),
-          SizedBox(width: Layouts.SPACING),
-          FlutterSwitch(
-            height: 30,
-            width: 50,
-            value: _isMutil,
-            onToggle: (val) {
-              setState(() {
-                _isMutil = val;
-              });
-            },
-          )
+          _mutilChoice(),
         ],
       ),
+    );
+  }
+
+  Widget _mutilChoice() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(
+          'Chọn nhiều',
+          style: TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM),
+        ),
+        SizedBox(width: Layouts.SPACING / 2),
+        FlutterSwitch(
+          height: 30,
+          width: 50,
+          value: _isMutil,
+          onToggle: (val) {
+            setState(() {
+              _isMutil = val;
+            });
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _filterDropdown() {
+    final productsList = AzsalesData.instance.products;
+    return DropdownButton<int>(
+      style: Theme.of(context).textTheme.bodyText2,
+      elevation: 0,
+      underline: Container(
+        height: 2,
+        color: Colors.blue,
+      ),
+      value: productsList.filterId,
+      items: List.generate(
+        ProductList.filter.length,
+        (index) => DropdownMenuItem(
+          value: index,
+          child: Text(ProductList.filter[index]),
+        ),
+      ),
+      onChanged: (value) {
+        setState(() {
+          productsList.filterId = value;
+        });
+      },
     );
   }
 

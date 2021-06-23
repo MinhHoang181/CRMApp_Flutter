@@ -3,7 +3,6 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:cntt2_crm/constants/images.dart' as MyImage;
 
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
@@ -12,6 +11,9 @@ import 'package:cntt2_crm/models/Product/Variant.dart';
 
 //Screens
 import '../select_product/select_product.screen.dart';
+
+//Components
+import 'package:cntt2_crm/components/image_item.dart';
 
 class ProductOrder extends StatelessWidget {
   @override
@@ -86,24 +88,10 @@ class ProductOrder extends StatelessWidget {
 
   Widget _imageProduct(List<Photo> photos) {
     final double size = 60;
-    if (photos.isEmpty) {
-      return Image.asset(
-        MyImage.IMAGE_HOLDER,
-        height: size,
-        width: size,
-      );
-    } else {
-      return Image.network(
-        photos[0].url,
-        height: size,
-        width: size,
-        errorBuilder: (context, error, stackTrace) => Image.asset(
-          MyImage.IMAGE_HOLDER,
-          height: size,
-          width: size,
-        ),
-      );
-    }
+    return ImageItem(
+      url: photos.isNotEmpty ? photos[0].url : null,
+      size: Size(size, size),
+    );
   }
 
   Widget _productInfo(BuildContext context, Variant variant) {

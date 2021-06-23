@@ -7,24 +7,31 @@ class Variant {
   final Product product;
   final int id;
   final String barcode;
-  final int price;
-  final int inPrice;
-  final int salePrice;
+  var _price;
+  double get price => _price != null ? _price.toDouble() : null;
+  var _inPrice;
+  double get inPrice => _inPrice != null ? _inPrice.toDouble() : null;
+  var _salePrice;
+  double get salePrice => _salePrice != null ? _salePrice.toDouble() : null;
   final List<Attribute> attributes;
   final int total;
 
-  int get finalPrice => salePrice != null ? salePrice : price;
+  double get finalPrice => salePrice != null ? salePrice : price;
 
   Variant({
     @required this.product,
     @required this.id,
     @required this.barcode,
-    @required this.price,
-    @required this.inPrice,
-    @required this.salePrice,
+    @required price,
+    @required inPrice,
+    @required salePrice,
     @required this.attributes,
     @required this.total,
-  });
+  }) {
+    this._price = price;
+    this._inPrice = inPrice;
+    this._salePrice = salePrice;
+  }
 
   factory Variant.fromJson(Product product, Map<String, dynamic> json,
       Map<String, dynamic> totalJson) {

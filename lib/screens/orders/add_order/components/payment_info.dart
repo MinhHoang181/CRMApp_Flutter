@@ -2,6 +2,10 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+//Models
+import 'package:cntt2_crm/models/Cart.dart';
 
 class PaymentInfo extends StatelessWidget {
   final TextEditingController _discount = TextEditingController();
@@ -46,6 +50,7 @@ class PaymentInfo extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Column(
       children: [
         TextField(
@@ -60,6 +65,7 @@ class PaymentInfo extends StatelessWidget {
             filled: false,
             labelText: 'Giảm giá',
           ),
+          onChanged: (value) => cart.discount,
         ),
         SizedBox(height: Layouts.SPACING),
         TextField(

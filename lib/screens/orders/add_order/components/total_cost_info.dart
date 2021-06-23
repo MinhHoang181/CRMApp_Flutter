@@ -1,6 +1,3 @@
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
-import 'package:cntt2_crm/models/Location/City.dart';
-
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:intl/intl.dart';
@@ -10,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:cntt2_crm/models/Cart.dart';
 import 'package:select_dialog/select_dialog.dart';
 import 'package:cntt2_crm/models/Stock.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 
 class TotalCostInfo extends StatelessWidget {
   @override
@@ -46,7 +44,7 @@ class TotalCostInfo extends StatelessWidget {
   Widget _body(BuildContext context) {
     final cart = Provider.of<Cart>(context);
     int _totalQuantity = cart.getTotalQuantity();
-    int _totalPrice = cart.getTotalPrice();
+    double _totalPrice = cart.getTotalPrice();
     return Column(
       children: [
         StorageSelect(),

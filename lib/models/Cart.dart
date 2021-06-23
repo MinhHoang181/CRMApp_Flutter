@@ -7,8 +7,34 @@ import 'Product/Product.dart';
 
 class Cart extends ChangeNotifier {
   final Map<Variant, int> _products = new Map<Variant, int>();
-
   UnmodifiableMapView get products => UnmodifiableMapView(_products);
+  int _discount = 0;
+  int get discount => _discount;
+  set discount(int value) {
+    _discount = value;
+    notifyListeners();
+  }
+
+  int _transfer = 0;
+  int get transfer => _transfer;
+  set transfer(int value) {
+    _transfer = value;
+    notifyListeners();
+  }
+
+  int _payment = 0;
+  int get payment => _payment;
+  set payment(int value) {
+    _transfer = value;
+    notifyListeners();
+  }
+
+  int _another = 0;
+  int get another => _another;
+  set another(int value) {
+    _another = value;
+    notifyListeners();
+  }
 
   int getTotalQuantity() {
     int _total = 0;
@@ -18,18 +44,16 @@ class Cart extends ChangeNotifier {
     return _total;
   }
 
-  int getTotalPrice() {
-    int _total = 0;
+  double getTotalPrice() {
+    double _total = 0;
     _products.forEach((variant, number) {
       _total += variant.finalPrice * number;
     });
     return _total;
   }
 
-  int getTotalCost() {
-    int feeShip = 0;
-    int discount = 0;
-    int _total = getTotalPrice() + feeShip - discount;
+  double getTotalCost() {
+    double _total = getTotalPrice() - discount - transfer - payment - another;
     return _total;
   }
 

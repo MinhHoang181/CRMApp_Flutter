@@ -8,26 +8,33 @@ class Product {
   final String id;
   final int numberId;
   final String name;
-  final int price;
-  final int inPrice;
-  final int salePrice;
+  var _price;
+  double get price => _price != null ? _price.toDouble() : null;
+  var _inPrice;
+  double get inPrice => _inPrice != null ? _inPrice.toDouble() : null;
+  var _salePrice;
+  double get salePrice => _salePrice != null ? _salePrice.toDouble() : null;
   final List<Photo> photos;
   final VariantList variants;
   final int total;
 
-  int get finalPrice => salePrice != null ? salePrice : price;
+  double get finalPrice => salePrice != null ? salePrice : price;
 
   Product({
     @required this.id,
     @required this.numberId,
     @required this.name,
-    @required this.price,
-    @required this.inPrice,
-    @required this.salePrice,
+    @required price,
+    @required inPrice,
+    @required salePrice,
     @required this.photos,
     @required this.variants,
     @required this.total,
-  });
+  }) {
+    this._price = price;
+    this._inPrice = inPrice;
+    this._salePrice = salePrice;
+  }
 
   factory Product.fromJson(Map<String, dynamic> json) {
     List<dynamic> photosJson = json['photos'];

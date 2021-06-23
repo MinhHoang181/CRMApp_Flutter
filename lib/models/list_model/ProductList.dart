@@ -6,12 +6,31 @@ import 'package:cntt2_crm/providers/azsales_api/chat_service/product_api.dart';
 import 'package:flutter/material.dart';
 
 class ProductList extends ChangeNotifier {
+  static List<String> filter = [
+    'Tất cả',
+    'Còn hàng',
+  ];
+  int _filterId = 0;
+  int get filterId => _filterId;
+  set filterId(int value) {
+    _filterId = value;
+    notifyListeners();
+  }
+
   PageInfo pageInfo;
   Map<String, Product> _list;
-  UnmodifiableMapView get map => UnmodifiableMapView(_list);
 
-  bool _isSearching = false;
-  String _search = '';
+  UnmodifiableMapView get map {
+    switch (_filterId) {
+      case 1:
+        final filter = Map.fromIterable(
+          _list.values.where((product) => product.total > 0),
+        );
+        return UnmodifiableMapView(filter);
+      default:
+        return UnmodifiableMapView(_list);
+    }
+  }
 
   void _addList(List<Product> products) {
     products.forEach((product) {
@@ -30,22 +49,20 @@ class ProductList extends ChangeNotifier {
         _addList(data.item1);
         pageInfo = data.item2;
       }
-    } else if (_isSearching) {
-      final products = await ProductAPI.fetchProducts(text: _search);
-      _isSearching = false;
-      _search = '';
-      if (products != null) {
-        _list.clear();
-        _addList(products);
-      }
     }
     return this;
   }
 
-  void searchProduct(String text) {
-    _isSearching = true;
-    _search = text;
-    notifyListeners();
+  Future<bool> searchProduct(String text) async {
+    final products = await ProductAPI.fetchProducts(text: text);
+    if (products != null) {
+      pageInfo.currentPage = 1;
+      pageInfo.hasNextPage = false;
+      _list.clear();
+      _addList(products);
+      return true;
+    }
+    return false;
   }
 
   Future<bool> refreshData() async {
