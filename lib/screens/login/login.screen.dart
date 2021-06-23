@@ -69,6 +69,14 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => Home(),
         ));
       },
+      theme: _loginTheme(context),
+    );
+  }
+
+  LoginTheme _loginTheme(BuildContext context) {
+    return LoginTheme(
+      primaryColor: Theme.of(context).primaryColor,
+      accentColor: Colors.white,
     );
   }
 }

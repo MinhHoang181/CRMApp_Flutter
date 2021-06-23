@@ -23,7 +23,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
           ),
           padding: EdgeInsets.symmetric(horizontal: Layouts.SPACING),
           child: Text(
-            'Đơn hàng chờ xử lý',
+            'Thông tin nền tảng',
             style: Theme.of(context).textTheme.subtitle1,
           ),
         ),

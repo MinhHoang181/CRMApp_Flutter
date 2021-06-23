@@ -39,14 +39,14 @@ class ConversationItem extends StatelessWidget {
                 Text(
                   conversation.participants[0].name,
                   style: conversation.isRead
-                      ? Theme.of(context).textTheme.bodyText1.copyWith(
+                      ? Theme.of(context).textTheme.bodyText2.copyWith(
                             fontSize:
-                                Theme.of(context).textTheme.bodyText1.fontSize +
+                                Theme.of(context).textTheme.bodyText2.fontSize +
                                     2,
                           )
-                      : Theme.of(context).textTheme.bodyText1.copyWith(
+                      : Theme.of(context).textTheme.bodyText2.copyWith(
                             fontSize:
-                                Theme.of(context).textTheme.bodyText1.fontSize +
+                                Theme.of(context).textTheme.bodyText2.fontSize +
                                     2,
                             fontWeight: FontWeight.bold,
                           ),
@@ -55,7 +55,7 @@ class ConversationItem extends StatelessWidget {
                   Icons.arrow_forward_ios_rounded,
                   color: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyText2
                       .color
                       .withOpacity(0.5),
                   size: 14,
@@ -74,6 +74,7 @@ class ConversationItem extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: Layouts.SPACING / 2),
             Row(
               children: [
                 Expanded(
@@ -82,8 +83,8 @@ class ConversationItem extends StatelessWidget {
                         ? 'Bạn: ' + conversation.snippet
                         : conversation.snippet,
                     style: conversation.isRead
-                        ? Theme.of(context).textTheme.bodyText1
-                        : Theme.of(context).textTheme.bodyText1.copyWith(
+                        ? Theme.of(context).textTheme.bodyText2
+                        : Theme.of(context).textTheme.bodyText2.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                     overflow: TextOverflow.ellipsis,
@@ -93,8 +94,11 @@ class ConversationItem extends StatelessWidget {
             ),
             SizedBox(height: Layouts.SPACING / 2),
             Wrap(
-                children: List.generate(conversation.labelIds.length,
-                    (index) => _labelItem(conversation.labelIds[index]))),
+              children: List.generate(
+                conversation.labelIds.length,
+                (index) => _labelItem(conversation.labelIds[index]),
+              ),
+            ),
           ],
         ),
       ),

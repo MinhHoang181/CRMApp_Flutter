@@ -138,7 +138,10 @@ class Conversation extends ChangeNotifier {
       this.hasOrder = value.map.isNotEmpty;
       notifyListeners();
     });
-    customers.fetchData();
+    customers.fetchData().then((value) {
+      this.hasPhone = value.map.isNotEmpty;
+      notifyListeners();
+    });
     return this;
   }
 

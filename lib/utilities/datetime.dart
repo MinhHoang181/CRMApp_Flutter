@@ -53,6 +53,22 @@ String readTimestampHHDM(int timestamp) {
   return time;
 }
 
+String readTimestampHHDMYYYY(int timestamp) {
+  var now = DateTime.now();
+  now = DateTime(now.year, now.month, now.day);
+  var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+  var diff = now.difference(date);
+  var time = '';
+  if (diff.isNegative) {
+    time = DateFormat('HH:mm').format(date) + ', Hôm nay';
+  } else {
+    time = DateFormat('HH:mm').format(date) +
+        ', ' +
+        DateFormat('d/MM/yyyy').format(date);
+  }
+  return time;
+}
+
 DateTime _getNearestSunday() {
   var sunday = 7;
   var now = DateTime.now();
