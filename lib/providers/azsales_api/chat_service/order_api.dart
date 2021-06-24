@@ -1,12 +1,12 @@
 import 'package:cntt2_crm/models/Order/Order.dart';
-import 'package:cntt2_crm/models/list_model/OrderList.dart';
+import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 import 'package:tuple/tuple.dart';
 
 class OrderAPI {
-  static Future<Tuple2<List<Order>, OrderPagingInfor>> fetchOrders({
+  static Future<Tuple2<List<Order>, PageInfo>> fetchOrders({
     int page = 1,
   }) async {
     final QueryOptions options = QueryOptions(
@@ -78,12 +78,11 @@ class OrderAPI {
       });
       Map<String, dynamic> pageInfo =
           response.data['order']['ordersPaging']['pageInfo'];
-      return Tuple2(orders, OrderPagingInfor.fromJson(pageInfo));
+      return Tuple2(orders, PageInfo.fromJson(pageInfo));
     }
   }
 
-  static Future<Tuple2<List<Order>, OrderPagingInfor>>
-      fetchOrdersOfConversation({
+  static Future<Tuple2<List<Order>, PageInfo>> fetchOrdersOfConversation({
     @required String conversationId,
     int page = 1,
   }) async {
@@ -156,7 +155,7 @@ class OrderAPI {
       });
       Map<String, dynamic> pageInfo =
           response.data['order']['ordersPaging']['pageInfo'];
-      return Tuple2(orders, OrderPagingInfor.fromJson(pageInfo));
+      return Tuple2(orders, PageInfo.fromJson(pageInfo));
     }
   }
 }

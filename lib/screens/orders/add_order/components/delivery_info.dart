@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
@@ -19,10 +18,13 @@ class DeliveryInfo extends StatelessWidget {
           ),
         ],
       ),
-      child: ExpandablePanel(
-        header: _header(context),
-        collapsed: _collapsedDeliveryInfo(context),
-        expanded: _body(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _header(context),
+          SizedBox(height: Layouts.SPACING),
+          _body(context),
+        ],
       ),
     );
   }
@@ -31,17 +33,6 @@ class DeliveryInfo extends StatelessWidget {
     return Text(
       'Thông tin giao hàng',
       style: Theme.of(context).textTheme.subtitle1,
-    );
-  }
-
-  Widget _collapsedDeliveryInfo(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _customer(context),
-        SizedBox(height: Layouts.SPACING),
-        _address(context),
-      ],
     );
   }
 
@@ -78,26 +69,6 @@ class DeliveryInfo extends StatelessWidget {
             labelText: 'Số điện thoại',
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _address(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
-          child: Text(
-            'Địa chỉ giao hàng',
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
-                ),
-          ),
-        ),
-        SizedBox(height: Layouts.SPACING / 2),
-        AddressInfo(),
       ],
     );
   }
@@ -162,8 +133,6 @@ class DeliveryInfo extends StatelessWidget {
         SizedBox(height: Layouts.SPACING),
         DropDownTypeOrder(),
         SizedBox(height: Layouts.SPACING),
-        _address(context),
-        SizedBox(height: Layouts.SPACING),
         _note(context),
       ],
     );
@@ -218,7 +187,29 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
         if (_typeOrder != 1) ...[
           SizedBox(height: Layouts.SPACING),
           DropDownWhoReceive(),
+          SizedBox(height: Layouts.SPACING),
+          _address(context),
         ],
+      ],
+    );
+  }
+
+  Widget _address(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+          child: Text(
+            'Địa chỉ giao hàng',
+            style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                ),
+          ),
+        ),
+        SizedBox(height: Layouts.SPACING / 2),
+        AddressInfo(),
       ],
     );
   }

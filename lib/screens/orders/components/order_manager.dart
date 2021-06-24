@@ -5,21 +5,12 @@ import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 //Screens
 import '../list_order/list_order.screen.dart';
 
-class OrdersManager extends StatefulWidget {
-  @override
-  _OrdersManagerState createState() => _OrdersManagerState();
-}
-
-class _OrdersManagerState extends State<OrdersManager> {
-  int _newOrder;
-  int _newReturnOrder;
-  int _newDeliveryOrder;
+class OrdersManager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    _newOrder = 10;
-    _newDeliveryOrder = 5;
-    _newReturnOrder = 2;
-
+    int _newOrder = 1;
+    int _newReturnOrder = 0;
+    int _newDeliveryOrder = 0;
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: Layouts.SPACING,
@@ -44,7 +35,13 @@ class _OrdersManagerState extends State<OrdersManager> {
             ),
             title: Row(
               children: [
-                Text('Danh sách đơn hàng', style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500),),
+                Text(
+                  'Danh sách đơn hàng',
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
                 SizedBox(width: Layouts.SPACING),
                 Badge(
                   padding: EdgeInsets.all(Layouts.SPACING / 3),
@@ -56,7 +53,10 @@ class _OrdersManagerState extends State<OrdersManager> {
                 ),
               ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).accentColor,
+            ),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -66,7 +66,7 @@ class _OrdersManagerState extends State<OrdersManager> {
           ),
           Divider(),
           ListTile(
-            leading:  SizedBox(
+            leading: SizedBox(
               width: 32,
               height: 32,
               child: Image(
@@ -75,7 +75,11 @@ class _OrdersManagerState extends State<OrdersManager> {
             ),
             title: Row(
               children: [
-                Text('Khách trả hàng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500)),
+                Text('Khách trả hàng',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontWeight: FontWeight.w500)),
                 SizedBox(width: Layouts.SPACING),
                 Badge(
                   padding: EdgeInsets.all(Layouts.SPACING / 3),
@@ -87,11 +91,14 @@ class _OrdersManagerState extends State<OrdersManager> {
                 ),
               ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).accentColor,
+            ),
           ),
           Divider(),
           ListTile(
-            leading:  SizedBox(
+            leading: SizedBox(
               width: 30,
               height: 30,
               child: Image(
@@ -100,7 +107,11 @@ class _OrdersManagerState extends State<OrdersManager> {
             ),
             title: Row(
               children: [
-                Text('Quản lý giao hàng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500)),
+                Text('Quản lý giao hàng',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(fontWeight: FontWeight.w500)),
                 SizedBox(width: Layouts.SPACING),
                 Badge(
                   padding: EdgeInsets.all(Layouts.SPACING / 3),
@@ -112,7 +123,10 @@ class _OrdersManagerState extends State<OrdersManager> {
                 ),
               ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios,color: Theme.of(context).accentColor,),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Theme.of(context).accentColor,
+            ),
           ),
         ],
       ),

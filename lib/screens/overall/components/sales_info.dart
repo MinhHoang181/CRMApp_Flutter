@@ -1,24 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
-import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
-import 'package:google_fonts/google_fonts.dart';
-class SalesInfo extends StatefulWidget {
-  @override
-  _SalesInfoState createState() => _SalesInfoState();
-}
 
-class _SalesInfoState extends State<SalesInfo> {
-  int _moneyTotal;
-  int _newOrder;
-  int _cancelOrder;
-  int _returnOrder;
+class SalesInfo extends StatelessWidget {
+  final int _moneyTotal = 0;
+  final int _newOrder = 1;
+  final int _cancelOrder = 0;
+  final int _returnOrder = 0;
   @override
   Widget build(BuildContext context) {
-    _moneyTotal = 0;
-    _newOrder = 1;
-    _cancelOrder = 0;
-    _returnOrder = 0;
     return Container(
       margin: EdgeInsets.all(Layouts.SPACING),
       padding: EdgeInsets.all(Layouts.SPACING),

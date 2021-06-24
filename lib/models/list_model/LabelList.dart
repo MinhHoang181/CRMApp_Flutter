@@ -32,7 +32,10 @@ class LabelList extends ChangeNotifier {
   Future<LabelList> fetchData() async {
     if (_list == null) {
       _list = new Map<String, Label>();
-      _addList(await LabelAPI.fetchAllLabels());
+      final labels = await LabelAPI.fetchAllLabels();
+      if (labels != null) {
+        _addList(labels);
+      }
     }
     return this;
   }

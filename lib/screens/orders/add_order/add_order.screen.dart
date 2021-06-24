@@ -54,8 +54,9 @@ class AddOrderScreen extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      NumberFormat('#,###')
-                          .format(Provider.of<Cart>(context).getTotalCost()),
+                      NumberFormat('#,###').format(
+                              Provider.of<Cart>(context).getTotalCost()) +
+                          ' đ',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: Fonts.SIZE_TEXT_LARGE,
@@ -67,26 +68,9 @@ class AddOrderScreen extends StatelessWidget {
             ),
             TableRow(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        child: Text('Tạo đơn hàng'),
-                        onPressed: () => {},
-                      ),
-                    ),
-                    SizedBox(width: Layouts.SPACING),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white.withOpacity(0.6),
-                      ),
-                      child: Icon(
-                        Icons.more_horiz_rounded,
-                        color: Colors.black,
-                      ),
-                      onPressed: () => {},
-                    ),
-                  ],
+                ElevatedButton(
+                  child: Text('Tạo đơn hàng'),
+                  onPressed: () => {},
                 ),
               ],
             ),

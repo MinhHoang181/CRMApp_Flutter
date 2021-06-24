@@ -93,12 +93,8 @@ class ChatboxScreen extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MultiProvider(
-                providers: [
-                  ChangeNotifierProvider<Cart>(create: (context) => Cart()),
-                  ChangeNotifierProvider<CustomerList>.value(
-                      value: conversation.customers),
-                ],
+              builder: (context) => ChangeNotifierProvider(
+                create: (context) => Cart(),
                 child: AddOrderScreen(),
               ),
             ),

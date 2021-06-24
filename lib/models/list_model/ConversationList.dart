@@ -1,14 +1,15 @@
 import 'dart:collection';
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/ChatMessage.dart';
-import 'package:cntt2_crm/models/PagingInfo.dart';
+import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:flutter/material.dart';
 import '../Conversation/Conversation.dart';
 
 class ConversationList extends ChangeNotifier {
   Map<String, Conversation> _list;
-  PagingInfo pageInfo;
+  PagingInfo pageInfo =
+      new PagingInfo(hasNextPage: false, next: 1, start: 1, min: 20);
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
 

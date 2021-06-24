@@ -21,6 +21,9 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  cached_network_image: ^3.0.0
+  currency_text_input_formatter: ^2.0.1
+  mask_text_input_formatter: ^2.0.0
   expandable: ^5.0.1
   implicitly_animated_reorderable_list: ^0.4.0
   tuple: ^2.0.0

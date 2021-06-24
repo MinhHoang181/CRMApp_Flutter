@@ -1,29 +1,13 @@
 import 'dart:collection';
 
 import 'package:cntt2_crm/models/Order/Order.dart';
+import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/order_api.dart';
 import 'package:flutter/material.dart';
 
-class OrderPagingInfor {
-  bool hasNextPage = false;
-  int currentPage = 1;
-
-  OrderPagingInfor({
-    @required this.hasNextPage,
-    @required this.currentPage,
-  });
-
-  factory OrderPagingInfor.fromJson(Map<String, dynamic> json) {
-    return OrderPagingInfor(
-      hasNextPage: json['hasNextPage'],
-      currentPage: json['currentPage'],
-    );
-  }
-}
-
 class OrderList extends ChangeNotifier {
   Map<String, Order> _list;
-  OrderPagingInfor pageInfo;
+  PageInfo pageInfo;
   final String conversationId;
 
   OrderList({this.conversationId});
@@ -47,8 +31,10 @@ class OrderList extends ChangeNotifier {
           ? await OrderAPI.fetchOrdersOfConversation(
               conversationId: this.conversationId)
           : await OrderAPI.fetchOrders();
-      _addList(data.item1);
-      pageInfo = data.item2;
+      if (data != null) {
+        _addList(data.item1);
+        pageInfo = data.item2;
+      }
     }
     return this;
   }

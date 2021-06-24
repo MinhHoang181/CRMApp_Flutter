@@ -1,13 +1,40 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Product/Variant.dart';
 import 'package:flutter/material.dart';
 
-import 'Product.dart';
+import 'Product/Product.dart';
 
 class Cart extends ChangeNotifier {
-  final Map<Product, int> _products = new Map<Product, int>();
-
+  final Map<Variant, int> _products = new Map<Variant, int>();
   UnmodifiableMapView get products => UnmodifiableMapView(_products);
+  int _discount = 0;
+  int get discount => _discount;
+  set discount(int value) {
+    _discount = value;
+    notifyListeners();
+  }
+
+  int _transfer = 0;
+  int get transfer => _transfer;
+  set transfer(int value) {
+    _transfer = value;
+    notifyListeners();
+  }
+
+  int _payment = 0;
+  int get payment => _payment;
+  set payment(int value) {
+    _transfer = value;
+    notifyListeners();
+  }
+
+  int _another = 0;
+  int get another => _another;
+  set another(int value) {
+    _another = value;
+    notifyListeners();
+  }
 
   int getTotalQuantity() {
     int _total = 0;
@@ -17,37 +44,44 @@ class Cart extends ChangeNotifier {
     return _total;
   }
 
-  int getTotalPrice() {
-    int _total = 0;
-    _products.forEach((key, value) {
-      _total += key.price * value;
+  double getTotalPrice() {
+    double _total = 0;
+    _products.forEach((variant, number) {
+      _total += variant.finalPrice * number;
     });
     return _total;
   }
 
-  int getTotalCost() {
-    int feeShip = 0;
-    int discount = 0;
-    int _total = getTotalPrice() + feeShip - discount;
+  double getTotalCost() {
+    double _total = getTotalPrice() - discount - transfer - payment - another;
     return _total;
   }
 
-  void add(Product product) {
-    if (_products.containsKey(product)) {
-      _products[product]++;
+  void add(Variant variant) {
+    if (_products.containsKey(variant)) {
+      if (variant.total > _products[variant]) {
+        _products[variant]++;
+      }
     } else {
-      _products.putIfAbsent(product, () => 1);
+      _products.putIfAbsent(variant, () => 1);
     }
     notifyListeners();
   }
 
-  void remove(Product product) {
-    if (_products.containsKey(product)) {
-      if (_products[product] <= 1) {
-        _products.remove(product);
+  void remove(Variant variant) {
+    if (_products.containsKey(variant)) {
+      if (_products[variant] <= 1) {
+        _products.remove(variant);
       } else {
-        _products[product]--;
+        _products[variant]--;
       }
+      notifyListeners();
+    }
+  }
+
+  void delete(Variant variant) {
+    if (_products.containsKey(variant)) {
+      _products.remove(variant);
       notifyListeners();
     }
   }
@@ -55,5 +89,16 @@ class Cart extends ChangeNotifier {
   void removeAll() {
     _products.clear();
     notifyListeners();
+  }
+
+  int totalSelectOfProduct(Product product) {
+    int total = 0;
+    if (_products.isEmpty) return 0;
+    _products.forEach((variant, number) {
+      if (variant.product == product) {
+        total += number;
+      }
+    });
+    return total;
   }
 }

@@ -4,13 +4,7 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 import 'components/page_select.dart';
 
-class FacebookMessengerScreen extends StatefulWidget {
-  @override
-  _FacebookMessengerScreenState createState() =>
-      _FacebookMessengerScreenState();
-}
-
-class _FacebookMessengerScreenState extends State<FacebookMessengerScreen> {
+class FacebookMessengerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

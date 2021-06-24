@@ -8,16 +8,7 @@ import 'package:cntt2_crm/screens/labels/labels.screen.dart';
 import 'package:cntt2_crm/screens/login/login.screen.dart';
 import 'package:provider/provider.dart';
 
-class Setting extends StatefulWidget {
-  const Setting({Key key}) : super(key: key);
-
-
-  @override
-  _SettingState createState() => _SettingState();
-}
-
-class _SettingState extends State<Setting> {
-  bool _light = true;
+class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
@@ -220,12 +211,12 @@ class _SettingState extends State<Setting> {
       ),
       onTap: () => showDialog(
         context: context,
-        builder: (context) => _logoutDialog(),
+        builder: (context) => _logoutDialog(context),
       ),
     );
   }
 
-  Widget _logoutDialog() {
+  Widget _logoutDialog(BuildContext context) {
     return AlertDialog(
       content: Text('Bạn muốn đăng xuất?'),
       actions: [

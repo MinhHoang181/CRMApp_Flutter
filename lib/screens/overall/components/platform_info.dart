@@ -4,12 +4,7 @@ import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 import 'package:cntt2_crm/constants/enum.dart';
 
-class PlatformInfo extends StatefulWidget {
-  @override
-  _PlatformInfoState createState() => _PlatformInfoState();
-}
-
-class _PlatformInfoState extends State<PlatformInfo> {
+class PlatformInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,9 +41,9 @@ class _PlatformInfoState extends State<PlatformInfo> {
           ),
           child: Column(
             children: [
-              _platformRow(Platform.facebook, 1, 1),
+              _platformRow(context, Platform.facebook, 1, 1),
               Divider(),
-              _platformRow(Platform.zalo, 5, 3),
+              _platformRow(context, Platform.zalo, 5, 3),
             ],
           ),
         ),
@@ -56,7 +51,12 @@ class _PlatformInfoState extends State<PlatformInfo> {
     );
   }
 
-  Widget _platformRow(Platform platform, int numberMess, int numberNotifi) {
+  Widget _platformRow(
+    BuildContext context,
+    Platform platform,
+    int numberMess,
+    int numberNotifi,
+  ) {
     String _namePlatform;
     String _logoPlatform;
     switch (platform) {
@@ -115,7 +115,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
-              _alertText(numberMess),
+              _alertText(context, numberMess),
             ],
           ),
           SizedBox(
@@ -138,7 +138,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
-              _alertText(numberNotifi),
+              _alertText(context, numberNotifi),
             ],
           ),
         ],
@@ -146,7 +146,7 @@ class _PlatformInfoState extends State<PlatformInfo> {
     );
   }
 
-  Widget _alertText(int numberAlert) {
+  Widget _alertText(BuildContext context, int numberAlert) {
     if (numberAlert > 0) {
       return Align(
         alignment: Alignment.centerRight,
