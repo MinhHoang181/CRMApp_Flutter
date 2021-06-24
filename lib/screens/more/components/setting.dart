@@ -2,7 +2,7 @@ import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/list_model/LabelList.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-
+import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 //Screens
 import 'package:cntt2_crm/screens/labels/labels.screen.dart';
 import 'package:cntt2_crm/screens/login/login.screen.dart';
@@ -11,17 +11,20 @@ import 'package:provider/provider.dart';
 class Setting extends StatefulWidget {
   const Setting({Key key}) : super(key: key);
 
+
   @override
   _SettingState createState() => _SettingState();
 }
 
 class _SettingState extends State<Setting> {
+  bool _light = true;
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.all(Layouts.SPACING),
       child: Card(
-        elevation: 10,
+        elevation: 5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -42,8 +45,67 @@ class _SettingState extends State<Setting> {
                 ),
               ),
             ),
+            _darkMode(),
+            _switch(),
             _labels(),
+            _update(),
+            _support(),
             _logout(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _darkMode() {
+    return InkWell(
+      child: Padding(
+        padding:  const EdgeInsets.only(
+            left: Layouts.SPACING,
+            top: Layouts.SPACING,
+            bottom:  Layouts.SPACING/2
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: Image(
+                image: AssetImage(MyIcons.DARK),
+              ),
+            ),
+            SizedBox(width: Layouts.SPACING),
+            Text('Chế độ tối',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
+            Switch(value: _light,onChanged: (state){
+                  setState(() {
+                    _light = state;
+                  });
+            })
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _switch() {
+    return InkWell(
+      child: Padding(
+        padding:  const EdgeInsets.only(
+            left: Layouts.SPACING,
+            top: Layouts.SPACING,
+            bottom:  Layouts.SPACING/2
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: Image(
+                image: AssetImage(MyIcons.SWITCH_ACCOUNT_ICON),
+              ),
+            ),
+            SizedBox(width: Layouts.SPACING),
+            Text('Chuyển tài khoản',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
           ],
         ),
       ),
@@ -53,12 +115,22 @@ class _SettingState extends State<Setting> {
   Widget _labels() {
     return InkWell(
       child: Padding(
-        padding: EdgeInsets.all(Layouts.SPACING),
+        padding:  const EdgeInsets.only(
+          left: Layouts.SPACING,
+          top: Layouts.SPACING,
+          bottom:  Layouts.SPACING/2
+        ),
         child: Row(
           children: [
-            Icon(Icons.style_rounded),
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: Image(
+                image: AssetImage(MyIcons.TAG_ICON),
+              ),
+            ),
             SizedBox(width: Layouts.SPACING),
-            Text('Quản lý nhãn'),
+            Text('Quản lý nhãn',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
           ],
         ),
       ),
@@ -74,15 +146,75 @@ class _SettingState extends State<Setting> {
     );
   }
 
+  Widget _update() {
+    return InkWell(
+      child: Padding(
+        padding:  const EdgeInsets.only(
+            left: Layouts.SPACING,
+            top: Layouts.SPACING,
+            bottom:  Layouts.SPACING/2
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: Image(
+                image: AssetImage(MyIcons.UPDATE_ICON),
+              ),
+            ),
+            SizedBox(width: Layouts.SPACING),
+            Text('Cập nhật ứng dụng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _support() {
+    return InkWell(
+      child: Padding(
+        padding:  const EdgeInsets.only(
+            left: Layouts.SPACING,
+            top: Layouts.SPACING,
+            bottom:  Layouts.SPACING/2
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: Image(
+                image: AssetImage(MyIcons.SUPPORT),
+              ),
+            ),
+            SizedBox(width: Layouts.SPACING),
+            Text('Chăm sóc khách hàng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _logout() {
     return InkWell(
       child: Padding(
-        padding: EdgeInsets.all(Layouts.SPACING),
+        padding: const EdgeInsets.only(
+          left: Layouts.SPACING,
+          top: Layouts.SPACING,
+          bottom:  Layouts.SPACING
+        ),
         child: Row(
           children: [
-            Icon(Icons.logout_rounded),
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: Image(
+                image: AssetImage(MyIcons.SIGN_OUT),
+              ),
+            ),
             SizedBox(width: Layouts.SPACING),
-            Text('Đăng xuất'),
+            Text('Đăng xuất',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16),),
           ],
         ),
       ),

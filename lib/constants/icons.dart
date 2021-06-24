@@ -13,3 +13,12 @@ const String PAY_BILL = 'assets/icons/pay-bill-icon.png';
 const String ALL_BILLS = 'assets/icons/all-bills-icon.png';
 const String CAR_DELIVERY = 'assets/icons/car-delivery-icon.png';
 const String REFUND_BOX = 'assets/icons/refund-box-icon.png';
+const String CHART = 'assets/icons/chart-icon.png';
+const String DARK = 'assets/icons/dark-icon.png';
+const String SIGN_OUT = 'assets/icons/sign-out-icon.png';
+const String STORE = 'assets/icons/store-icon.png';
+const String SUPPORT = 'assets/icons/suppotr-icon.png';
+const String SWITCH_ACCOUNT_ICON = 'assets/icons/switch-account-icon.png';
+const String UPDATE_ICON = 'assets/icons/update-icon.png';
+const String TAG_ICON = 'assets/icons/tag-icon.png';
+

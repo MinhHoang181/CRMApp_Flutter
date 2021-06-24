@@ -15,6 +15,12 @@ class MoreScreen extends StatelessWidget {
   AppBar _moreScreenAppBar(BuildContext context) {
     return AppBar(
       title: Text('Cài đặt'),
+
+      flexibleSpace: Image(
+        image: AssetImage('assets/images/appbar-background.png'),
+        fit: BoxFit.cover,
+      ),
+      elevation: 0,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'constants/colors.dart' as Colors;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'constants/layouts.dart' as Layouts;
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData ligthThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
@@ -122,17 +123,18 @@ TextTheme textTheme(BuildContext context, Color color) {
           fontWeight: FontWeight.bold,
           color: color.withOpacity(0.55),
         ),
-        bodyText1: TextStyle(
+        bodyText1:  TextStyle(
           // normal text
           fontSize: 13,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.w200,
+          // fontFamily: "Comfortaa",
           color: color.withOpacity(0.5),
         ),
-        bodyText2: TextStyle(
-          // light text
-          fontSize: 13,
-          fontWeight: FontWeight.normal,
-          color: color.withOpacity(1),
-        ),
+        bodyText2: GoogleFonts.comfortaa(textStyle:  TextStyle(
+           fontSize: 13,
+           fontWeight: FontWeight.w800,
+           color: color.withOpacity(1),
+         ),
+         )
       );
 }

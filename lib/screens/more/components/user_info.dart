@@ -1,7 +1,7 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-
+import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 
 //Components
@@ -15,12 +15,13 @@ class UserInfo extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(Layouts.SPACING),
       child: Card(
-        elevation: 10,
+        elevation: 5,
         child: Padding(
           padding: EdgeInsets.all(Layouts.SPACING),
           child: Column(
             children: [
               _userInfo(context),
+              SizedBox(height: 10,),
               Divider(),
               _listPage(context),
             ],

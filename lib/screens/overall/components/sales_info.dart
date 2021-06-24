@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
-
+import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
+import 'package:google_fonts/google_fonts.dart';
 class SalesInfo extends StatefulWidget {
   @override
   _SalesInfoState createState() => _SalesInfoState();
@@ -37,16 +38,16 @@ class _SalesInfoState extends State<SalesInfo> {
         children: [
           Text(
             'Doanh Thu Ngày',
-            style: TextStyle(
+            style:TextStyle(
               fontSize: Fonts.SIZE_TEXT_LARGE,
+
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             '$_moneyTotal',
-            style: TextStyle(
-              fontSize: Fonts.SIZE_TEXT_LARGE * 2,
-              fontFamily: 'RobotoMono',
+            style:  GoogleFonts.robotoMono(
+              textStyle:TextStyle(fontSize: 35,fontWeight: FontWeight.normal),
             ),
           ),
           Divider(),
@@ -63,8 +64,8 @@ class _SalesInfoState extends State<SalesInfo> {
                     ),
                     Text(
                       '$_newOrder',
-                      style: TextStyle(
-                        fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5,
+                      style:  GoogleFonts.robotoMono(
+                        textStyle:TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5),
                       ),
                     ),
                   ],
@@ -79,8 +80,8 @@ class _SalesInfoState extends State<SalesInfo> {
                     ),
                     Text(
                       '$_cancelOrder',
-                      style: TextStyle(
-                        fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5,
+                      style:  GoogleFonts.robotoMono(
+                        textStyle:TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5),
                       ),
                     ),
                   ],
@@ -95,8 +96,8 @@ class _SalesInfoState extends State<SalesInfo> {
                     ),
                     Text(
                       '$_returnOrder',
-                      style: TextStyle(
-                        fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5,
+                      style:  GoogleFonts.robotoMono(
+                        textStyle:TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5),
                       ),
                     ),
                   ],
