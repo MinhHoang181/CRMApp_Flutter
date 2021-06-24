@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'package:google_fonts/google_fonts.dart';
+
 
 class SalesInfo extends StatelessWidget {
   final int _moneyTotal = 0;

@@ -187,7 +187,7 @@ class _LabelDetailState extends State<_LabelDetail> {
                           ? 'Đang tạo nhãn'
                           : 'Đang cập nhật',
                       success: widget.label == null
-                          ? 'Tạo thành nhãn công'
+                          ? 'Tạo nhãn thành công'
                           : 'Cập nhật thành công',
                       falied: widget.label == null
                           ? 'Tạo nhãn thất bại'

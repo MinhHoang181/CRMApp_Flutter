@@ -1,5 +1,3 @@
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
-import 'package:cntt2_crm/models/list_model/LabelList.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
@@ -7,6 +5,11 @@ import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 import 'package:cntt2_crm/screens/labels/labels.screen.dart';
 import 'package:cntt2_crm/screens/login/login.screen.dart';
 import 'package:provider/provider.dart';
+//Components
+import 'components/darkModeSwitch.dart';
+//Models
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/list_model/LabelList.dart';
 
 class Setting extends StatelessWidget {
   @override
@@ -36,49 +39,21 @@ class Setting extends StatelessWidget {
                 ),
               ),
             ),
-            _darkMode(),
-            _switch(),
-            _labels(),
-            _update(),
-            _support(),
-            _logout(),
+            DarkModeSwitch(),
+            _switchAccount(context),
+            _labels(context),
+            _update(context),
+            _support(context),
+            _logout(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _darkMode() {
-    return InkWell(
-      child: Padding(
-        padding:  const EdgeInsets.only(
-            left: Layouts.SPACING,
-            top: Layouts.SPACING,
-            bottom:  Layouts.SPACING/2
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 45,
-              height: 45,
-              child: Image(
-                image: AssetImage(MyIcons.DARK),
-              ),
-            ),
-            SizedBox(width: Layouts.SPACING),
-            Text('Chế độ tối',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
-            Switch(value: _light,onChanged: (state){
-                  setState(() {
-                    _light = state;
-                  });
-            })
-          ],
-        ),
-      ),
-    );
-  }
 
-  Widget _switch() {
+
+  Widget _switchAccount(BuildContext context) {
     return InkWell(
       child: Padding(
         padding:  const EdgeInsets.only(
@@ -103,7 +78,7 @@ class Setting extends StatelessWidget {
     );
   }
 
-  Widget _labels() {
+  Widget _labels(BuildContext context) {
     return InkWell(
       child: Padding(
         padding:  const EdgeInsets.only(
@@ -137,7 +112,7 @@ class Setting extends StatelessWidget {
     );
   }
 
-  Widget _update() {
+  Widget _update(BuildContext context) {
     return InkWell(
       child: Padding(
         padding:  const EdgeInsets.only(
@@ -162,7 +137,7 @@ class Setting extends StatelessWidget {
     );
   }
 
-  Widget _support() {
+  Widget _support(BuildContext context) {
     return InkWell(
       child: Padding(
         padding:  const EdgeInsets.only(
@@ -187,7 +162,7 @@ class Setting extends StatelessWidget {
     );
   }
 
-  Widget _logout() {
+  Widget _logout(BuildContext context) {
     return InkWell(
       child: Padding(
         padding: const EdgeInsets.only(

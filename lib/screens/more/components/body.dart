@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 //Components
 import 'user_info.dart';
-import 'setting.dart';
+import 'setting/setting.dart';
 
 class Body extends StatelessWidget {
 

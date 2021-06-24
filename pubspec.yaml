@@ -21,7 +21,6 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  cached_network_image: ^3.0.0
   currency_text_input_formatter: ^2.0.1
   mask_text_input_formatter: ^2.0.0
   expandable: ^5.0.1
