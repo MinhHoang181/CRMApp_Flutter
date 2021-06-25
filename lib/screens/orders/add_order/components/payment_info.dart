@@ -8,11 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:cntt2_crm/models/Cart.dart';
 
 class PaymentInfo extends StatelessWidget {
-  final TextEditingController _discount = TextEditingController();
-  final TextEditingController _transfer = TextEditingController();
-  final TextEditingController _payment = TextEditingController();
-  final TextEditingController _another = TextEditingController();
-
   final CurrencyTextInputFormatter _currencyFormat = CurrencyTextInputFormatter(
     decimalDigits: 0,
     customPattern: '#,### đ',
@@ -50,11 +45,10 @@ class PaymentInfo extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
+    final cart = Provider.of<Cart>(context, listen: false);
     return Column(
       children: [
         TextField(
-          controller: _discount,
           style: Theme.of(context).textTheme.bodyText2,
           keyboardType: TextInputType.number,
           inputFormatters: [
@@ -64,12 +58,14 @@ class PaymentInfo extends StatelessWidget {
             prefixIcon: Icon(Icons.card_giftcard_rounded),
             filled: false,
             labelText: 'Giảm giá',
+            hintText: '0',
           ),
-          onChanged: (value) => cart.discount,
+          onChanged: (value) {
+            cart.discount = _toValue(value);
+          },
         ),
         SizedBox(height: Layouts.SPACING),
         TextField(
-          controller: _transfer,
           style: Theme.of(context).textTheme.bodyText2,
           keyboardType: TextInputType.number,
           inputFormatters: [
@@ -79,7 +75,11 @@ class PaymentInfo extends StatelessWidget {
             prefixIcon: Icon(Icons.attach_money_rounded),
             filled: false,
             labelText: 'Chuyển khoản',
+            hintText: '0',
           ),
+          onChanged: (value) {
+            cart.transfer = _toValue(value);
+          },
         ),
         SizedBox(height: Layouts.SPACING),
         Row(
@@ -87,7 +87,6 @@ class PaymentInfo extends StatelessWidget {
             Expanded(
               flex: 1,
               child: TextField(
-                controller: _payment,
                 style: Theme.of(context).textTheme.bodyText2,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -97,14 +96,17 @@ class PaymentInfo extends StatelessWidget {
                   prefixIcon: Icon(Icons.payment_rounded),
                   filled: false,
                   labelText: 'Đã quẹt thẻ',
+                  hintText: '0',
                 ),
+                onChanged: (value) {
+                  cart.payment = _toValue(value);
+                },
               ),
             ),
             SizedBox(width: Layouts.SPACING),
             Expanded(
               flex: 1,
               child: TextField(
-                controller: _another,
                 style: Theme.of(context).textTheme.bodyText2,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -114,12 +116,22 @@ class PaymentInfo extends StatelessWidget {
                   prefixIcon: Icon(Icons.payments_rounded),
                   filled: false,
                   labelText: 'Hình thức khác',
+                  hintText: '0',
                 ),
+                onChanged: (value) {
+                  cart.another = _toValue(value);
+                },
               ),
             ),
           ],
         ),
       ],
     );
+  }
+
+  int _toValue(String value) {
+    value = value.replaceAll(' ', '').replaceAll('đ', '').replaceAll(',', '');
+    final int number = value.isEmpty ? 0 : int.parse(value);
+    return number != null ? number : 0;
   }
 }

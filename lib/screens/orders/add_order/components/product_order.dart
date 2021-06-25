@@ -14,11 +14,16 @@ import '../select_product/select_product.screen.dart';
 
 //Components
 import 'package:cntt2_crm/components/image_item.dart';
+import 'no_product_order.dart';
 
 class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context, listen: false);
+    final products = context.select((Cart cart) => cart.products);
+    return products.isEmpty ? NoProductOrder() : _buildList(context, products);
+  }
+
+  Widget _buildList(BuildContext context, var products) {
     return Container(
       margin: EdgeInsets.all(Layouts.SPACING / 2),
       child: Column(
@@ -26,10 +31,10 @@ class ProductOrder extends StatelessWidget {
           ListView(
             shrinkWrap: true,
             children: List.generate(
-              cart.products.length,
+              products.length,
               (index) => _buildRow(
                 context,
-                cart.products.keys.elementAt(index),
+                products.keys.elementAt(index),
               ),
             ),
           ),
@@ -43,8 +48,8 @@ class ProductOrder extends StatelessWidget {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ChangeNotifierProvider.value(
-                  value: cart,
+                builder: (_) => ChangeNotifierProvider<Cart>.value(
+                  value: context.watch<Cart>(),
                   child: SelectProductScreen(),
                 ),
               ),
@@ -56,7 +61,7 @@ class ProductOrder extends StatelessWidget {
   }
 
   Widget _buildRow(BuildContext context, Variant variant) {
-    final cart = Provider.of<Cart>(context);
+    final cart = context.watch<Cart>();
     return Slidable(
       child: Card(
         child: Padding(

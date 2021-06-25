@@ -1,12 +1,12 @@
-import 'package:cntt2_crm/screens/overall/components/background.dart';
 import 'package:flutter/material.dart';
+import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
 import 'user_info.dart';
 import 'setting/setting.dart';
+import 'package:cntt2_crm/screens/overall/components/background.dart';
 
 class Body extends StatelessWidget {
-
   const Body({Key key}) : super(key: key);
 
   @override
@@ -21,6 +21,7 @@ class Body extends StatelessWidget {
               child: Column(
                 children: [
                   UserInfo(),
+                  SizedBox(height: Layouts.SPACING),
                   Setting(),
                 ],
               ),

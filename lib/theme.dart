@@ -105,38 +105,38 @@ TextTheme textTheme(BuildContext context, Color color) {
         bodyColor: color,
       )
       .copyWith(
-        headline1: TextStyle(
-          // Header
-          fontSize: 27,
-          fontWeight: FontWeight.w400,
-        ),
-        headline2: TextStyle(
-          // Header
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
-        ),
-        subtitle1: TextStyle(
-          fontSize: Fonts.SIZE_TEXT_LARGE,
-          fontWeight: FontWeight.bold,
-          color: color.withOpacity(1),
-        ),
-        subtitle2: TextStyle(
-          fontSize: Fonts.SIZE_TEXT_LARGE - 3,
-          fontWeight: FontWeight.bold,
-          color: color.withOpacity(0.55),
-        ),
-        bodyText1:  TextStyle(
-          // normal text
-          fontSize: 13,
-          fontWeight: FontWeight.w200,
-          // fontFamily: "Comfortaa",
-          color: color.withOpacity(0.5),
-        ),
-        bodyText2: GoogleFonts.comfortaa(textStyle:  TextStyle(
-           fontSize: 13,
-           fontWeight: FontWeight.w800,
-           color: color.withOpacity(1),
-         ),
-         )
-      );
+          headline1: TextStyle(
+            // Header
+            fontSize: 27,
+            fontWeight: FontWeight.w400,
+          ),
+          headline2: TextStyle(
+            // Header
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
+          subtitle1: TextStyle(
+            fontSize: Fonts.SIZE_TEXT_LARGE,
+            fontWeight: FontWeight.bold,
+            color: color.withOpacity(1),
+          ),
+          subtitle2: TextStyle(
+            fontSize: Fonts.SIZE_TEXT_LARGE - 3,
+            fontWeight: FontWeight.bold,
+            color: color.withOpacity(0.55),
+          ),
+          bodyText1: TextStyle(
+            // normal text
+            fontSize: 13,
+            fontWeight: FontWeight.w200,
+            // fontFamily: "Comfortaa",
+            color: color.withOpacity(0.5),
+          ),
+          bodyText2: GoogleFonts.comfortaa(
+            textStyle: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+              color: color.withOpacity(1),
+            ),
+          ));
 }

@@ -42,9 +42,8 @@ class TotalCostInfo extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    final cart = Provider.of<Cart>(context);
-    int _totalQuantity = cart.getTotalQuantity();
-    double _totalPrice = cart.getTotalPrice();
+    int _totalQuantity = context.select((Cart cart) => cart.totalQuantity);
+    double _totalPrice = context.select((Cart cart) => cart.totalPrice);
     return Column(
       children: [
         StorageSelect(),

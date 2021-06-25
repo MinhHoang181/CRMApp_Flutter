@@ -14,9 +14,10 @@ import 'package:cntt2_crm/models/list_model/LabelList.dart';
 class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Container(
-      margin: EdgeInsets.all(Layouts.SPACING),
+      margin: EdgeInsets.symmetric(
+        horizontal: Layouts.SPACING,
+      ),
       child: Card(
         elevation: 5,
         child: Column(
@@ -51,16 +52,13 @@ class Setting extends StatelessWidget {
     );
   }
 
-
-
   Widget _switchAccount(BuildContext context) {
     return InkWell(
       child: Padding(
-        padding:  const EdgeInsets.only(
+        padding: const EdgeInsets.only(
             left: Layouts.SPACING,
             top: Layouts.SPACING,
-            bottom:  Layouts.SPACING/2
-        ),
+            bottom: Layouts.SPACING / 2),
         child: Row(
           children: [
             SizedBox(
@@ -71,7 +69,11 @@ class Setting extends StatelessWidget {
               ),
             ),
             SizedBox(width: Layouts.SPACING),
-            Text('Chuyển tài khoản',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
+            Text('Chuyển tài khoản',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontWeight: FontWeight.w600, fontSize: 16)),
           ],
         ),
       ),
@@ -81,11 +83,10 @@ class Setting extends StatelessWidget {
   Widget _labels(BuildContext context) {
     return InkWell(
       child: Padding(
-        padding:  const EdgeInsets.only(
-          left: Layouts.SPACING,
-          top: Layouts.SPACING,
-          bottom:  Layouts.SPACING/2
-        ),
+        padding: const EdgeInsets.only(
+            left: Layouts.SPACING,
+            top: Layouts.SPACING,
+            bottom: Layouts.SPACING / 2),
         child: Row(
           children: [
             SizedBox(
@@ -96,7 +97,11 @@ class Setting extends StatelessWidget {
               ),
             ),
             SizedBox(width: Layouts.SPACING),
-            Text('Quản lý nhãn',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
+            Text('Quản lý nhãn',
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    .copyWith(fontWeight: FontWeight.w600, fontSize: 16)),
           ],
         ),
       ),
@@ -115,11 +120,10 @@ class Setting extends StatelessWidget {
   Widget _update(BuildContext context) {
     return InkWell(
       child: Padding(
-        padding:  const EdgeInsets.only(
+        padding: const EdgeInsets.only(
             left: Layouts.SPACING,
             top: Layouts.SPACING,
-            bottom:  Layouts.SPACING/2
-        ),
+            bottom: Layouts.SPACING / 2),
         child: Row(
           children: [
             SizedBox(
@@ -130,7 +134,13 @@ class Setting extends StatelessWidget {
               ),
             ),
             SizedBox(width: Layouts.SPACING),
-            Text('Cập nhật ứng dụng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
+            Text(
+              'Cập nhật ứng dụng',
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+            ),
           ],
         ),
       ),
@@ -140,11 +150,10 @@ class Setting extends StatelessWidget {
   Widget _support(BuildContext context) {
     return InkWell(
       child: Padding(
-        padding:  const EdgeInsets.only(
+        padding: const EdgeInsets.only(
             left: Layouts.SPACING,
             top: Layouts.SPACING,
-            bottom:  Layouts.SPACING/2
-        ),
+            bottom: Layouts.SPACING / 2),
         child: Row(
           children: [
             SizedBox(
@@ -155,7 +164,13 @@ class Setting extends StatelessWidget {
               ),
             ),
             SizedBox(width: Layouts.SPACING),
-            Text('Chăm sóc khách hàng',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16)),
+            Text(
+              'Chăm sóc khách hàng',
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+            ),
           ],
         ),
       ),
@@ -166,10 +181,9 @@ class Setting extends StatelessWidget {
     return InkWell(
       child: Padding(
         padding: const EdgeInsets.only(
-          left: Layouts.SPACING,
-          top: Layouts.SPACING,
-          bottom:  Layouts.SPACING
-        ),
+            left: Layouts.SPACING,
+            top: Layouts.SPACING,
+            bottom: Layouts.SPACING),
         child: Row(
           children: [
             SizedBox(
@@ -180,7 +194,13 @@ class Setting extends StatelessWidget {
               ),
             ),
             SizedBox(width: Layouts.SPACING),
-            Text('Đăng xuất',style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w600,fontSize: 16),),
+            Text(
+              'Đăng xuất',
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+            ),
           ],
         ),
       ),

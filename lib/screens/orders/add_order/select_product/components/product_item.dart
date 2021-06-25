@@ -189,7 +189,7 @@ class ProductItem extends StatelessWidget {
               padding: EdgeInsets.all(8),
               child: Center(
                 child: Text(
-                  variant.barcode,
+                  variant.barcode != null ? variant.barcode : '---',
                 ),
               ),
             ),

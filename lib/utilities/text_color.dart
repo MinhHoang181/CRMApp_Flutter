@@ -12,5 +12,6 @@ String colorToString(Color color) {
 
 Color stringToColor(String text) {
   String color = text.replaceAll('#', '0xff');
-  return Color(int.parse(color));
+  int value = int.parse(color);
+  return value != null ? Color(value) : Colors.white.withOpacity(0);
 }

@@ -36,7 +36,7 @@ class Cart extends ChangeNotifier {
     notifyListeners();
   }
 
-  int getTotalQuantity() {
+  int get totalQuantity {
     int _total = 0;
     _products.forEach((key, value) {
       _total += value;
@@ -44,7 +44,7 @@ class Cart extends ChangeNotifier {
     return _total;
   }
 
-  double getTotalPrice() {
+  double get totalPrice {
     double _total = 0;
     _products.forEach((variant, number) {
       _total += variant.finalPrice * number;
@@ -52,8 +52,8 @@ class Cart extends ChangeNotifier {
     return _total;
   }
 
-  double getTotalCost() {
-    double _total = getTotalPrice() - discount - transfer - payment - another;
+  double get totalCost {
+    double _total = totalPrice - discount - transfer - payment - another;
     return _total;
   }
 

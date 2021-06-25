@@ -16,7 +16,7 @@ class AddOrderScreen extends StatelessWidget {
     return Scaffold(
       appBar: _addOrderScreenAppBar(context),
       body: Body(),
-      bottomNavigationBar: _createOrderButton(context),
+      bottomNavigationBar: CreateOrderButton(),
     );
   }
 
@@ -25,8 +25,18 @@ class AddOrderScreen extends StatelessWidget {
       title: Text('Thêm đơn hàng'),
     );
   }
+}
+
+class CreateOrderButton extends StatelessWidget {
+  const CreateOrderButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return _createOrderButton(context);
+  }
 
   BottomAppBar _createOrderButton(BuildContext context) {
+    final total = context.select((Cart cart) => cart.totalCost);
     return BottomAppBar(
       child: Container(
         padding: EdgeInsets.all(Layouts.SPACING),
@@ -54,9 +64,7 @@ class AddOrderScreen extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      NumberFormat('#,###').format(
-                              Provider.of<Cart>(context).getTotalCost()) +
-                          ' đ',
+                      NumberFormat('#,###').format(total) + ' đ',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: Fonts.SIZE_TEXT_LARGE,
