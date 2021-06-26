@@ -5,6 +5,7 @@ import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 //Screens
 import '../list_order/list_order.screen.dart';
 import '../list_order/return_order.screen.dart';
+import '../shipping_manager/shipping_manager.screen.dart';
 
 class OrdersManager extends StatelessWidget {
   @override
@@ -94,6 +95,12 @@ class OrdersManager extends StatelessWidget {
             trailing: Icon(
               Icons.arrow_forward_ios,
               color: Theme.of(context).accentColor,
+            ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ShippingManagerScreen(),
+              ),
             ),
           ),
         ],

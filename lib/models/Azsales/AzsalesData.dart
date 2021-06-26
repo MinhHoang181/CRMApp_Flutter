@@ -6,6 +6,7 @@ import 'package:cntt2_crm/models/list_model/Location.dart';
 import 'package:cntt2_crm/models/list_model/OrderList.dart';
 import 'package:cntt2_crm/models/list_model/ProductList.dart';
 import 'package:cntt2_crm/models/list_model/ReplyList.dart';
+import 'package:cntt2_crm/models/list_model/ShipperList.dart';
 import 'package:cntt2_crm/models/list_model/StockList.dart';
 import 'package:cntt2_crm/theme.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class AzsalesData extends ChangeNotifier {
   final ProductList products = ProductList();
   final StockList stocks = StockList();
   final OrderList orders = OrderList();
+  final ShipperList shippers = ShipperList();
 
   bool _ligthTheme = true;
   bool get ligthTheme => _ligthTheme;
