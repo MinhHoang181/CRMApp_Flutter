@@ -27,6 +27,10 @@ class ProductAPI {
                 price,
                 in_price,
                 sale_price,
+                featured_photo {
+                  _id
+                  url
+                }
                 photos {
                   _id,
                   url,
@@ -72,6 +76,10 @@ class ProductAPI {
               price
               in_price
               sale_price
+              featured_photo {
+                _id
+                url
+              }
               photos {
                 _id
                 url

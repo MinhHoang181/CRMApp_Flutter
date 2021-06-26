@@ -1,5 +1,4 @@
 import 'package:cntt2_crm/components/progress_dialog.dart';
-import 'package:cntt2_crm/providers/azsales_api/chat_service/order_api.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;

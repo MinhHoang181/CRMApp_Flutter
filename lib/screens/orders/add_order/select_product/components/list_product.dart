@@ -1,4 +1,3 @@
-import 'package:cntt2_crm/models/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -9,6 +8,7 @@ import 'product_item.dart';
 //Models
 import 'package:cntt2_crm/models/Product/Product.dart';
 import 'package:cntt2_crm/models/list_model/ProductList.dart';
+import 'package:cntt2_crm/models/Cart.dart';
 
 class ListProduct extends StatefulWidget {
   const ListProduct({Key key}) : super(key: key);

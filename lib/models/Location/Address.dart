@@ -1,5 +1,3 @@
-import 'package:cntt2_crm/providers/azsales_api/chat_service/location_api.dart';
-
 class Address {
   String address;
   String city;

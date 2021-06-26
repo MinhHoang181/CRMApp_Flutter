@@ -14,6 +14,7 @@ import 'package:cntt2_crm/models/Cart.dart';
 import 'package:cntt2_crm/models/list_model/ProductList.dart';
 
 class SelectProductScreen extends StatefulWidget {
+  const SelectProductScreen({Key key}) : super(key: key);
   @override
   _SelectProductScreenState createState() => _SelectProductScreenState();
 }

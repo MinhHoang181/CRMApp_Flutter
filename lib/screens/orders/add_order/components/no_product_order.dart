@@ -11,6 +11,9 @@ import 'package:cntt2_crm/screens/orders/add_order/select_product/select_product
 import 'package:cntt2_crm/models/Cart.dart';
 
 class NoProductOrder extends StatelessWidget {
+  final selectProductScreen;
+  const NoProductOrder({Key key, @required this.selectProductScreen})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return InkWell(

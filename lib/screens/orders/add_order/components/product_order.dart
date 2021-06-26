@@ -17,47 +17,51 @@ import 'package:cntt2_crm/components/image_item.dart';
 import 'no_product_order.dart';
 
 class ProductOrder extends StatelessWidget {
+  final selectProductScreen = const SelectProductScreen();
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<Cart>();
     return cart.products.isEmpty
-        ? NoProductOrder()
+        ? NoProductOrder(selectProductScreen: selectProductScreen)
         : _buildList(context, cart.products);
   }
 
   Widget _buildList(BuildContext context, var products) {
-    return Container(
-      margin: EdgeInsets.all(Layouts.SPACING / 2),
-      child: Column(
-        children: [
-          ListView(
-            shrinkWrap: true,
-            children: List.generate(
-              products.length,
-              (index) => _buildRow(
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.all(Layouts.SPACING / 2),
+        child: Column(
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 500,
+              ),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return _buildRow(context, products.keys.elementAt(index));
+                  }),
+            ),
+            TextButton(
+              child: Text(
+                'Thêm sản phẩm',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              onPressed: () => Navigator.push(
                 context,
-                products.keys.elementAt(index),
-              ),
-            ),
-          ),
-          TextButton(
-            child: Text(
-              'Thêm sản phẩm',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => ChangeNotifierProvider<Cart>.value(
-                  value: Provider.of<Cart>(context, listen: false),
-                  child: SelectProductScreen(),
+                MaterialPageRoute(
+                  builder: (_) => ChangeNotifierProvider<Cart>.value(
+                    value: Provider.of<Cart>(context, listen: false),
+                    child: selectProductScreen,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -70,7 +74,7 @@ class ProductOrder extends StatelessWidget {
           padding: const EdgeInsets.all(Layouts.SPACING / 2),
           child: Row(
             children: [
-              _imageProduct(variant.product.photos),
+              _imageProduct(variant.product.featuredPhoto),
               SizedBox(width: Layouts.SPACING),
               Expanded(
                 child: _productInfo(context, variant),
@@ -93,10 +97,10 @@ class ProductOrder extends StatelessWidget {
     );
   }
 
-  Widget _imageProduct(List<Photo> photos) {
+  Widget _imageProduct(Photo photo) {
     final double size = 60;
     return ImageItem(
-      url: photos.isNotEmpty ? photos[0].url : null,
+      url: photo != null ? photo.url : null,
       size: Size(size, size),
     );
   }

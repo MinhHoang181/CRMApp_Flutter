@@ -26,14 +26,14 @@ class MessageList extends ChangeNotifier {
     return chatlog;
   }
 
-  List<ChatMessage> _sortTime(List<ChatMessage> sortList) {
-    sortList.sort((a, b) {
-      final dayA = a.timeCreated;
-      final dayB = b.timeCreated;
-      return dayB.compareTo(dayA);
-    });
-    return sortList;
-  }
+  // List<ChatMessage> _sortTime(List<ChatMessage> sortList) {
+  //   sortList.sort((a, b) {
+  //     final dayA = a.timeCreated;
+  //     final dayB = b.timeCreated;
+  //     return dayB.compareTo(dayA);
+  //   });
+  //   return sortList;
+  // }
 
   void _addList(List<ChatMessage> messages) {
     messages.forEach((message) {

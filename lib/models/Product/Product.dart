@@ -14,6 +14,7 @@ class Product {
   double get inPrice => _inPrice != null ? _inPrice.toDouble() : null;
   var _salePrice;
   double get salePrice => _salePrice != null ? _salePrice.toDouble() : null;
+  final Photo featuredPhoto;
   final List<Photo> photos;
   final VariantList variants;
   final int total;
@@ -27,6 +28,7 @@ class Product {
     @required price,
     @required inPrice,
     @required salePrice,
+    @required this.featuredPhoto,
     @required this.photos,
     @required this.variants,
     @required this.total,
@@ -49,6 +51,9 @@ class Product {
       price: json['price'],
       inPrice: json['in_price'],
       salePrice: json['sale_price'],
+      featuredPhoto: json['featured_photo'] != null
+          ? Photo.fromJson(json['featured_photo'])
+          : null,
       photos: photos,
       variants: new VariantList(productId: json['_id']),
       total: json['stockData'] != null ? json['stockData']['total'] : 0,
@@ -69,6 +74,9 @@ class Product {
       price: json['price'],
       inPrice: json['in_price'],
       salePrice: json['sale_price'],
+      featuredPhoto: json['featured_photo'] != null
+          ? Photo.fromJson(json['featured_photo'])
+          : null,
       photos: photos,
       variants: new VariantList(productId: json['_id']),
       total: json['stockData'] != null ? json['stockData']['total'] : 0,

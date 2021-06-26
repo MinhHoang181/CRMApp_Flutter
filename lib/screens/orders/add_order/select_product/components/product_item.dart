@@ -62,7 +62,7 @@ class ProductItem extends StatelessWidget {
           ),
           badgeColor: Colors.blueAccent,
           padding: EdgeInsets.all(8),
-          child: _imageProduct(product.photos),
+          child: _imageProduct(product.featuredPhoto),
         ),
         SizedBox(width: Layouts.SPACING),
         Expanded(
@@ -171,54 +171,57 @@ class ProductItem extends StatelessWidget {
     final totalSelect =
         cart.products.containsKey(variant) ? cart.products[variant] : 0;
     return InkWell(
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Badge(
-              toAnimate: false,
-              showBadge: cart.products.containsKey(variant) ? true : false,
-              badgeContent: Text(
-                totalSelect > 0 ? totalSelect.toString() : '',
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              badgeColor: Colors.blueAccent,
-              padding: EdgeInsets.all(8),
-              child: Center(
-                child: Text(
-                  variant.barcode != null ? variant.barcode : '---',
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: Layouts.SPACING / 2),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Badge(
+                toAnimate: false,
+                showBadge: cart.products.containsKey(variant) ? true : false,
+                badgeContent: Text(
+                  totalSelect > 0 ? totalSelect.toString() : '',
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                badgeColor: Colors.blueAccent,
+                padding: EdgeInsets.all(8),
+                child: Center(
+                  child: Text(
+                    variant.barcode != null ? variant.barcode : '---',
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(width: Layouts.SPACING / 2),
-          Expanded(
-            flex: 3,
-            child: Center(
-              child: Text(
-                variant.attributesToString(),
+            SizedBox(width: Layouts.SPACING / 2),
+            Expanded(
+              flex: 3,
+              child: Center(
+                child: Text(
+                  variant.attributesToString(),
+                ),
               ),
             ),
-          ),
-          SizedBox(width: Layouts.SPACING / 2),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                variant.total.toString(),
+            SizedBox(width: Layouts.SPACING / 2),
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: Text(
+                  variant.total.toString(),
+                ),
               ),
             ),
-          ),
-          SizedBox(width: Layouts.SPACING / 2),
-          Expanded(
-            flex: 3,
-            child: _price(
-                context, variant.salePrice, variant.price, variant.total),
-          ),
-        ],
+            SizedBox(width: Layouts.SPACING / 2),
+            Expanded(
+              flex: 3,
+              child: _price(
+                  context, variant.salePrice, variant.price, variant.total),
+            ),
+          ],
+        ),
       ),
       onTap: variant.total == 0 || totalSelect >= variant.total
           ? null
@@ -261,10 +264,10 @@ class ProductItem extends StatelessWidget {
         : _outOfStock(context);
   }
 
-  Widget _imageProduct(List<Photo> photos) {
+  Widget _imageProduct(Photo photo) {
     final double size = 80;
     return ImageItem(
-      url: photos.isNotEmpty ? photos[0].url : null,
+      url: photo != null ? photo.url : null,
       size: Size(size, size),
     );
   }
