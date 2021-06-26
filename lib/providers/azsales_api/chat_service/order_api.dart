@@ -1,4 +1,5 @@
 import 'package:cntt2_crm/models/Cart.dart';
+import 'package:cntt2_crm/models/Order/FilterOrder.dart';
 import 'package:cntt2_crm/models/Order/Order.dart';
 import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
@@ -9,13 +10,40 @@ import 'package:tuple/tuple.dart';
 class OrderAPI {
   static Future<Tuple2<List<Order>, PageInfo>> fetchOrders({
     int page = 1,
+    FilterOrder filterOrder = FilterOrder.all,
   }) async {
+    String filter;
+    switch (filterOrder) {
+      case FilterOrder.status_new:
+        filter = 'filter: {status: 1}';
+        break;
+      case FilterOrder.status_confirmed:
+        filter = 'filter: {status: 2}';
+        break;
+      case FilterOrder.status_sent:
+        filter = 'filter: {status: 3}';
+        break;
+      case FilterOrder.status_done:
+        filter = 'filter: {status: 4}';
+        break;
+      case FilterOrder.status_return_all:
+        filter = 'filter: {OR: [{status: 5} {status: 6}] }';
+        break;
+      case FilterOrder.status_returning:
+        filter = 'filter: {status: 5}';
+        break;
+      case FilterOrder.status_returned:
+        filter = 'filter: {status: 6}';
+        break;
+      default:
+        filter = '';
+    }
     final QueryOptions options = QueryOptions(
       document: gql(
         '''
         query {
           order {
-            ordersPaging(page: $page, sort: ID_DESC) {
+            ordersPaging(page: $page, sort: ID_DESC, $filter) {
               pageInfo {
                 hasNextPage,
                 currentPage,
@@ -24,6 +52,13 @@ class OrderAPI {
                 _id,
                 id,
                 conversation_id,
+                customer {
+                  _id
+                  customer_name
+                  phone_number
+                }
+                recipient_name
+                recipient_phone_number
                 phone_number,
                 amount,
                 COD,
@@ -101,6 +136,13 @@ class OrderAPI {
                 _id,
                 id,
                 conversation_id,
+                customer {
+                  _id
+                  customer_name
+                  phone_number
+                }
+                recipient_name
+                recipient_phone_number
                 phone_number,
                 amount,
                 COD,

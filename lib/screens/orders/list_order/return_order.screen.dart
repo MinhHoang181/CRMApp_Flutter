@@ -1,32 +1,29 @@
-import 'package:cntt2_crm/models/Order/FilterOrder.dart';
 import 'package:flutter/material.dart';
+import 'package:cntt2_crm/models/Order/FilterOrder.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+
 //Components
 import 'components/body.dart';
 
-class ListOrderScreen extends StatelessWidget {
+class ReturnOrderScreen extends StatelessWidget {
+  const ReturnOrderScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 3,
       child: Scaffold(
         appBar: _listOrderScreenAppBar(context),
         body: TabBarView(
           children: [
             Body(
-              filterOrder: FilterOrder.all,
+              filterOrder: FilterOrder.status_return_all,
             ),
             Body(
-              filterOrder: FilterOrder.status_new,
+              filterOrder: FilterOrder.status_returning,
             ),
             Body(
-              filterOrder: FilterOrder.status_confirmed,
-            ),
-            Body(
-              filterOrder: FilterOrder.status_sent,
-            ),
-            Body(
-              filterOrder: FilterOrder.status_done,
+              filterOrder: FilterOrder.status_returned,
             ),
           ],
         ),
@@ -36,7 +33,7 @@ class ListOrderScreen extends StatelessWidget {
 
   AppBar _listOrderScreenAppBar(BuildContext context) {
     return AppBar(
-      title: Text('Danh sách đơn hàng'),
+      title: Text('Danh sách đơn hàng trả lại'),
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(100),
         child: _toolBar(context),
@@ -82,16 +79,10 @@ class ListOrderScreen extends StatelessWidget {
             text: 'Tất cả',
           ),
           Tab(
-            text: 'Mới',
+            text: 'Đang trả hàng',
           ),
           Tab(
-            text: 'Đã xác nhận',
-          ),
-          Tab(
-            text: 'Đã gửi đi',
-          ),
-          Tab(
-            text: 'Đã nhận hàng',
+            text: 'Đã trả hàng',
           ),
         ],
       ),

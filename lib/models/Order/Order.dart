@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/Customer.dart';
 import 'package:cntt2_crm/models/Location/Address.dart';
 import 'package:cntt2_crm/models/Order/CartProduct.dart';
 import 'package:cntt2_crm/utilities/datetime.dart';
@@ -10,6 +11,9 @@ class Order extends ChangeNotifier {
   final int numberId;
   final String conversationId;
   final String createBy;
+  final Customer customer;
+  final String recipientName;
+  final String recipientPhone;
   int amount;
   int cod;
   Address address;
@@ -25,6 +29,9 @@ class Order extends ChangeNotifier {
     @required this.numberId,
     @required this.conversationId,
     @required this.createBy,
+    @required this.customer,
+    @required this.recipientName,
+    @required this.recipientPhone,
     @required this.amount,
     @required this.cod,
     @required this.address,
@@ -47,6 +54,9 @@ class Order extends ChangeNotifier {
       numberId: json['id'],
       conversationId: json['conversation_id'],
       createBy: json['created_by_user']['display_name'],
+      customer: Customer.fromJsonOrder(json['customer']),
+      recipientName: json['recipient_name'],
+      recipientPhone: json['recipient_phone_number'],
       amount: json['amount'],
       cod: json['COD'],
       address: Address.fromJson(json),

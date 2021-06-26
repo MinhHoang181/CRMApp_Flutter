@@ -36,6 +36,8 @@ class OrderItem extends StatelessWidget {
         padding: const EdgeInsets.all(Layouts.SPACING / 2),
         child: Row(
           children: [
+            _platform(order.conversationId),
+            SizedBox(width: Layouts.SPACING / 2),
             Text(
               'Mã đơn hàng: ' + order.numberId.toString(),
               style: TextStyle(
@@ -84,6 +86,27 @@ class OrderItem extends StatelessWidget {
               ),
             ],
           ),
+          if (order.customer != null) ...[
+            TableRow(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Layouts.SPACING / 2),
+                  child: Text('Khách hàng:'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Layouts.SPACING / 2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(order.customer.name),
+                      SizedBox(height: Layouts.SPACING / 2),
+                      Text('(điện thoại: ' + order.customer.phone + ')'),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ],
           TableRow(
             children: [
               Padding(
@@ -189,5 +212,9 @@ class OrderItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _platform(String conversationId) {
+    return conversationId != null ? Icon(Icons.facebook) : Icon(Icons.web);
   }
 }

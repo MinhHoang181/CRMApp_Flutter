@@ -3,6 +3,7 @@ import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
 import 'package:cntt2_crm/models/list_model/FacebookPageList.dart';
 import 'package:cntt2_crm/models/list_model/LabelList.dart';
 import 'package:cntt2_crm/models/list_model/Location.dart';
+import 'package:cntt2_crm/models/list_model/OrderList.dart';
 import 'package:cntt2_crm/models/list_model/ProductList.dart';
 import 'package:cntt2_crm/models/list_model/ReplyList.dart';
 import 'package:cntt2_crm/models/list_model/StockList.dart';
@@ -13,14 +14,15 @@ class AzsalesData extends ChangeNotifier {
   static AzsalesData _instance = AzsalesData._();
 
   String azsalesAccessToken;
-  AzsalesAccount azsalesAccount = new AzsalesAccount();
+  AzsalesAccount azsalesAccount = AzsalesAccount();
 
-  final LabelList labels = new LabelList();
-  final ReplyList replies = new ReplyList();
-  final FacebookPageList pages = new FacebookPageList();
-  final Location location = new Location();
-  final ProductList products = new ProductList();
-  final StockList stocks = new StockList();
+  final LabelList labels = LabelList();
+  final ReplyList replies = ReplyList();
+  final FacebookPageList pages = FacebookPageList();
+  final Location location = Location();
+  final ProductList products = ProductList();
+  final StockList stocks = StockList();
+  final OrderList orders = OrderList();
 
   bool _ligthTheme = true;
   bool get ligthTheme => _ligthTheme;
@@ -35,7 +37,7 @@ class AzsalesData extends ChangeNotifier {
   }
 
   //Chat - Conversation
-  final ConversationList conversations = new ConversationList();
+  final ConversationList conversations = ConversationList();
 
   static AzsalesData get instance => _instance;
 

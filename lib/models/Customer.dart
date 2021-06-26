@@ -28,6 +28,16 @@ class Customer extends ChangeNotifier {
     );
   }
 
+  factory Customer.fromJsonOrder(Map<String, dynamic> json) {
+    return json != null
+        ? Customer(
+            id: json['_id'],
+            name: json['customer_name'],
+            phone: json['phone_number'],
+          )
+        : null;
+  }
+
   void copy(Customer customer) {
     this.id = customer.id;
     this.name = customer.name;

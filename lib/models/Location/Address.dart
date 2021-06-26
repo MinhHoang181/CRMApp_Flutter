@@ -33,9 +33,12 @@ class Address {
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
       address: json['address'],
-      cityCode: json['city_code'],
-      districtCode: json['district_code'],
-      wardCode: json['ward_code'],
+      city: json['city'] != null ? json['city']['label'] : null,
+      cityCode: json['city'] != null ? json['city']['_id'] : null,
+      district: json['district'] != null ? json['district']['label'] : null,
+      districtCode: json['district'] != null ? json['district']['_id'] : null,
+      ward: json['ward'] != null ? json['ward']['label'] : null,
+      wardCode: json['ward'] != null ? json['ward']['_id'] : null,
     );
   }
 
