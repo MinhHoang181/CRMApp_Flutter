@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/Customer.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
@@ -17,7 +18,6 @@ import 'components/chatbox.dart';
 import 'package:cntt2_crm/models/Cart.dart';
 import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
-import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 
 class ChatboxScreen extends StatelessWidget {
   const ChatboxScreen({Key key}) : super(key: key);
@@ -94,7 +94,12 @@ class ChatboxScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => ChangeNotifierProvider(
-                create: (context) => Cart(),
+                create: (context) => Cart(
+                  conversationId: conversation.id,
+                  customer: conversation.customers.map.isNotEmpty
+                      ? conversation.customers.map.values.elementAt(0)
+                      : Customer(name: conversation.participants[0].name),
+                ),
                 child: AddOrderScreen(),
               ),
             ),

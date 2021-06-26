@@ -5,7 +5,6 @@ import '../../../../components/address_info.dart';
 class Body extends StatelessWidget {
   String _name;
   String _phone;
-  String _email;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -45,16 +44,10 @@ class Body extends StatelessWidget {
             ),
           ),
           Divider(),
-          TextField(
-            controller: TextEditingController(text: _email),
-            decoration: InputDecoration(
-              hintText: 'Email',
-              labelText: 'Email',
-              filled: false,
-            ),
+          AddressInfo(
+            address: null,
+            formKey: null,
           ),
-          Divider(),
-          AddressInfo(),
         ],
       ),
     );

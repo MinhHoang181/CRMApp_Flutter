@@ -78,7 +78,7 @@ class PaymentInfo extends StatelessWidget {
             hintText: '0',
           ),
           onChanged: (value) {
-            cart.transfer = _toValue(value);
+            cart.bank = _toValue(value);
           },
         ),
         SizedBox(height: Layouts.SPACING),
@@ -99,7 +99,7 @@ class PaymentInfo extends StatelessWidget {
                   hintText: '0',
                 ),
                 onChanged: (value) {
-                  cart.payment = _toValue(value);
+                  cart.card = _toValue(value);
                 },
               ),
             ),
@@ -119,7 +119,7 @@ class PaymentInfo extends StatelessWidget {
                   hintText: '0',
                 ),
                 onChanged: (value) {
-                  cart.another = _toValue(value);
+                  cart.other = _toValue(value);
                 },
               ),
             ),

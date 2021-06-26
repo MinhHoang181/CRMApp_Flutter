@@ -1,13 +1,79 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Customer.dart';
 import 'package:cntt2_crm/models/Product/Variant.dart';
+import 'package:cntt2_crm/models/Stock.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/order_api.dart';
 import 'package:flutter/material.dart';
 
+import 'Location/Address.dart';
 import 'Product/Product.dart';
 
 class Cart extends ChangeNotifier {
-  final Map<Variant, int> _products = new Map<Variant, int>();
+  Cart({
+    this.conversationId,
+    Customer customer,
+  }) {
+    if (customer != null) {
+      this.customer.copy(customer);
+      _address.copy(customer.address);
+    }
+  }
+
+  Future<bool> createOrder() async {
+    final order = await OrderAPI.createOrder(cart: this);
+    if (order != null) {
+      return true;
+    }
+    return false;
+  }
+
+  int mimeType = 2;
+  int whoReceive;
+  final String conversationId;
+  final Customer customer = Customer();
+  String get cartItemsJson {
+    String cartItems = '';
+    _products.forEach((variant, total) {
+      cartItems += _itemToJson(variant);
+    });
+    return '[' + cartItems + ']';
+  }
+
+  final Map<Variant, int> _products = Map<Variant, int>();
   UnmodifiableMapView get products => UnmodifiableMapView(_products);
+
+  Stock stock;
+  final Address _address = Address();
+  Address get address => mimeType != 1 ? _address : null;
+
+  String _recipientName = '';
+  String get recipientName => _recipientName.isNotEmpty ? _recipientName : null;
+  set recipientName(String name) {
+    _recipientName = name;
+  }
+
+  String _recipientPhone = '';
+  String get recipientPhone =>
+      _recipientPhone.isNotEmpty ? _recipientPhone : null;
+  set recipientPhone(String phone) {
+    _recipientPhone = phone;
+  }
+
+  String _externalNote = '';
+  String get externalNote => _externalNote.isNotEmpty ? _externalNote : null;
+  set externalNote(String note) {
+    _externalNote = note;
+  }
+
+  String _internalNote = '';
+  String get internalNote => _internalNote.isNotEmpty ? _internalNote : null;
+  set internalNote(String note) {
+    _internalNote = note;
+  }
+
+  int initStatus = 1;
+
   int _discount = 0;
   int get discount => _discount;
   set discount(int value) {
@@ -15,24 +81,24 @@ class Cart extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _transfer = 0;
-  int get transfer => _transfer;
-  set transfer(int value) {
-    _transfer = value;
+  int _bank = 0;
+  int get bank => _bank;
+  set bank(int value) {
+    _bank = value;
     notifyListeners();
   }
 
-  int _payment = 0;
-  int get payment => _payment;
-  set payment(int value) {
-    _transfer = value;
+  int _card = 0;
+  int get card => _card;
+  set card(int value) {
+    _card = value;
     notifyListeners();
   }
 
-  int _another = 0;
-  int get another => _another;
-  set another(int value) {
-    _another = value;
+  int _other = 0;
+  int get other => _other;
+  set other(int value) {
+    _other = value;
     notifyListeners();
   }
 
@@ -53,7 +119,7 @@ class Cart extends ChangeNotifier {
   }
 
   double get totalCost {
-    double _total = totalPrice - discount - transfer - payment - another;
+    double _total = totalPrice - discount - bank - card - other;
     return _total;
   }
 
@@ -100,5 +166,15 @@ class Cart extends ChangeNotifier {
       }
     });
     return total;
+  }
+
+  String _itemToJson(Variant variant) {
+    return '''
+    {
+      product_id_ref: "${variant.product.id}"
+      variant_id: ${variant.id}
+      qty: ${_products[variant]}
+    }
+    ''';
   }
 }

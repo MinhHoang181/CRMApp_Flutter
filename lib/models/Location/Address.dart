@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/location_api.dart';
 
 class Address {
   String address;
@@ -23,7 +23,7 @@ class Address {
   }
 
   Address({
-    @required this.address,
+    this.address,
     this.city,
     this.cityCode,
     this.district,
@@ -35,12 +35,33 @@ class Address {
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
       address: json['address'],
-      cityCode: json['city'] != null ? json['city']['_id'] : null,
-      city: json['city'] != null ? json['city']['label'] : null,
-      districtCode: json['district'] != null ? json['district']['_id'] : null,
-      district: json['district'] != null ? json['district']['label'] : null,
-      wardCode: json['ward'] != null ? json['ward']['_id'] : null,
-      ward: json['ward'] != null ? json['ward']['label'] : null,
+      cityCode: json['city_code'],
+      districtCode: json['district_code'],
+      wardCode: json['ward_code'],
     );
+  }
+
+  factory Address.fromJsonLocation(String address, Map<String, dynamic> json) {
+    return Address(
+      address: address,
+      city: json['cityById'] != null ? json['cityById']['label'] : null,
+      cityCode: json['cityById'] != null ? json['cityById']['_id'] : null,
+      district:
+          json['districtById'] != null ? json['districtById']['label'] : null,
+      districtCode:
+          json['districtById'] != null ? json['districtById']['_id'] : null,
+      ward: json['wardById'] != null ? json['wardById']['label'] : null,
+      wardCode: json['wardById'] != null ? json['wardById']['_id'] : null,
+    );
+  }
+
+  void copy(Address address) {
+    this.address = address.address;
+    this.city = address.city;
+    this.cityCode = address.cityCode;
+    this.district = address.district;
+    this.districtCode = address.districtCode;
+    this.ward = address.ward;
+    this.wardCode = address.wardCode;
   }
 }

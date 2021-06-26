@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/Location/Address.dart';
 import 'package:cntt2_crm/models/Location/City.dart';
 import 'package:cntt2_crm/models/Location/District.dart';
 import 'package:cntt2_crm/models/Location/Ward.dart';
@@ -97,6 +98,48 @@ class LocationAPI {
         wards.add(Ward.fromJson(district, ward));
       });
       return wards;
+    }
+  }
+
+  static Future<Address> fetchAddress({
+    @required String address,
+    @required int cityCode,
+    @required int districtCode,
+    @required int wardCode,
+  }) async {
+    if (cityCode == null || districtCode == null || wardCode == null) {
+      return null;
+    }
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          location {
+            cityById(_id: $cityCode) {
+              _id,
+              label,
+            }
+            districtById(_id: $districtCode) {
+              _id,
+              label,
+            }
+            wardById(_id: $wardCode) {
+              _id,
+              label,
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getShippingClient();
+    final response = await client.query(options);
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      Map<String, dynamic> json = response.data['location'];
+      return Address.fromJsonLocation(address, json);
     }
   }
 }

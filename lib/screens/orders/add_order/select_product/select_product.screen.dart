@@ -54,6 +54,10 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
     return TextField(
       controller: _search,
       style: Theme.of(context).textTheme.bodyText2,
+      autofocus: false,
+      autocorrect: false,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.search,
       decoration: InputDecoration(
         prefixIcon: Icon(
           Icons.search,
@@ -66,6 +70,7 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
       ),
       onEditingComplete: () {
         if (_search.text.isNotEmpty) {
+          FocusScope.of(context).unfocus();
           showDialog<bool>(
             context: context,
             barrierDismissible: false,
@@ -76,7 +81,9 @@ class _SelectProductScreenState extends State<SelectProductScreen> {
               falied: 'Tìm kiếm sản phẩm thất bại',
             ),
           ).then(
-            (value) => value ? _search.text = '' : null,
+            (value) {
+              return value ? _search.text = '' : null;
+            },
           );
         }
       },

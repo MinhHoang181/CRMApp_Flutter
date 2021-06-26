@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
+import 'package:provider/provider.dart';
 
 //Components
 import 'package:cntt2_crm/components/address_info.dart';
+
+//Models
+import 'package:cntt2_crm/models/Cart.dart';
+
+//Screen
+import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
 
 class DeliveryInfo extends StatelessWidget {
   @override
@@ -37,43 +44,70 @@ class DeliveryInfo extends StatelessWidget {
   }
 
   Widget _customer(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
-          child: Text(
-            'Khách hàng',
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
-                ),
+    final customer = context.select((Cart cart) => cart.customer);
+    final formKey = context.select((FormValidate form) => form.customer);
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+            child: Text(
+              'Khách hàng',
+              style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize:
+                        Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                  ),
+            ),
           ),
-        ),
-        SizedBox(height: Layouts.SPACING / 2),
-        TextField(
-          style: Theme.of(context).textTheme.bodyText2,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.person),
-            filled: false,
-            labelText: 'Tên khách hàng',
+          SizedBox(height: Layouts.SPACING / 2),
+          TextFormField(
+            controller: TextEditingController(text: customer.name),
+            style: Theme.of(context).textTheme.bodyText2,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.person),
+              filled: false,
+              labelText: 'Tên khách hàng',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'vui lòng nhập tên khách hàng';
+              }
+              return null;
+            },
+            onChanged: (value) {
+              customer.name = value;
+            },
           ),
-        ),
-        SizedBox(height: Layouts.SPACING),
-        TextField(
-          style: Theme.of(context).textTheme.bodyText2,
-          keyboardType: TextInputType.phone,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.phone),
-            filled: false,
-            labelText: 'Số điện thoại',
+          SizedBox(height: Layouts.SPACING),
+          TextFormField(
+            controller: TextEditingController(text: customer.phone),
+            style: Theme.of(context).textTheme.bodyText2,
+            keyboardType: TextInputType.phone,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.phone),
+              filled: false,
+              labelText: 'Số điện thoại',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'vui lòng nhập số điện thoại';
+              }
+              return null;
+            },
+            onChanged: (value) {
+              customer.phone = value;
+            },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _note(BuildContext context) {
+    var cart = Provider.of<Cart>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -102,6 +136,9 @@ class DeliveryInfo extends StatelessWidget {
                   labelText: 'Ghi chú nội bộ',
                   alignLabelWithHint: true,
                 ),
+                onChanged: (value) {
+                  cart.internalNote = value;
+                },
               ),
             ),
             SizedBox(width: Layouts.SPACING),
@@ -117,6 +154,9 @@ class DeliveryInfo extends StatelessWidget {
                   labelText: 'Ghi chú khách',
                   alignLabelWithHint: true,
                 ),
+                onChanged: (value) {
+                  cart.externalNote = value;
+                },
               ),
             ),
           ],
@@ -151,7 +191,21 @@ class DropDownTypeOrder extends StatefulWidget {
 }
 
 class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
-  int _typeOrder = 2;
+  Cart _cart;
+
+  @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _cart = Provider.of<Cart>(context, listen: false);
+    _cart.mimeType = 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -168,9 +222,9 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
           ),
         ),
         SizedBox(height: Layouts.SPACING / 2),
-        DropdownButtonFormField(
+        DropdownButtonFormField<int>(
           style: Theme.of(context).textTheme.bodyText2,
-          value: _typeOrder,
+          value: _cart.mimeType,
           items: List.generate(
             widget.typeOrders.length,
             (index) => DropdownMenuItem(
@@ -180,11 +234,11 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
           ),
           onChanged: (value) {
             setState(() {
-              _typeOrder = value;
+              _cart.mimeType = value;
             });
           },
         ),
-        if (_typeOrder != 1) ...[
+        if (_cart.mimeType != 1) ...[
           SizedBox(height: Layouts.SPACING),
           DropDownWhoReceive(),
           SizedBox(height: Layouts.SPACING),
@@ -195,6 +249,8 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
   }
 
   Widget _address(BuildContext context) {
+    final address = context.select((Cart cart) => cart.address);
+    final formKey = context.select((FormValidate form) => form.address);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -209,7 +265,10 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
           ),
         ),
         SizedBox(height: Layouts.SPACING / 2),
-        AddressInfo(),
+        AddressInfo(
+          address: address,
+          formKey: formKey,
+        ),
       ],
     );
   }
@@ -226,7 +285,14 @@ class DropDownWhoReceive extends StatefulWidget {
 }
 
 class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
-  int _whoReceive = 1;
+  Cart _cart;
+  @override
+  void initState() {
+    super.initState();
+    _cart = Provider.of<Cart>(context, listen: false);
+    _cart.whoReceive = 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -245,7 +311,7 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
         SizedBox(height: Layouts.SPACING / 2),
         DropdownButtonFormField(
           style: Theme.of(context).textTheme.bodyText2,
-          value: _whoReceive,
+          value: _cart.whoReceive,
           items: List.generate(
             widget.whoReceives.length,
             (index) => DropdownMenuItem(
@@ -255,11 +321,11 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
           ),
           onChanged: (value) {
             setState(() {
-              _whoReceive = value;
+              _cart.whoReceive = value;
             });
           },
         ),
-        if (_whoReceive == 2) ...[
+        if (_cart.whoReceive == 2) ...[
           SizedBox(height: Layouts.SPACING),
           _recipientInfo(context),
         ],
@@ -268,38 +334,59 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
   }
 
   Widget _recipientInfo(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
-          child: Text(
-            'Thông tin người nhận',
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.bodyText2.fontSize + 3,
-                ),
+    final fromKey = context.select((FormValidate form) => form.recipient);
+    return Form(
+      key: fromKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: Layouts.SPACING / 2),
+            child: Text(
+              'Thông tin người nhận',
+              style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize:
+                        Theme.of(context).textTheme.bodyText2.fontSize + 3,
+                  ),
+            ),
           ),
-        ),
-        SizedBox(height: Layouts.SPACING / 2),
-        TextField(
-          style: Theme.of(context).textTheme.bodyText2,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.person),
-            filled: false,
-            labelText: 'Người nhận hàng',
+          SizedBox(height: Layouts.SPACING / 2),
+          TextFormField(
+            style: Theme.of(context).textTheme.bodyText2,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.person),
+              filled: false,
+              labelText: 'Người nhận hàng',
+            ),
+            validator: (_) {
+              if (_cart.whoReceive == 2 &&
+                  (_cart.recipientName == null ||
+                      _cart.recipientName.isEmpty)) {
+                return 'Vui lòng nhập tên người nhận';
+              }
+              return null;
+            },
           ),
-        ),
-        SizedBox(height: Layouts.SPACING),
-        TextField(
-          style: Theme.of(context).textTheme.bodyText2,
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.phone),
-            filled: false,
-            labelText: 'Số điện thoại',
+          SizedBox(height: Layouts.SPACING),
+          TextFormField(
+            style: Theme.of(context).textTheme.bodyText2,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.phone),
+              filled: false,
+              labelText: 'Số điện thoại',
+            ),
+            validator: (_) {
+              if (_cart.whoReceive == 2 &&
+                  (_cart.recipientPhone == null ||
+                      _cart.recipientPhone.isEmpty)) {
+                return 'Vui lòng nhập số điện thoại người nhận';
+              }
+              return null;
+            },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

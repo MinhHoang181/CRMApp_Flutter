@@ -1,4 +1,5 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Location/Address.dart';
 import 'package:cntt2_crm/models/Location/City.dart';
 import 'package:cntt2_crm/models/Location/District.dart';
 import 'package:cntt2_crm/models/Location/Ward.dart';
@@ -7,6 +8,14 @@ import 'package:select_dialog/select_dialog.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 class AddressInfo extends StatefulWidget {
+  final Address address;
+  final GlobalKey<FormState> formKey;
+
+  const AddressInfo({
+    Key key,
+    @required this.address,
+    @required this.formKey,
+  }) : super(key: key);
   @override
   _AddressInfoState createState() => _AddressInfoState();
 }
@@ -15,27 +24,29 @@ class _AddressInfoState extends State<AddressInfo> {
   City _city;
   District _district;
   Ward _ward;
-  String _address;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _selectCity(),
-        SizedBox(height: Layouts.SPACING),
-        _selectDisctrict(),
-        SizedBox(height: Layouts.SPACING),
-        _selectWard(),
-        SizedBox(height: Layouts.SPACING),
-        _addressField(),
-      ],
+    return Form(
+      key: widget.formKey,
+      child: Column(
+        children: [
+          _selectCity(),
+          SizedBox(height: Layouts.SPACING),
+          _selectDisctrict(),
+          SizedBox(height: Layouts.SPACING),
+          _selectWard(),
+          SizedBox(height: Layouts.SPACING),
+          _addressField(),
+        ],
+      ),
     );
   }
 
   Widget _selectCity() {
-    return TextField(
+    return TextFormField(
       controller: TextEditingController(
-        text: _city != null ? _city.toString() : '',
+        text: widget.address.city != null ? widget.address.city : '',
       ),
       decoration: InputDecoration(
         labelText: 'Tỉnh / thành phố',
@@ -44,13 +55,19 @@ class _AddressInfoState extends State<AddressInfo> {
       style: Theme.of(context).textTheme.bodyText2,
       readOnly: true,
       onTap: _showCityDialog,
+      validator: (_) {
+        if (widget.address.cityCode == null) {
+          return 'Vui lòng chọn tỉnh/thành phố';
+        }
+        return null;
+      },
     );
   }
 
   Widget _selectDisctrict() {
-    return TextField(
+    return TextFormField(
       controller: TextEditingController(
-        text: _district != null ? _district.toString() : '',
+        text: widget.address.district != null ? widget.address.district : '',
       ),
       decoration: InputDecoration(
         labelText: 'Quận / huyện',
@@ -60,13 +77,19 @@ class _AddressInfoState extends State<AddressInfo> {
       readOnly: true,
       enabled: _city != null ? true : false,
       onTap: _showDisctrictDialog,
+      validator: (_) {
+        if (widget.address.districtCode == null) {
+          return 'Vui lòng chọn quận/huyện';
+        }
+        return null;
+      },
     );
   }
 
   Widget _selectWard() {
-    return TextField(
+    return TextFormField(
       controller: TextEditingController(
-        text: _ward != null ? _ward.toString() : '',
+        text: widget.address.ward != null ? widget.address.ward : '',
       ),
       decoration: InputDecoration(
         labelText: 'Phường / xã',
@@ -76,17 +99,32 @@ class _AddressInfoState extends State<AddressInfo> {
       readOnly: true,
       enabled: _district != null ? true : false,
       onTap: _showWardDialog,
+      validator: (_) {
+        if (widget.address.wardCode == null) {
+          return 'Vui lòng chọn phường/xã';
+        }
+        return null;
+      },
     );
   }
 
   Widget _addressField() {
-    return TextField(
-      controller: TextEditingController(text: _address),
+    return TextFormField(
+      controller: TextEditingController(text: widget.address.address),
       style: Theme.of(context).textTheme.bodyText2,
       decoration: InputDecoration(
         labelText: 'Địa chỉ cụ thể',
         filled: false,
       ),
+      onChanged: (value) {
+        widget.address.address = value;
+      },
+      validator: (_) {
+        if (widget.address.address == null || widget.address.address.isEmpty) {
+          return 'Vui lòng nhập địa chỉ';
+        }
+        return null;
+      },
     );
   }
 
@@ -138,8 +176,16 @@ class _AddressInfoState extends State<AddressInfo> {
       onChange: (selected) {
         setState(() {
           _city = selected;
+          widget.address.city = _city.name;
+          widget.address.cityCode = _city.id;
+
           _district = null;
+          widget.address.district = null;
+          widget.address.districtCode = null;
+
           _ward = null;
+          widget.address.ward = null;
+          widget.address.wardCode = null;
         });
       },
     );
@@ -158,7 +204,12 @@ class _AddressInfoState extends State<AddressInfo> {
       onChange: (selected) {
         setState(() {
           _district = selected;
+          widget.address.district = _district.name;
+          widget.address.districtCode = _district.id;
+
           _ward = null;
+          widget.address.ward = null;
+          widget.address.wardCode = null;
         });
       },
     );
@@ -177,6 +228,8 @@ class _AddressInfoState extends State<AddressInfo> {
       onChange: (selected) {
         setState(() {
           _ward = selected;
+          widget.address.ward = _ward.name;
+          widget.address.wardCode = _ward.id;
         });
       },
     );

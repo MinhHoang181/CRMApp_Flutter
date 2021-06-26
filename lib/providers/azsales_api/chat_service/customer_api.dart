@@ -1,4 +1,5 @@
 import 'package:cntt2_crm/models/Customer.dart';
+import 'package:cntt2_crm/providers/azsales_api/chat_service/location_api.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
@@ -17,19 +18,10 @@ class CustomerAPI {
                 _id
                 customer_name
                 phone_number
-              }
-              address,
-              city {
-                _id,
-                label,
-              }
-              district {
-                _id,
-                label,
-              }
-              ward {
-                _id,
-                label,
+                address
+                city_code
+                district_code
+                ward_code
               }
             }
           }
@@ -46,8 +38,15 @@ class CustomerAPI {
     } else {
       List<dynamic> customersJson = response.data['order']['orders'];
       List<Customer> customers = List.empty(growable: true);
-      customersJson.forEach((customer) {
-        customers.add(Customer.fromJson(customer));
+      await Future.forEach(customersJson, (customer) async {
+        await LocationAPI.fetchAddress(
+          address: customer['customer']['address'],
+          cityCode: customer['customer']['city_code'],
+          districtCode: customer['customer']['district_code'],
+          wardCode: customer['customer']['ward_code'],
+        ).then((address) {
+          customers.add(Customer.fromJson(customer, address));
+        });
       });
       return customers;
     }

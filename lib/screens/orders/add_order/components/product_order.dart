@@ -19,8 +19,10 @@ import 'no_product_order.dart';
 class ProductOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final products = context.select((Cart cart) => cart.products);
-    return products.isEmpty ? NoProductOrder() : _buildList(context, products);
+    final cart = context.watch<Cart>();
+    return cart.products.isEmpty
+        ? NoProductOrder()
+        : _buildList(context, cart.products);
   }
 
   Widget _buildList(BuildContext context, var products) {
@@ -49,7 +51,7 @@ class ProductOrder extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (_) => ChangeNotifierProvider<Cart>.value(
-                  value: context.watch<Cart>(),
+                  value: Provider.of<Cart>(context, listen: false),
                   child: SelectProductScreen(),
                 ),
               ),

@@ -13,7 +13,7 @@ class District {
   District({
     @required this.id,
     @required this.name,
-    @required this.city,
+    this.city,
   });
 
   factory District.fromJson(City city, Map<String, dynamic> json) {

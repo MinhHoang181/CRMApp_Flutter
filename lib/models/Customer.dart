@@ -4,23 +4,34 @@ import 'package:flutter/material.dart';
 
 class Customer extends ChangeNotifier {
   String id;
-  final String name;
+  String name;
   String phone;
   Address address;
 
   Customer({
-    @required this.id,
-    @required this.name,
-    @required this.phone,
-    @required this.address,
-  });
+    this.id,
+    this.name,
+    this.phone,
+    this.address,
+  }) {
+    if (address == null) {
+      this.address = new Address();
+    }
+  }
 
-  factory Customer.fromJson(Map<String, dynamic> json) {
+  factory Customer.fromJson(Map<String, dynamic> json, Address address) {
     return Customer(
       id: json['customer']['_id'],
       name: json['customer']['customer_name'],
       phone: json['customer']['phone_number'],
-      address: Address.fromJson(json),
+      address: address,
     );
+  }
+
+  void copy(Customer customer) {
+    this.id = customer.id;
+    this.name = customer.name;
+    this.phone = customer.phone;
+    this.address = customer.address;
   }
 }

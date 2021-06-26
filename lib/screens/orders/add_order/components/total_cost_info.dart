@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:intl/intl.dart';
@@ -88,21 +89,44 @@ class StorageSelect extends StatefulWidget {
 }
 
 class _StorageSelectState extends State<StorageSelect> {
-  Stock _stock;
+  Cart _cart;
+
+  @override
+  void setState(VoidCallback fn) {
+    if (!mounted) return;
+    super.setState(fn);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _cart = Provider.of<Cart>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: TextEditingController(
-        text: _stock != null ? _stock.name : '',
+    final formKey = context.select((FormValidate form) => form.stock);
+    return Form(
+      key: formKey,
+      child: TextFormField(
+        controller: TextEditingController(
+          text: _cart.stock != null ? _cart.stock.name : '',
+        ),
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.store_rounded),
+          labelText: 'Chọn kho',
+          filled: false,
+        ),
+        style: Theme.of(context).textTheme.bodyText2,
+        readOnly: true,
+        onTap: _showStockDialog,
+        validator: (_) {
+          if (_cart.stock == null) {
+            return 'vui lòng chọn kho hàng';
+          }
+          return null;
+        },
       ),
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.store_rounded),
-        labelText: 'Chọn kho',
-        filled: false,
-      ),
-      style: Theme.of(context).textTheme.bodyText2,
-      readOnly: true,
-      onTap: _showStockDialog,
     );
   }
 
@@ -111,7 +135,7 @@ class _StorageSelectState extends State<StorageSelect> {
       context,
       titleStyle: Theme.of(context).textTheme.subtitle1,
       label: 'Chọn kho',
-      selectedValue: _stock,
+      selectedValue: _cart.stock,
       searchBoxDecoration: InputDecoration(
         prefixIcon: Icon(Icons.search),
         filled: false,
@@ -123,7 +147,7 @@ class _StorageSelectState extends State<StorageSelect> {
       },
       onChange: (selected) {
         setState(() {
-          _stock = selected;
+          _cart.stock = selected;
         });
       },
     );
