@@ -8,3 +8,4 @@ const String NO_CUSTOMER = 'assets/images/no-customer.png';
 const String NO_PRODUCT_ORDER = 'assets/images/no-product-order.png';
 const String AVATAR = 'assets/images/avatar.png';
 const String IMAGE_HOLDER = 'assets/images/image-holder.jpg';
+const String EMPTY_SEARCH = 'assets/images/empty-search.png';
