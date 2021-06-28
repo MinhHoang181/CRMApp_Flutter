@@ -38,9 +38,11 @@ class Variant {
     int id = json['id'];
     List<dynamic> attributesJson = json['attributes'];
     List<Attribute> attributes = List.empty(growable: true);
-    attributesJson.forEach((attribute) {
-      attributes.add(Attribute.fromJson(attribute));
-    });
+    if (attributesJson != null) {
+      attributesJson.forEach((attribute) {
+        attributes.add(Attribute.fromJson(attribute));
+      });
+    }
     int total = 0;
     if (totalJson != null) {
       if (totalJson['qty_by_variant']['$id'] != null) {
