@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 //Components
 import 'product_item.dart';
+import 'emty_list_product.dart';
 
 //Models
 import 'package:cntt2_crm/models/Product/Product.dart';
@@ -62,19 +63,25 @@ class _ListProductState extends State<ListProduct> {
         _onLoading(productList);
       },
       controller: _refreshController,
-      child: ListView.builder(
-        itemCount: productList.map.length,
-        itemBuilder: (context, index) {
-          return MultiProvider(
-            providers: [
-              Provider<Product>.value(
-                  value: productList.map.values.elementAt(index)),
-              ChangeNotifierProvider<Cart>.value(value: cart),
-            ],
-            child: ProductItem(),
-          );
-        },
-      ),
+      child: _buidList(context, productList, cart),
     );
+  }
+
+  Widget _buidList(BuildContext context, ProductList productList, Cart cart) {
+    return productList.map.isEmpty
+        ? EmptyListProduct()
+        : ListView.builder(
+            itemCount: productList.map.length,
+            itemBuilder: (context, index) {
+              return MultiProvider(
+                providers: [
+                  Provider<Product>.value(
+                      value: productList.map.values.elementAt(index)),
+                  ChangeNotifierProvider<Cart>.value(value: cart),
+                ],
+                child: ProductItem(),
+              );
+            },
+          );
   }
 }

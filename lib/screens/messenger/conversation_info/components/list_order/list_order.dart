@@ -5,6 +5,7 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
 import 'components/order_item.dart';
+import 'components/empty_list_order.dart';
 
 //Models
 import 'package:cntt2_crm/models/Order/Order.dart';
@@ -55,15 +56,22 @@ class ListOrder extends StatelessWidget {
         onRefresh: () => _onRefresh(orders),
         onLoading: () => _onLoading(orders),
         controller: _refreshController,
-        child: ListView.builder(
+        child: _buidList(context, orders),
+      ),
+    );
+  }
+
+  Widget _buidList(BuildContext context, OrderList orders) {
+    return orders.map.isEmpty
+        ? EmptyListOrder()
+        : ListView.builder(
             itemCount: orders.map.length,
             itemBuilder: (context, index) {
               return ChangeNotifierProvider<Order>.value(
                 value: orders.map.values.elementAt(index),
                 child: OrderItem(),
               );
-            }),
-      ),
-    );
+            },
+          );
   }
 }

@@ -5,6 +5,7 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
 import 'components/customer_item.dart';
+import 'components/emty_list_customer.dart';
 
 //Models
 import 'package:cntt2_crm/models/Customer.dart';
@@ -38,15 +39,22 @@ class ListCustomer extends StatelessWidget {
         ),
         onRefresh: () => _onRefresh(customers),
         controller: _refreshController,
-        child: ListView.builder(
+        child: _buidList(context, customers),
+      ),
+    );
+  }
+
+  Widget _buidList(BuildContext context, CustomerList customers) {
+    return customers.map.isEmpty
+        ? EmptyListCustomer()
+        : ListView.builder(
             itemCount: customers.map.length,
             itemBuilder: (context, index) {
               return ChangeNotifierProvider<Customer>.value(
                 value: customers.map.values.elementAt(index),
                 child: CustomerItem(),
               );
-            }),
-      ),
-    );
+            },
+          );
   }
 }
