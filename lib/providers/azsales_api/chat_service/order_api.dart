@@ -101,7 +101,11 @@ class OrderAPI {
       ),
     );
     final GraphQLClient client = getPosClient();
-    final response = await client.query(options);
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception);
       return null;
@@ -185,7 +189,11 @@ class OrderAPI {
       ),
     );
     final GraphQLClient client = getPosClient();
-    final response = await client.query(options);
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception);
       return null;
@@ -305,7 +313,11 @@ class OrderAPI {
       ),
     );
     final GraphQLClient client = getPosClient();
-    final response = await client.mutate(options);
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception.toString());
       return null;
@@ -343,7 +355,7 @@ class OrderAPI {
     );
     final GraphQLClient client = getPosClient();
     final response = await client.query(options).timeout(
-          Duration(minutes: 1),
+          timeout,
           onTimeout: () => null,
         );
     if (response == null) return null;
@@ -417,7 +429,7 @@ class OrderAPI {
     );
     final GraphQLClient client = getPosClient();
     final response = await client.query(options).timeout(
-          Duration(minutes: 1),
+          timeout,
           onTimeout: () => null,
         );
     if (response == null) return null;
@@ -490,7 +502,7 @@ class OrderAPI {
     );
     final GraphQLClient client = getPosClient();
     final response = await client.query(options).timeout(
-          Duration(minutes: 1),
+          timeout,
           onTimeout: () => null,
         );
     if (response == null) return null;
@@ -558,7 +570,7 @@ class OrderAPI {
     );
     final GraphQLClient client = getPosClient();
     final response = await client.query(options).timeout(
-          Duration(minutes: 1),
+          timeout,
           onTimeout: () => null,
         );
     if (response == null) return null;
@@ -596,6 +608,38 @@ class OrderAPI {
         }
       });
       return amount;
+    }
+  }
+
+  static Future<int> fetchNumberOrder({
+    @required int status,
+  }) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(filter: {status: $status}) {
+              pageInfo {
+                itemCount
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      return response.data['order']['ordersPaging']['pageInfo']['itemCount'];
     }
   }
 }

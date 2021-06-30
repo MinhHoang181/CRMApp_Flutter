@@ -19,7 +19,11 @@ class FacebookPageAPI {
       ),
     );
     final GraphQLClient client = getChatClient();
-    final response = await client.query(options);
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception.toString());
       return null;

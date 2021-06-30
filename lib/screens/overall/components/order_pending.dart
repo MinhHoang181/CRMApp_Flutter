@@ -77,11 +77,6 @@ class OrdersPending extends StatelessWidget {
           '$_orderCheck',
           style: Theme.of(context).textTheme.bodyText2,
         ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
-        ),
       ],
     );
   }
@@ -105,11 +100,6 @@ class OrdersPending extends StatelessWidget {
         Text(
           '$_orderDelivery',
           style: Theme.of(context).textTheme.bodyText2,
-        ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
         ),
       ],
     );
@@ -135,11 +125,6 @@ class OrdersPending extends StatelessWidget {
           '$_orderPayment',
           style: Theme.of(context).textTheme.bodyText2,
         ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
-        ),
       ],
     );
   }
@@ -163,11 +148,6 @@ class OrdersPending extends StatelessWidget {
         Text(
           '$_orderReturn',
           style: Theme.of(context).textTheme.bodyText2,
-        ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
         ),
       ],
     );
