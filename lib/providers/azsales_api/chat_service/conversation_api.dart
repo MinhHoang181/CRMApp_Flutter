@@ -58,8 +58,13 @@ class ConversationAPI {
       List<Conversation> conversations = List.empty(growable: true);
       List<dynamic> conversationsJson =
           response.data['conversation']['conversationsPaging']['items'];
-      conversationsJson.forEach((conversation) {
-        conversations.add(Conversation.fromJson(conversation));
+      await Future.forEach(conversationsJson, (json) async {
+        final data = await fetchHasNotePhoneOrder(conversationId: json['_id']);
+        final conversation = Conversation.fromJson(json);
+        conversation.hasNote = data.item1;
+        conversation.hasPhone = data.item2;
+        conversation.hasOrder = data.item3;
+        conversations.add(conversation);
       });
       Map<String, dynamic> pageInfo =
           response.data['conversation']['conversationsPaging']['pageInfo'];
@@ -301,5 +306,75 @@ class ConversationAPI {
         );
       }
     });
+  }
+
+  static Future<Tuple3<bool, bool, bool>> fetchHasNotePhoneOrder({
+    @required String conversationId,
+  }) async {
+    final QueryOptions noteOptions = QueryOptions(
+      document: gql(
+        '''
+        query {
+          note {
+            notesPaging(filter: {reference_id: "$conversationId" }) {
+              pageInfo {
+                itemCount
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final QueryOptions orderOptions = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(filter: {conversation_id: "$conversationId"}) {
+              pageInfo {
+                itemCount
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient noteClient = getChatClient();
+    final GraphQLClient orderClient = getPosClient();
+
+    bool hasNote = false;
+    bool hasOrder = false;
+    bool hasPhone = false;
+
+    final noteResponse = await noteClient.query(noteOptions).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    final orderReponse = await orderClient.query(orderOptions).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (noteResponse != null) {
+      if (noteResponse.hasException) {
+        print(noteResponse.exception.toString());
+      } else {
+        int number =
+            noteResponse.data['note']['notesPaging']['pageInfo']['itemCount'];
+        hasNote = number > 0;
+      }
+    }
+    if (orderReponse != null) {
+      if (orderReponse.hasException) {
+        print(orderReponse.exception.toString());
+      } else {
+        int number =
+            orderReponse.data['order']['ordersPaging']['pageInfo']['itemCount'];
+        hasOrder = number > 0;
+        hasPhone = number > 0;
+      }
+    }
+    return Tuple3(hasNote, hasPhone, hasOrder);
   }
 }

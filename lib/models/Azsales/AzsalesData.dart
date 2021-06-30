@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/Order/DailyOrderInfo.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
 import 'package:cntt2_crm/models/list_model/FacebookPageList.dart';
@@ -25,6 +26,7 @@ class AzsalesData extends ChangeNotifier {
   final StockList stocks = StockList();
   final OrderList orders = OrderList();
   final ShipperList shippers = ShipperList();
+  final DailyOrderInfo dailyOrderInfo = DailyOrderInfo();
 
   bool _ligthTheme = true;
   bool get ligthTheme => _ligthTheme;
