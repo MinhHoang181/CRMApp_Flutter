@@ -15,11 +15,10 @@ class SalesInfo extends StatefulWidget {
 
 class _SalesInfoState extends State<SalesInfo> {
   final int _cancelOrder = 0;
-  final int _returnOrder = 0;
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? _loading() : _futureBuilder();
+    return _isLoading ? _infoTable(context, null) : _futureBuilder();
   }
 
   Widget _futureBuilder() {
@@ -31,28 +30,8 @@ class _SalesInfoState extends State<SalesInfo> {
         } else if (snapshot.hasError) {
           print(snapshot.error.toString());
         }
-        return _loading();
+        return _infoTable(context, null);
       },
-    );
-  }
-
-  Widget _loading() {
-    return Container(
-      height: 160,
-      margin: EdgeInsets.all(Layouts.SPACING),
-      padding: EdgeInsets.all(Layouts.SPACING),
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 3,
-            offset: Offset(0, 2),
-            color: Theme.of(context).shadowColor,
-          ),
-        ],
-      ),
-      child: Center(child: CircularProgressIndicator()),
     );
   }
 
@@ -60,7 +39,7 @@ class _SalesInfoState extends State<SalesInfo> {
     return Stack(
       children: [
         _salesInfo(dailyOrderInfo),
-        _refreshButton(dailyOrderInfo),
+        _isLoading ? SizedBox() : _refreshButton(dailyOrderInfo),
       ],
     );
   }
@@ -91,7 +70,9 @@ class _SalesInfoState extends State<SalesInfo> {
             ),
           ),
           Text(
-            NumberFormat('#,### đ').format(dailyOrderInfo.amount),
+            dailyOrderInfo != null
+                ? NumberFormat('#,### đ').format(dailyOrderInfo.amount)
+                : '0 đ',
             style: GoogleFonts.robotoMono(
               textStyle: TextStyle(fontSize: 35, fontWeight: FontWeight.normal),
             ),
@@ -109,7 +90,9 @@ class _SalesInfoState extends State<SalesInfo> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '${dailyOrderInfo.newOrder}',
+                      dailyOrderInfo != null
+                          ? '${dailyOrderInfo.newOrder}'
+                          : '0',
                       style: GoogleFonts.robotoMono(
                         textStyle:
                             TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5),
@@ -126,7 +109,7 @@ class _SalesInfoState extends State<SalesInfo> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '$_cancelOrder',
+                      dailyOrderInfo != null ? '$_cancelOrder' : '0',
                       style: GoogleFonts.robotoMono(
                         textStyle:
                             TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5),
@@ -143,7 +126,9 @@ class _SalesInfoState extends State<SalesInfo> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '${dailyOrderInfo.returnOrder}',
+                      dailyOrderInfo != null
+                          ? '${dailyOrderInfo.returnOrder}'
+                          : '0',
                       style: GoogleFonts.robotoMono(
                         textStyle:
                             TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5),
