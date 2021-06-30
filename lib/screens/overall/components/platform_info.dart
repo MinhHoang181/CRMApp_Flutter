@@ -101,10 +101,10 @@ class PlatformInfo extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 27,
-                height: 27,
+                width: 32,
+                height: 32,
                 child: Image(
-                  image: AssetImage(MyIcons.CONVERSATION),
+                  image: AssetImage(MyIcons.CONVERSATION2),
                 ),
               ),
               SizedBox(
@@ -127,7 +127,7 @@ class PlatformInfo extends StatelessWidget {
                 width: 27,
                 height: 27,
                 child: Image(
-                  image: AssetImage(MyIcons.BELL),
+                  image: AssetImage(MyIcons.BELL2),
                 ),
               ),
               SizedBox(

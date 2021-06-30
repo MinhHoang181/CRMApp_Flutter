@@ -61,10 +61,10 @@ class OrdersPending extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 50,
-          height: 50,
+          width: 45,
+          height: 45,
           child: Image(
-            image: AssetImage(MyIcons.APPROVE),
+            image: AssetImage(MyIcons.APPROVE2),
           ),
         ),
         SizedBox(width: Layouts.SPACING),
@@ -90,10 +90,10 @@ class OrdersPending extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 50,
-          height: 50,
+          width: 48,
+          height: 48,
           child: Image(
-            image: AssetImage(MyIcons.DELIVERY),
+            image: AssetImage(MyIcons.DELIVERY2),
           ),
         ),
         SizedBox(width: Layouts.SPACING),
@@ -119,10 +119,10 @@ class OrdersPending extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 50,
-          height: 50,
+          width: 42,
+          height: 42,
           child: Image(
-            image: AssetImage(MyIcons.MONEY),
+            image: AssetImage(MyIcons.MONEY_BAG),
           ),
         ),
         SizedBox(width: Layouts.SPACING),
@@ -148,10 +148,10 @@ class OrdersPending extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 50,
-          height: 50,
+          width: 45,
+          height: 45,
           child: Image(
-            image: AssetImage(MyIcons.BOX),
+            image: AssetImage(MyIcons.BOX2),
           ),
         ),
         SizedBox(width: Layouts.SPACING),
