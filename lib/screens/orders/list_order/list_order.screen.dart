@@ -5,10 +5,33 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'components/body.dart';
 
 class ListOrderScreen extends StatelessWidget {
+  final FilterOrder filterOrderTab;
+  const ListOrderScreen({Key key, this.filterOrderTab}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    int indexTab = 0;
+    switch (filterOrderTab) {
+      case FilterOrder.all:
+        indexTab = 0;
+        break;
+      case FilterOrder.status_new:
+        indexTab = 1;
+        break;
+      case FilterOrder.status_confirmed:
+        indexTab = 2;
+        break;
+      case FilterOrder.status_sent:
+        indexTab = 3;
+        break;
+      case FilterOrder.status_done:
+        indexTab = 4;
+        break;
+      default:
+        indexTab = 0;
+    }
     return DefaultTabController(
       length: 5,
+      initialIndex: indexTab,
       child: Scaffold(
         appBar: _listOrderScreenAppBar(context),
         body: TabBarView(
