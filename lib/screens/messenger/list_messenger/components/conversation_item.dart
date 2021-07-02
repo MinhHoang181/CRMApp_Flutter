@@ -62,7 +62,7 @@ class ConversationItem extends StatelessWidget {
                 ),
                 Badge(
                   toAnimate: false,
-                  badgeColor: Colors.blue.withOpacity(0.5),
+                  badgeColor: Colors.blue.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(20),
                   shape: BadgeShape.square,
                   badgeContent: Text(
@@ -123,7 +123,7 @@ class ConversationItem extends StatelessWidget {
         vertical: Layouts.SPACING / 6,
       ),
       child: Badge(
-        badgeColor: label.color.withOpacity(0.3),
+        badgeColor: label.color.withOpacity(0.6),
         toAnimate: false,
         shape: BadgeShape.square,
         borderRadius: BorderRadius.circular(20),
@@ -140,6 +140,7 @@ class ConversationItem extends StatelessWidget {
               label.name,
               style: TextStyle(
                 fontSize: 10,
+                color: Colors.white
               ),
             ),
           ],

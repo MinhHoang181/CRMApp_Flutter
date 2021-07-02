@@ -115,6 +115,13 @@ TextTheme textTheme(BuildContext context, Color color) {
             fontSize: 20,
             fontWeight: FontWeight.w400,
           ),
+          headline3:  GoogleFonts.roboto(
+              textStyle: TextStyle(   //for text message
+                // Header
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              )
+          ),
           subtitle1: TextStyle(
             fontSize: Fonts.SIZE_TEXT_LARGE,
             fontWeight: FontWeight.bold,

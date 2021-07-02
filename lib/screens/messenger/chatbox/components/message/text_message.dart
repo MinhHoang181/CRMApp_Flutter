@@ -35,11 +35,11 @@ class TextMessage extends StatelessWidget {
       child: Text(
         message.message,
         style: message.isSender
-            ? Theme.of(context).textTheme.bodyText2.copyWith(
+            ? Theme.of(context).textTheme.headline3.copyWith(
                   color: Colors.white,
-                  fontSize: Fonts.SIZE_TEXT_MEDIUM,
+                  fontSize: Fonts.SIZE_TEXT_MEDIUM ,
                 )
-            : Theme.of(context).textTheme.bodyText2.copyWith(
+            : Theme.of(context).textTheme.headline3.copyWith(
                   fontSize: Fonts.SIZE_TEXT_MEDIUM,
                 ),
       ),
