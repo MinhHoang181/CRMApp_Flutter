@@ -174,10 +174,7 @@ class ConversationItem extends StatelessWidget {
             SizedBox(width: Layouts.SPACING / 4),
             Text(
               label.name,
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.white
-              ),
+              style: TextStyle(fontSize: 10, color: Colors.white),
             ),
           ],
         ),

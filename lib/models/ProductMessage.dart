@@ -102,7 +102,7 @@ class ProductMessage extends ChangeNotifier {
     String text = '';
     if (_hasPrice) {
       if (!_hasAttribute || (_hasAttribute && _varaints.isEmpty)) {
-        text = 'Giá: ' + NumberFormat('#,### đ').format(product.finalPrice);
+        text = '\nGiá: ' + NumberFormat('#,### đ').format(product.finalPrice);
       }
     }
     return text;
