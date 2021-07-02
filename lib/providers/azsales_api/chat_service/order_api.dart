@@ -101,7 +101,11 @@ class OrderAPI {
       ),
     );
     final GraphQLClient client = getPosClient();
-    final response = await client.query(options);
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception);
       return null;
@@ -185,7 +189,11 @@ class OrderAPI {
       ),
     );
     final GraphQLClient client = getPosClient();
-    final response = await client.query(options);
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception);
       return null;
@@ -304,26 +312,12 @@ class OrderAPI {
         ''',
       ),
     );
-    // print(
-    //   '''
-    //   minetype: ${cart.mimeType},
-    //   conversation_id: "${cart.conversationId}",
-    //   $customer
-    //   cart_items: ${cart.cartItemsJson}
-    //   stock_id: "${cart.stock.id}"
-    //   $address
-    //   bank_payment: ${cart.bank},
-    //   card_payment: ${cart.card},
-    //   other_payment: ${cart.other},
-    //   discount: ${cart.discount},
-    //   $recipient
-    //   $externalNote
-    //   $internalNote
-    //   initStatus: ${cart.initStatus},
-    //   ''',
-    // );
     final GraphQLClient client = getPosClient();
-    final response = await client.mutate(options);
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception.toString());
       return null;
@@ -331,6 +325,321 @@ class OrderAPI {
       Map<String, dynamic> order =
           response.data['order']['createOrder']['record'];
       return Order.fromJson(order);
+    }
+  }
+
+  static Future<int> fetchStatusOrderInDay({
+    @required DateTime date,
+    int page = 1,
+    @required int status,
+  }) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(page: $page, filter: {status: $status}, sort: ID_DESC) {
+              pageInfo {
+                hasNextPage,
+                currentPage,
+                itemCount,
+              }
+              items {
+                date_created
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      final int beginDay =
+          DateTime(date.year, date.month, date.day).microsecondsSinceEpoch ~/
+              1000;
+      final int endDay = DateTime(date.year, date.month, date.day, 23, 59, 59)
+              .microsecondsSinceEpoch ~/
+          1000;
+      int total = 0;
+      final List<dynamic> ordersJson =
+          response.data['order']['ordersPaging']['items'];
+      final PageInfo pageInfo =
+          PageInfo.fromJson(response.data['order']['ordersPaging']['pageInfo']);
+      await Future(() async {
+        ordersJson.forEach((order) {
+          if (order['date_created'] >= beginDay &&
+              order['date_created'] <= endDay) {
+            total++;
+          }
+        });
+        final last = ordersJson.length - 1;
+        if (pageInfo.hasNextPage) {
+          if (ordersJson[last]['date_created'] >= beginDay &&
+              ordersJson[last]['date_created'] <= endDay) {
+            total += await fetchStatusOrderInDay(
+              date: date,
+              page: page + 1,
+              status: status,
+            );
+          }
+        }
+      });
+      return total;
+    }
+  }
+
+  static Future<int> fetchCreateOrderInDay({
+    @required DateTime date,
+    int page = 1,
+  }) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(
+              page: $page
+              filter: {
+                OR: [{ status: 1 }, { status: 2 }, { status: 3 }, { status: 4 }]
+              }
+              sort: ID_DESC
+            ) {
+              pageInfo {
+                hasNextPage,
+                currentPage,
+                itemCount,
+              }
+              items {
+                date_created
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      final int beginDay =
+          DateTime(date.year, date.month, date.day).microsecondsSinceEpoch ~/
+              1000;
+      final int endDay = DateTime(date.year, date.month, date.day, 23, 59, 59)
+              .microsecondsSinceEpoch ~/
+          1000;
+      int total = 0;
+      final List<dynamic> ordersJson =
+          response.data['order']['ordersPaging']['items'];
+      final PageInfo pageInfo =
+          PageInfo.fromJson(response.data['order']['ordersPaging']['pageInfo']);
+      await Future(() async {
+        ordersJson.forEach((order) {
+          if (order['date_created'] >= beginDay &&
+              order['date_created'] <= endDay) {
+            total++;
+          }
+        });
+        final last = ordersJson.length - 1;
+        if (pageInfo.hasNextPage) {
+          if (ordersJson[last]['date_created'] >= beginDay &&
+              ordersJson[last]['date_created'] <= endDay) {
+            total += await fetchCreateOrderInDay(
+              date: date,
+              page: page + 1,
+            );
+          }
+        }
+      });
+      return total;
+    }
+  }
+
+  static Future<int> fetchReturnOrderInDay({
+    @required DateTime date,
+    int page = 1,
+  }) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(
+              page: $page
+              filter: {
+                OR: [{ status: 5 }, { status: 6 }]
+              }
+              sort: ID_DESC
+            ) {
+              pageInfo {
+                hasNextPage,
+                currentPage,
+                itemCount,
+              }
+              items {
+                date_created
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      final int beginDay =
+          DateTime(date.year, date.month, date.day).microsecondsSinceEpoch ~/
+              1000;
+      final int endDay = DateTime(date.year, date.month, date.day, 23, 59, 59)
+              .microsecondsSinceEpoch ~/
+          1000;
+      int total = 0;
+      final List<dynamic> ordersJson =
+          response.data['order']['ordersPaging']['items'];
+      final PageInfo pageInfo =
+          PageInfo.fromJson(response.data['order']['ordersPaging']['pageInfo']);
+      await Future(() async {
+        ordersJson.forEach((order) {
+          if (order['date_created'] >= beginDay &&
+              order['date_created'] <= endDay) {
+            total++;
+          }
+        });
+        final last = ordersJson.length - 1;
+        if (pageInfo.hasNextPage) {
+          if (ordersJson[last]['date_created'] >= beginDay &&
+              ordersJson[last]['date_created'] <= endDay) {
+            total += await fetchReturnOrderInDay(
+              date: date,
+              page: page + 1,
+            );
+          }
+        }
+      });
+      return total;
+    }
+  }
+
+  static Future<int> fetchAmountInDay({
+    @required DateTime date,
+    int page = 1,
+  }) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(page: $page, filter: {status: 4}, sort: ID_DESC) {
+              pageInfo {
+                hasNextPage,
+                currentPage,
+                itemCount,
+              }
+              items {
+                date_created
+                amount
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      final int beginDay =
+          DateTime(date.year, date.month, date.day).microsecondsSinceEpoch ~/
+              1000;
+      final int endDay = DateTime(date.year, date.month, date.day, 23, 59, 59)
+              .microsecondsSinceEpoch ~/
+          1000;
+      int amount = 0;
+      final List<dynamic> ordersJson =
+          response.data['order']['ordersPaging']['items'];
+      final PageInfo pageInfo =
+          PageInfo.fromJson(response.data['order']['ordersPaging']['pageInfo']);
+      await Future(() async {
+        ordersJson.forEach((order) {
+          if (order['date_created'] >= beginDay &&
+              order['date_created'] <= endDay) {
+            amount += order['amount'];
+          }
+        });
+        final last = ordersJson.length - 1;
+        if (pageInfo.hasNextPage) {
+          if (ordersJson[last]['date_created'] >= beginDay &&
+              ordersJson[last]['date_created'] <= endDay) {
+            amount += await fetchAmountInDay(
+              date: date,
+              page: page + 1,
+            );
+          }
+        }
+      });
+      return amount;
+    }
+  }
+
+  static Future<int> fetchNumberOrder({
+    @required int status,
+  }) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(filter: {status: $status}) {
+              pageInfo {
+                itemCount
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      return response.data['order']['ordersPaging']['pageInfo']['itemCount'];
     }
   }
 }

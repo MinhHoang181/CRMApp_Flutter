@@ -9,7 +9,7 @@ import 'empty_list_product.dart';
 //Models
 import 'package:cntt2_crm/models/Product/Product.dart';
 import 'package:cntt2_crm/models/list_model/ProductList.dart';
-import 'package:cntt2_crm/models/Cart.dart';
+import 'package:cntt2_crm/models/ProductMessage.dart';
 
 class ListProduct extends StatefulWidget {
   const ListProduct({Key key}) : super(key: key);
@@ -42,7 +42,6 @@ class _ListProductState extends State<ListProduct> {
   @override
   Widget build(BuildContext context) {
     final productList = Provider.of<ProductList>(context);
-    final cart = Provider.of<Cart>(context);
     return SmartRefresher(
       header: ClassicHeader(
         idleText: 'Kéo xuống để làm mới danh sách sản phẩm',
@@ -63,11 +62,12 @@ class _ListProductState extends State<ListProduct> {
         _onLoading(productList);
       },
       controller: _refreshController,
-      child: _buidList(context, productList, cart),
+      child: _buidList(context, productList),
     );
   }
 
-  Widget _buidList(BuildContext context, ProductList productList, Cart cart) {
+  Widget _buidList(BuildContext context, ProductList productList) {
+    final productMessage = Provider.of<ProductMessage>(context, listen: false);
     return productList.map.isEmpty
         ? EmptyListProduct()
         : ListView.builder(
@@ -77,7 +77,8 @@ class _ListProductState extends State<ListProduct> {
                 providers: [
                   Provider<Product>.value(
                       value: productList.map.values.elementAt(index)),
-                  ChangeNotifierProvider<Cart>.value(value: cart),
+                  ChangeNotifierProvider<ProductMessage>.value(
+                      value: productMessage),
                 ],
                 child: ProductItem(),
               );

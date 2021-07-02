@@ -1,14 +1,33 @@
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Order/PendedOrderInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 
 class OrdersPending extends StatelessWidget {
-  final int _orderCheck = 10;
-  final int _orderPayment = 1;
-  final int _orderReturn = 4;
-  final int _orderDelivery = 1;
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<PendedOrderInfo>(
+      future: AzsalesData.instance.pendedOrderInfo.fetchData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _orderPending(context, snapshot.data);
+        } else if (snapshot.hasError) {
+          print(snapshot.error.toString());
+        }
+        return _orderPending(context, null);
+      },
+    );
+  }
+
+  Widget _orderPending(BuildContext context, PendedOrderInfo pendedOrderInfo) {
+    final waitConfirm =
+        pendedOrderInfo != null ? pendedOrderInfo.waitConfirm : null;
+    final waitShipping =
+        pendedOrderInfo != null ? pendedOrderInfo.waitShipping : null;
+    final waitPay = pendedOrderInfo != null ? pendedOrderInfo.waitPay : null;
+    final waitReturn =
+        pendedOrderInfo != null ? pendedOrderInfo.waitReturn : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,13 +62,13 @@ class OrdersPending extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _orderWaitCheck(context),
+              _orderWaitCheck(context, waitConfirm),
               Divider(),
-              _orderWaitTranport(context),
+              _orderWaitTranport(context, waitShipping),
               Divider(),
-              _orderWaitPayment(context),
+              _orderWaitPayment(context, waitPay),
               Divider(),
-              _orderWaitReturn(context),
+              _orderWaitReturn(context, waitReturn),
             ],
           ),
         ),
@@ -57,7 +76,7 @@ class OrdersPending extends StatelessWidget {
     );
   }
 
-  Widget _orderWaitCheck(BuildContext context) {
+  Widget _orderWaitCheck(BuildContext context, int waitConfirm) {
     return Row(
       children: [
         SizedBox(
@@ -74,19 +93,14 @@ class OrdersPending extends StatelessWidget {
         ),
         Spacer(),
         Text(
-          '$_orderCheck',
+          waitConfirm != null ? '$waitConfirm' : 'Đang cập nhật',
           style: Theme.of(context).textTheme.bodyText2,
-        ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
         ),
       ],
     );
   }
 
-  Widget _orderWaitTranport(BuildContext context) {
+  Widget _orderWaitTranport(BuildContext context, int waitShipping) {
     return Row(
       children: [
         SizedBox(
@@ -103,19 +117,14 @@ class OrdersPending extends StatelessWidget {
         ),
         Spacer(),
         Text(
-          '$_orderDelivery',
+          waitShipping != null ? '$waitShipping' : 'Đang cập nhật',
           style: Theme.of(context).textTheme.bodyText2,
-        ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
         ),
       ],
     );
   }
 
-  Widget _orderWaitPayment(BuildContext context) {
+  Widget _orderWaitPayment(BuildContext context, int waitPay) {
     return Row(
       children: [
         SizedBox(
@@ -132,19 +141,14 @@ class OrdersPending extends StatelessWidget {
         ),
         Spacer(),
         Text(
-          '$_orderPayment',
+          waitPay != null ? '$waitPay' : 'Đang cập nhật',
           style: Theme.of(context).textTheme.bodyText2,
-        ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
         ),
       ],
     );
   }
 
-  Widget _orderWaitReturn(BuildContext context) {
+  Widget _orderWaitReturn(BuildContext context, int waitReturn) {
     return Row(
       children: [
         SizedBox(
@@ -161,13 +165,8 @@ class OrdersPending extends StatelessWidget {
         ),
         Spacer(),
         Text(
-          '$_orderReturn',
+          waitReturn != null ? '$waitReturn' : 'Đang cập nhật',
           style: Theme.of(context).textTheme.bodyText2,
-        ),
-        SizedBox(width: Layouts.SPACING),
-        Icon(
-          Icons.arrow_forward_ios,
-          color: Theme.of(context).accentColor,
         ),
       ],
     );

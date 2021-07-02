@@ -29,10 +29,13 @@ Future<AzsalesAccount> login(LoginData data) async {
     ),
   );
 
-  final response = await _client.query(options);
+  final response = await _client.query(options).timeout(
+        timeout,
+        onTimeout: () => null,
+      );
   if (response.hasException) {
     print(response.exception.toString());
-    throw Exception('Lỗi đăng nhập');
+    return null;
   }
   Map<String, dynamic> json = response.data['auth']['login'];
   return json['accessToken'] == null ? null : AzsalesAccount.fromJson(json);

@@ -1,6 +1,8 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:graphql/client.dart';
 
+final Duration timeout = Duration(minutes: 1);
+
 final _chatWebSocketLink = WebSocketLink(
   'ws://chat-service-dev.azsales.vn/graphql',
   config: SocketClientConfig(

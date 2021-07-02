@@ -21,7 +21,11 @@ class LabelAPI {
       ),
     );
     final GraphQLClient client = getChatClient();
-    final response = await client.query(options);
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception);
       return null;
@@ -58,7 +62,11 @@ class LabelAPI {
     );
 
     final GraphQLClient client = getChatClient();
-    final response = await client.mutate(options);
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception.toString());
       return null;
@@ -92,7 +100,11 @@ class LabelAPI {
     );
 
     final GraphQLClient client = getChatClient();
-    final response = await client.mutate(options);
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception.toString());
       return null;
@@ -122,7 +134,11 @@ class LabelAPI {
     );
 
     final GraphQLClient client = getChatClient();
-    final response = await client.mutate(options);
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
     if (response.hasException) {
       print(response.exception.toString());
       return false;
