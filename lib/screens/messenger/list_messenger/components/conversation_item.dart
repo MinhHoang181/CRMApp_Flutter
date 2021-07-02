@@ -22,87 +22,30 @@ class ConversationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final conversation = Provider.of<Conversation>(context);
-    return ListTile(
-      leading: CircleAvatarWithPlatform(
-        platform: Platform.messenger,
-        radius: 30,
-      ),
-      title: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
+    return InkWell(
+      child: Padding(
+        padding: const EdgeInsets.all(Layouts.SPACING / 2),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: Layouts.SPACING / 2,
-              children: [
-                Text(
-                  conversation.participants[0].name,
-                  style: conversation.isRead
-                      ? Theme.of(context).textTheme.bodyText2.copyWith(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2.fontSize +
-                                    2,
-                          )
-                      : Theme.of(context).textTheme.bodyText2.copyWith(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2.fontSize +
-                                    2,
-                            fontWeight: FontWeight.bold,
-                          ),
+            _avatar(context),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(Layouts.SPACING / 2),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _message(context, conversation),
+                    SizedBox(height: Layouts.SPACING / 2),
+                    _labelList(context, conversation.labelIds),
+                  ],
                 ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .color
-                      .withOpacity(0.5),
-                  size: 14,
-                ),
-                Badge(
-                  toAnimate: false,
-                  badgeColor: Colors.blue.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(20),
-                  shape: BadgeShape.square,
-                  badgeContent: Text(
-                    AzsalesData.instance.pages.map[conversation.pageId].name,
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: Layouts.SPACING / 2),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    conversation.isReplied
-                        ? 'Bạn: ' + conversation.snippet
-                        : conversation.snippet,
-                    style: conversation.isRead
-                        ? Theme.of(context).textTheme.bodyText2
-                        : Theme.of(context).textTheme.bodyText2.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: Layouts.SPACING / 2),
-            Wrap(
-              children: List.generate(
-                conversation.labelIds.length,
-                (index) => _labelItem(conversation.labelIds[index]),
               ),
             ),
           ],
         ),
       ),
-      trailing: _moreInfo(conversation),
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -111,6 +54,99 @@ class ConversationItem extends StatelessWidget {
             child: ChatboxScreen(),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _avatar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: Layouts.SPACING),
+      child: CircleAvatarWithPlatform(
+        platform: Platform.messenger,
+        radius: 30,
+      ),
+    );
+  }
+
+  Widget _message(BuildContext context, Conversation conversation) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: Layouts.SPACING / 2,
+                children: [
+                  Text(
+                    conversation.participants[0].name,
+                    style: conversation.isRead
+                        ? Theme.of(context).textTheme.bodyText2.copyWith(
+                              fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .fontSize +
+                                  2,
+                            )
+                        : Theme.of(context).textTheme.bodyText2.copyWith(
+                              fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .fontSize +
+                                  2,
+                              fontWeight: FontWeight.bold,
+                            ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .color
+                        .withOpacity(0.5),
+                    size: 14,
+                  ),
+                  Badge(
+                    toAnimate: false,
+                    badgeColor: Colors.blue.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(20),
+                    shape: BadgeShape.square,
+                    badgeContent: Text(
+                      AzsalesData.instance.pages.map[conversation.pageId].name,
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: Layouts.SPACING / 2),
+              Text(
+                conversation.isReplied
+                    ? 'Bạn: ' + conversation.snippet
+                    : conversation.snippet,
+                style: conversation.isRead
+                    ? Theme.of(context).textTheme.bodyText2
+                    : Theme.of(context).textTheme.bodyText2.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: Layouts.SPACING),
+        _moreInfo(conversation),
+      ],
+    );
+  }
+
+  Widget _labelList(BuildContext context, List<String> labelIds) {
+    return Wrap(
+      children: List.generate(
+        labelIds.length,
+        (index) => _labelItem(labelIds[index]),
       ),
     );
   }
@@ -150,6 +186,7 @@ class ConversationItem extends StatelessWidget {
   }
 
   Widget _moreInfo(Conversation conversation) {
+    final double size = 15;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -161,15 +198,24 @@ class ConversationItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             if (conversation.hasPhone) ...[
-              Icon(Icons.phone_rounded),
+              Icon(
+                Icons.phone_rounded,
+                size: size,
+              ),
               SizedBox(width: Layouts.SPACING / 4),
             ],
             if (conversation.hasNote) ...[
-              Icon(Icons.note_rounded),
+              Icon(
+                Icons.note_rounded,
+                size: size,
+              ),
               SizedBox(width: Layouts.SPACING / 4),
             ],
             if (conversation.hasOrder) ...[
-              Icon(Icons.shopping_cart_sharp),
+              Icon(
+                Icons.shopping_cart_sharp,
+                size: size,
+              ),
               SizedBox(width: Layouts.SPACING / 4),
             ],
           ],

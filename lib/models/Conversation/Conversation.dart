@@ -128,23 +128,6 @@ class Conversation extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Conversation> fetchData() async {
-    messages.fetchData();
-    notes.fetchData().then((value) {
-      this.hasNote = value.map.isNotEmpty;
-      notifyListeners();
-    });
-    orders.fetchData().then((value) {
-      this.hasOrder = value.map.isNotEmpty;
-      notifyListeners();
-    });
-    customers.fetchData().then((value) {
-      this.hasPhone = value.map.isNotEmpty;
-      notifyListeners();
-    });
-    return this;
-  }
-
   Future<bool> setLabel(String labelId) async {
     List<String> labelIds = await ConversationAPI.setLabel(
         conversationId: this.id, labelId: labelId);

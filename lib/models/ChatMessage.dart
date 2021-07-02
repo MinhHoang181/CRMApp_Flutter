@@ -51,7 +51,7 @@ class Attachment {
 
 class ChatMessage {
   String id;
-  final String message;
+  String message;
   String dateCreated;
   int timeCreated;
   List<Attachment> attachments = List.empty(growable: true);

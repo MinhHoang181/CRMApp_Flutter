@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
+import 'package:cntt2_crm/components/image_item.dart';
 
 //Models
 import 'package:cntt2_crm/models/ChatMessage.dart';
@@ -73,6 +74,7 @@ class AttachmentMessage extends StatelessWidget {
   }
 
   Widget _image(String url) {
+    print(url);
     return Container(
       margin: message.isSender
           ? EdgeInsets.only(
@@ -85,7 +87,10 @@ class AttachmentMessage extends StatelessWidget {
             ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.network(url),
+        child: ImageItem(
+          url: url,
+          size: const Size(200, 200),
+        ),
       ),
     );
   }

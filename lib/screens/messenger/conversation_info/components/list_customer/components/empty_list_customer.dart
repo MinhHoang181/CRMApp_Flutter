@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/images.dart' as MyImages;
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
-class EmptyNoteList extends StatelessWidget {
-  const EmptyNoteList({Key key}) : super(key: key);
+class EmptyListCustomer extends StatelessWidget {
+  const EmptyListCustomer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -53,7 +53,11 @@ class MessageAPI {
       ),
     );
     final GraphQLClient client = getChatClient();
-    final response = await client.query(options);
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception.toString());
       return null;
@@ -88,7 +92,7 @@ class MessageAPI {
                       page_id: "$pageId"
                       recipient_id: "$recipientId"
                       message: {
-                        text: "${message.message}"
+                        text: """${message.message}"""
                       }
                     }
                   ) {
@@ -127,7 +131,11 @@ class MessageAPI {
     }
 
     final GraphQLClient client = getChatClient();
-    final response = await client.mutate(options);
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
     if (response.hasException) {
       print(response.exception.toString());
       return null;
@@ -156,7 +164,11 @@ class MessageAPI {
       ),
     );
     final GraphQLClient client = getChatClient();
-    final response = await client.mutate(options);
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
     if (response.hasException) {
       print(response.exception.toString());
       return false;

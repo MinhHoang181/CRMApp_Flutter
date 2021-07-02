@@ -35,9 +35,9 @@ class ConversationList extends ChangeNotifier {
   }
 
   void _addList(List<Conversation> conversations) {
-    conversations.forEach((conversation) async {
+    conversations.forEach((conversation) {
       if (!_list.containsKey(conversation.id)) {
-        _list[conversation.id] = await conversation.fetchData();
+        _list[conversation.id] = conversation;
       }
     });
     notifyListeners();

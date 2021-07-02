@@ -1,3 +1,5 @@
+import 'package:cntt2_crm/models/Order/DailyOrderInfo.dart';
+import 'package:cntt2_crm/models/Order/PendedOrderInfo.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesAccount.dart';
 import 'package:cntt2_crm/models/list_model/FacebookPageList.dart';
@@ -25,6 +27,8 @@ class AzsalesData extends ChangeNotifier {
   final StockList stocks = StockList();
   final OrderList orders = OrderList();
   final ShipperList shippers = ShipperList();
+  final DailyOrderInfo dailyOrderInfo = DailyOrderInfo();
+  final PendedOrderInfo pendedOrderInfo = PendedOrderInfo();
 
   bool _ligthTheme = true;
   bool get ligthTheme => _ligthTheme;
@@ -47,18 +51,15 @@ class AzsalesData extends ChangeNotifier {
   AzsalesData._();
 
   Future<AzsalesData> fetchData() async {
-    //pages
-    await pages.fetchData();
-    //labels
-    await labels.fetchData();
-    //QuickReplies
-    await replies.fetchData();
-    //Conversations
-    await conversations.fetchData();
-    //Location
-    await location.fetchData();
-    //Stock
-    await stocks.fetchData();
+    await Future.wait([
+      pages.fetchData(),
+      labels.fetchData(),
+      replies.fetchData(),
+      conversations.fetchData(),
+      location.fetchData(),
+      stocks.fetchData(),
+      dailyOrderInfo.fetchData(),
+    ]);
     return this;
   }
 

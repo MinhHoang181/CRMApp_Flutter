@@ -28,7 +28,9 @@ class ChatboxScreen extends StatelessWidget {
     return Scaffold(
       appBar: _chatboxScreenAppBar(context),
       body: FutureBuilder<MessageList>(
-        future: conversation.messages.fetchData(),
+        future: conversation.messages.fetchData().whenComplete(
+              () => conversation.customers.fetchData(),
+            ),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ChangeNotifierProvider<MessageList>.value(

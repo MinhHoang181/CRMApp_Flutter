@@ -21,19 +21,19 @@ class MessageList extends ChangeNotifier {
 
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
   List<ChatMessage> get list {
-    List<ChatMessage> chatlog = _unUpdateList.toList();
-    chatlog.addAll(_list.values);
+    List<ChatMessage> chatlog =
+        _unUpdateList.toList() + _sortTime(_list.values.toList());
     return chatlog;
   }
 
-  // List<ChatMessage> _sortTime(List<ChatMessage> sortList) {
-  //   sortList.sort((a, b) {
-  //     final dayA = a.timeCreated;
-  //     final dayB = b.timeCreated;
-  //     return dayB.compareTo(dayA);
-  //   });
-  //   return sortList;
-  // }
+  List<ChatMessage> _sortTime(List<ChatMessage> sortList) {
+    sortList.sort((a, b) {
+      final dayA = a.timeCreated;
+      final dayB = b.timeCreated;
+      return dayB.compareTo(dayA);
+    });
+    return sortList;
+  }
 
   void _addList(List<ChatMessage> messages) {
     messages.forEach((message) {
