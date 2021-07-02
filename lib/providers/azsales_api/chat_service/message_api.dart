@@ -92,7 +92,7 @@ class MessageAPI {
                       page_id: "$pageId"
                       recipient_id: "$recipientId"
                       message: {
-                        text: "${message.message}"
+                        text: """${message.message}"""
                       }
                     }
                   ) {

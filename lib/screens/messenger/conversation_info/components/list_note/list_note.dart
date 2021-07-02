@@ -11,7 +11,7 @@ import 'package:cntt2_crm/models/list_model/NoteList.dart';
 
 //Components
 import 'components/note_item.dart';
-import 'components/emty_list_note.dart';
+import 'components/empty_list_note.dart';
 
 class ListNode extends StatelessWidget {
   final RefreshController _refreshController = RefreshController();

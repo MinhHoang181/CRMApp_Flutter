@@ -74,6 +74,7 @@ class AttachmentMessage extends StatelessWidget {
   }
 
   Widget _image(String url) {
+    print(url);
     return Container(
       margin: message.isSender
           ? EdgeInsets.only(

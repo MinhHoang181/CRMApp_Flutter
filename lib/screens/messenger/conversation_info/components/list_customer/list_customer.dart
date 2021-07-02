@@ -5,7 +5,7 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
 import 'components/customer_item.dart';
-import 'components/emty_list_customer.dart';
+import 'components/empty_list_customer.dart';
 
 //Models
 import 'package:cntt2_crm/models/Customer.dart';
