@@ -5,9 +5,13 @@ import 'package:provider/provider.dart';
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
 import 'package:cntt2_crm/models/Order/FilterOrder.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Conversation/Conversations.dart';
+import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 //Screens
 import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
 import 'package:cntt2_crm/screens/orders/list_order/list_order.screen.dart';
+import 'package:cntt2_crm/screens/messenger/list_messenger/all/all_message.screen.dart';
 
 class ShortCut extends StatelessWidget {
   @override
@@ -75,24 +79,37 @@ class ShortCut extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Image(
-                    image: AssetImage(MyIcons.MESSAGE_ALT),
+            InkWell(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Image(
+                      image: AssetImage(MyIcons.MESSAGE_ALT),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                  ),
+                  Text(
+                    'Tin nhắn \n tổng hợp',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              ),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ChangeNotifierProvider<Conversations>.value(
+                    value: AzsalesData
+                        .instance.conversations.map[PlatformConversation.all],
+                    child: AllMessageScreen(),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 5.0),
-                ),
-                Text(
-                  'Tin nhắn \n tổng hợp',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ],
+              ),
             ),
             InkWell(
               child: Column(

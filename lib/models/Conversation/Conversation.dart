@@ -147,7 +147,7 @@ class Conversation extends ChangeNotifier {
         conversationId: this.id, labelId: labelId);
     if (labelIds != null) {
       bool success = await ConversationAPI.notifyConversationChanged(
-          conversationId: this.id);   
+          conversationId: this.id);
       if (!success) {
         _updateLabels(labelIds);
       }

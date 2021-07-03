@@ -1,5 +1,6 @@
 import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:cntt2_crm/models/Conversation/Conversation.dart';
+import 'package:cntt2_crm/models/Conversation/FilterConversation.dart';
 import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/providers/azsales_api/url_api.dart';
@@ -8,17 +9,16 @@ import 'package:graphql/client.dart';
 import 'package:tuple/tuple.dart';
 
 class ConversationAPI {
-  static Future<Tuple2<List<Conversation>, PagingInfo>>
-      fetchConversationsAllPages({
-    int start,
-    int min,
+  static Future<Tuple2<List<Conversation>, PagingInfo>> fetchConversations({
+    @required int start,
+    @required FilterConversation filter,
   }) async {
     final QueryOptions options = QueryOptions(
       document: gql(
         '''
         query {
           conversation {
-            conversationsPaging(start: $start, min: $min) {
+            conversationsPaging(start: $start, min: 20, filter: { ${filter.toGraphQL} }) {
               pageInfo {
                 hasNextPage
                 next

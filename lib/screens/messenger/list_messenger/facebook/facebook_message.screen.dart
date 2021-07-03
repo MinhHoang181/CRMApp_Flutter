@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 //Components
-import 'components/body.dart';
+import '../components/body.dart';
 import 'components/page_select.dart';
 
-class FacebookMessengerScreen extends StatelessWidget {
+//Models
+import 'package:cntt2_crm/models/Conversation/FilterConversation.dart';
+
+class FacebookMessageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -14,9 +18,18 @@ class FacebookMessengerScreen extends StatelessWidget {
         body: SafeArea(
           child: TabBarView(
             children: [
-              Body(),
-              Body(),
-              Container(),
+              Provider.value(
+                value: FilterConversation.all,
+                child: Body(),
+              ),
+              Provider.value(
+                value: FilterConversation.unread,
+                child: Body(),
+              ),
+              Provider.value(
+                value: FilterConversation.unreplied,
+                child: Body(),
+              ),
             ],
           ),
         ),
@@ -58,23 +71,14 @@ class FacebookMessengerScreen extends StatelessWidget {
                 text: 'Tất cả',
               ),
               Tab(
-                text: 'Tin nhắn',
+                text: 'Chưa xem',
               ),
               Tab(
-                text: 'Bình luận',
+                text: 'Chưa trả lời',
               ),
             ],
           ),
         ),
-        Spacer(),
-        Align(
-          alignment: Alignment.centerRight,
-          child: IconButton(
-            icon: Icon(Icons.filter_alt_rounded),
-            color: Colors.white,
-            onPressed: () => {},
-          ),
-        )
       ],
     );
   }

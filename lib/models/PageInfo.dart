@@ -27,7 +27,7 @@ class PagingInfo {
     @required this.hasNextPage,
     @required this.next,
     @required this.start,
-    @required this.min,
+    this.min,
   });
 
   factory PagingInfo.fromJson(Map<String, dynamic> json) {

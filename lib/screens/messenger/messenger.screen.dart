@@ -1,11 +1,19 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:badges/badges.dart';
+import 'package:provider/provider.dart';
 
 //Screen
-import 'list_messenger/facebook_messenger.screen.dart';
+import 'list_messenger/facebook/facebook_message.screen.dart';
+import 'list_messenger/all/all_message.screen.dart';
+
+//Models
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Conversation/Conversations.dart';
+import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 
 class MessengerScreen extends StatelessWidget {
   @override
@@ -63,7 +71,16 @@ class MessengerScreen extends StatelessWidget {
         ),
         showBadge: notificationCount > 0 ? true : false,
       ),
-      onTap: () => {},
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<Conversations>.value(
+            value: AzsalesData
+                .instance.conversations.map[PlatformConversation.all],
+            child: AllMessageScreen(),
+          ),
+        ),
+      ),
     );
   }
 
@@ -96,7 +113,11 @@ class MessengerScreen extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => FacebookMessengerScreen(),
+          builder: (context) => ChangeNotifierProvider<Conversations>.value(
+            value: AzsalesData
+                .instance.conversations.map[PlatformConversation.facebook],
+            child: FacebookMessageScreen(),
+          ),
         ),
       ),
     );
