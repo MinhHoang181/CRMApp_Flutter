@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 import 'package:cntt2_crm/models/Conversation/FilterConversation.dart';
@@ -8,6 +9,16 @@ import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 
 class FacebookConversations extends Conversations {
+  Map<FilterConversation, FilterConversation> _filter = Map.fromIterable(
+    FilterConversation.list,
+    key: (filter) => filter,
+    value: (filter) {
+      return FilterConversation.copy(
+        filterConversation: filter,
+        pageIds: AzsalesData.instance.pages.selectedPageIds,
+      );
+    },
+  );
   Map<FilterConversation, Map<String, Conversation>> _list = Map.fromIterable(
     FilterConversation.list,
     key: (filter) => filter,
@@ -54,7 +65,7 @@ class FacebookConversations extends Conversations {
       _list[filterConversation] = Map<String, Conversation>();
       final data = await ConversationAPI.fetchConversations(
         start: 0,
-        filter: filterConversation,
+        filter: _filter[filterConversation],
       );
       if (data != null) {
         _addList(filterConversation, data.item1);
@@ -68,7 +79,7 @@ class FacebookConversations extends Conversations {
   Future<bool> refreshData(FilterConversation filterConversation) async {
     final data = await ConversationAPI.fetchConversations(
       start: 0,
-      filter: filterConversation,
+      filter: _filter[filterConversation],
     );
     if (data != null) {
       _list[filterConversation].clear();
@@ -84,7 +95,7 @@ class FacebookConversations extends Conversations {
     if (_pageInfo[filterConversation].hasNextPage) {
       final data = await ConversationAPI.fetchConversations(
         start: pageInfo.next,
-        filter: filterConversation,
+        filter: _filter[filterConversation],
       );
       if (data != null) {
         _addList(filterConversation, data.item1);

@@ -7,11 +7,23 @@ import 'package:flutter/material.dart';
 class FacebookPageList extends ChangeNotifier {
   Map<String, FacebookPage> _list;
   UnmodifiableMapView get map => UnmodifiableMapView(_list);
+  List<String> selectedPageIds = List.empty(growable: true);
+
+  void notify(FacebookPage page) {
+    if (page.isSelected && !selectedPageIds.contains(page.id)) {
+      selectedPageIds.add(page.id);
+    } else {
+      selectedPageIds.remove(page.id);
+    }
+  }
 
   void _addList(List<FacebookPage> pages) {
     pages.forEach((page) {
       if (!_list.containsKey(page.id)) {
         _list[page.id] = page;
+        if (!selectedPageIds.contains(page.id)) {
+          selectedPageIds.add(page.id);
+        }
       }
     });
     notifyListeners();

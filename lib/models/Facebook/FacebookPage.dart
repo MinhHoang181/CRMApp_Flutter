@@ -1,5 +1,4 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
-import 'package:cntt2_crm/models/list_model/ConversationList.dart';
 import 'package:flutter/material.dart';
 
 class FacebookPage {
@@ -22,7 +21,6 @@ class FacebookPage {
 
   void toggleSelect() {
     _isSelected = _isSelected ? false : true;
-    AzsalesData.instance.conversations.map[PlatformConversation.facebook]
-        .notifyChanged();
+    AzsalesData.instance.pages.notify(this);
   }
 }

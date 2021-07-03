@@ -32,8 +32,4 @@ abstract class Conversations extends ChangeNotifier {
 
   bool addConversation(
       FilterConversation filterConversation, Conversation conversation);
-
-  void notifyChanged() {
-    notifyListeners();
-  }
 }

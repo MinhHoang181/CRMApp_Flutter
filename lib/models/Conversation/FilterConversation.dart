@@ -25,6 +25,35 @@ class FilterConversation {
     this.participantId,
   });
 
+  factory FilterConversation.copy({
+    FilterConversation filterConversation,
+    List<String> pageIds,
+    List<String> labeIds,
+    bool hasPhone,
+    bool hasNote,
+    bool hasOrder,
+    bool isRead,
+    bool isReplied,
+    int mimeType,
+    String search,
+    String participantId,
+  }) {
+    return FilterConversation(
+      pageIds: pageIds == null ? filterConversation.pageIds : pageIds,
+      labeIds: labeIds == null ? filterConversation.labeIds : labeIds,
+      hasPhone: hasPhone == null ? filterConversation.hasPhone : hasPhone,
+      hasNote: hasNote == null ? filterConversation.hasNote : hasNote,
+      hasOrder: hasOrder == null ? filterConversation.hasOrder : hasOrder,
+      isRead: isRead == null ? filterConversation.isRead : isRead,
+      isReplied: isReplied == null ? filterConversation.isReplied : isReplied,
+      mimeType: mimeType == null ? filterConversation.mimeType : mimeType,
+      search: search == null ? filterConversation.search : search,
+      participantId: participantId == null
+          ? filterConversation.participantId
+          : participantId,
+    );
+  }
+
   static FilterConversation get all => const FilterConversation();
   static FilterConversation get unread =>
       const FilterConversation(isRead: false);
@@ -56,7 +85,7 @@ class FilterConversation {
 
   String get _pageIds {
     String text = '';
-    if (this.pageIds != null && this.pageIds.isNotEmpty) {
+    if (this.pageIds != null) {
       text = 'page_ids: [';
       this.pageIds.forEach((id) {
         text += '"$id",';
