@@ -108,4 +108,14 @@ class AllConversations extends Conversations {
     }
     return false;
   }
+
+  @override
+  Future<bool> refreshAll() async {
+    await Future.forEach(
+      _list.keys,
+      (filter) => refreshData(filter),
+    );
+    notifyListeners();
+    return true;
+  }
 }

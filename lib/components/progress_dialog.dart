@@ -69,9 +69,11 @@ class _ProgressDialogState extends State<ProgressDialog> {
       children: [
         CircularProgressIndicator(),
         SizedBox(height: Layouts.SPACING / 2),
-        Text(
-          widget.loading,
-          style: Theme.of(context).textTheme.bodyText2,
+        Flexible(
+          child: Text(
+            widget.loading,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
         ),
       ],
     );
@@ -86,9 +88,11 @@ class _ProgressDialogState extends State<ProgressDialog> {
           color: Colors.green,
         ),
         SizedBox(width: Layouts.SPACING / 2),
-        Text(
-          widget.success,
-          style: Theme.of(context).textTheme.bodyText2,
+        Flexible(
+          child: Text(
+            widget.success,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
         ),
       ],
     );
@@ -103,9 +107,11 @@ class _ProgressDialogState extends State<ProgressDialog> {
           color: Colors.red,
         ),
         SizedBox(width: Layouts.SPACING / 2),
-        Text(
-          widget.falied,
-          style: Theme.of(context).textTheme.bodyText2,
+        Flexible(
+          child: Text(
+            widget.falied,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
         ),
       ],
     );

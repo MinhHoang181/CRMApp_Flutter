@@ -19,8 +19,12 @@ class FacebookPage {
     );
   }
 
-  void toggleSelect() {
-    _isSelected = _isSelected ? false : true;
+  void toggleSelect({bool select}) {
+    if (select != null) {
+      _isSelected = select;
+    } else {
+      _isSelected = _isSelected ? false : true;
+    }
     AzsalesData.instance.pages.notify(this);
   }
 }

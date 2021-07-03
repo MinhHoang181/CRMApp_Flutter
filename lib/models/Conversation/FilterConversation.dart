@@ -85,7 +85,7 @@ class FilterConversation {
 
   String get _pageIds {
     String text = '';
-    if (this.pageIds != null) {
+    if (this.pageIds != null && this.pageIds.isNotEmpty) {
       text = 'page_ids: [';
       this.pageIds.forEach((id) {
         text += '"$id",';

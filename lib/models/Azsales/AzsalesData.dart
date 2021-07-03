@@ -52,13 +52,13 @@ class AzsalesData extends ChangeNotifier {
 
   Future<AzsalesData> fetchData() async {
     await Future.wait([
+      dailyOrderInfo.fetchData(),
       pages.fetchData(),
       labels.fetchData(),
       replies.fetchData(),
       conversations.fetchData(),
       location.fetchData(),
       stocks.fetchData(),
-      dailyOrderInfo.fetchData(),
     ]);
     return this;
   }

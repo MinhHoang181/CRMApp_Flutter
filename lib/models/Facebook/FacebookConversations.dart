@@ -120,4 +120,18 @@ class FacebookConversations extends Conversations {
     }
     return false;
   }
+
+  @override
+  Future<bool> refreshAll() async {
+    await Future.forEach(
+      _list.keys,
+      (filter) {
+        if (_list[filter] != null) {
+          return refreshData(filter);
+        }
+      },
+    );
+    notifyListeners();
+    return true;
+  }
 }
