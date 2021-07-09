@@ -18,7 +18,7 @@ class AllMessageScreen extends StatefulWidget {
 }
 
 class _AllMessageScreenState extends State<AllMessageScreen> {
-  bool _isSearch = true;
+  bool _isSearch = false;
   int _indexTab = 0;
   TextEditingController _search = TextEditingController();
 

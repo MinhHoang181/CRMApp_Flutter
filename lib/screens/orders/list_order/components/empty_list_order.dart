@@ -8,7 +8,6 @@ class EmptyListOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.onBackground,
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(Layouts.SPACING * 2),

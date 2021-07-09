@@ -11,6 +11,7 @@ import 'package:cntt2_crm/models/Conversation/Conversation.dart';
 
 //Components
 import 'conversation_item.dart';
+import 'empty_list_conversation.dart';
 
 class ListConversation extends StatelessWidget {
   final RefreshController _refreshController = RefreshController();
@@ -53,47 +54,55 @@ class ListConversation extends StatelessWidget {
       onRefresh: () => _onRefresh(conversations, filter),
       onLoading: () => _onLoading(conversations, filter),
       controller: _refreshController,
-      child: CustomScrollView(
-        slivers: [
-          SliverImplicitlyAnimatedList<Conversation>(
-            items: conversations.list(filter),
-            areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
-            itemBuilder: (context, animation, item, i) {
-              return SizeFadeTransition(
-                sizeFraction: 0.7,
-                curve: Curves.easeInOut,
-                animation: animation,
-                child: ChangeNotifierProvider<Conversation>.value(
-                  value: item,
-                  child: ConversationItem(),
-                ),
-              );
-            },
-            updateItemBuilder: (context, animation, item) {
-              return SizeFadeTransition(
-                sizeFraction: 0.7,
-                curve: Curves.easeInOut,
-                animation: animation,
-                child: ChangeNotifierProvider<Conversation>.value(
-                  value: item,
-                  child: ConversationItem(),
-                ),
-              );
-            },
-            removeItemBuilder: (context, animation, item) {
-              return SizeFadeTransition(
-                sizeFraction: 0.7,
-                curve: Curves.easeInOut,
-                animation: animation,
-                child: ChangeNotifierProvider<Conversation>.value(
-                  value: item,
-                  child: ConversationItem(),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      child: _buildList(context, conversations, filter),
     );
+  }
+
+  Widget _buildList(BuildContext context, Conversations conversations,
+      FilterConversation filter) {
+    final list = conversations.list(filter);
+    return list.isEmpty
+        ? EmptyListConversation()
+        : CustomScrollView(
+            slivers: [
+              SliverImplicitlyAnimatedList<Conversation>(
+                items: list,
+                areItemsTheSame: (oldItem, newItem) => oldItem.id == newItem.id,
+                itemBuilder: (context, animation, item, i) {
+                  return SizeFadeTransition(
+                    sizeFraction: 0.7,
+                    curve: Curves.easeInOut,
+                    animation: animation,
+                    child: ChangeNotifierProvider<Conversation>.value(
+                      value: item,
+                      child: ConversationItem(),
+                    ),
+                  );
+                },
+                updateItemBuilder: (context, animation, item) {
+                  return SizeFadeTransition(
+                    sizeFraction: 0.7,
+                    curve: Curves.easeInOut,
+                    animation: animation,
+                    child: ChangeNotifierProvider<Conversation>.value(
+                      value: item,
+                      child: ConversationItem(),
+                    ),
+                  );
+                },
+                removeItemBuilder: (context, animation, item) {
+                  return SizeFadeTransition(
+                    sizeFraction: 0.7,
+                    curve: Curves.easeInOut,
+                    animation: animation,
+                    child: ChangeNotifierProvider<Conversation>.value(
+                      value: item,
+                      child: ConversationItem(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
   }
 }

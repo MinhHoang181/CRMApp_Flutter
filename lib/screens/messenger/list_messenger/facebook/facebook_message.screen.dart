@@ -19,7 +19,7 @@ class FacebookMessageScreen extends StatefulWidget {
 }
 
 class _FacebookMessageScreenState extends State<FacebookMessageScreen> {
-  bool _isSearch = true;
+  bool _isSearch = false;
   int _indexTab = 0;
   TextEditingController _search = TextEditingController();
 

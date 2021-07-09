@@ -13,7 +13,7 @@ class EmptyListCustomer extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(Layouts.SPACING * 2),
           child: Image.asset(
-            MyImages.EMPTY_SEARCH,
+            MyImages.EMPTY_CUSTOMER,
           ),
         ),
       ),
