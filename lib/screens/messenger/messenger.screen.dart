@@ -46,7 +46,7 @@ class MessengerScreen extends StatelessWidget {
   }
 
   Widget _all(BuildContext context) {
-    int notificationCount = 1;
+    int notificationCount = 0;
     notificationCount = min(notificationCount, 999);
     return ListTile(
       leading: Image(
@@ -85,7 +85,7 @@ class MessengerScreen extends StatelessWidget {
   }
 
   Widget _facebook(BuildContext context) {
-    int notificationCount = 1;
+    int notificationCount = 0;
     notificationCount = min(notificationCount, 999);
     return ListTile(
       leading: Image(

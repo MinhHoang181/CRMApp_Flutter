@@ -39,7 +39,9 @@ class ConversationList extends ChangeNotifier {
 
   void listenReceiveMessage(String conversationId, ChatMessage message) {
     if (root.containsKey(conversationId)) {
-      root[conversationId].messages.add(message);
+      if (root[conversationId].messages.map != null) {
+        root[conversationId].messages.add(message);
+      }
     }
   }
 
@@ -57,7 +59,7 @@ class ConversationList extends ChangeNotifier {
         _list.values,
         (conversations) {
           if (conversations != null) {
-            conversations.fetchData(FilterConversation.all);
+            conversations.fetchData(conversations.filters.map.values.first);
           }
         },
       );
@@ -75,6 +77,6 @@ class ConversationList extends ChangeNotifier {
 
   bool addConversation(Conversation conversation) {
     final all = _list[PlatformConversation.all] as AllConversations;
-    return all.addConversation(FilterConversation.all, conversation);
+    return all.addConversation(all.filters.map.values.first, conversation);
   }
 }

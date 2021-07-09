@@ -41,9 +41,9 @@ class PlatformInfo extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _platformRow(context, Platform.facebook, 1, 1),
+              _platformRow(context, Platform.facebook, 0, 0),
               Divider(),
-              _platformRow(context, Platform.zalo, 5, 3),
+              _platformRow(context, Platform.zalo, 0, 0),
             ],
           ),
         ),
@@ -115,7 +115,7 @@ class PlatformInfo extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
-              _alertText(context, numberMess),
+              _alertText(context, numberMess, 'tin nhắn'),
             ],
           ),
           SizedBox(
@@ -138,7 +138,7 @@ class PlatformInfo extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
-              _alertText(context, numberNotifi),
+              _alertText(context, numberNotifi, 'thông báo'),
             ],
           ),
         ],
@@ -146,29 +146,25 @@ class PlatformInfo extends StatelessWidget {
     );
   }
 
-  Widget _alertText(BuildContext context, int numberAlert) {
-    if (numberAlert > 0) {
-      return Align(
-        alignment: Alignment.centerRight,
-        child: Row(
-          children: [
-            Text(
-              '$numberAlert chưa đọc',
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            SizedBox(
-              width: Layouts.SPACING / 2,
-            ),
-            Icon(
-              Icons.circle,
-              size: 10,
-              color: Colors.red,
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Container();
-    }
+  Widget _alertText(BuildContext context, int numberAlert, String name) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Row(
+        children: [
+          Text(
+            numberAlert > 0 ? '$numberAlert chưa đọc' : 'Không có $name mới',
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          SizedBox(
+            width: Layouts.SPACING / 2,
+          ),
+          Icon(
+            Icons.circle,
+            size: 10,
+            color: numberAlert > 0 ? Colors.red : Colors.blueAccent,
+          ),
+        ],
+      ),
+    );
   }
 }

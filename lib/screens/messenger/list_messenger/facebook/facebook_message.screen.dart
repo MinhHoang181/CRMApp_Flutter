@@ -1,5 +1,8 @@
+import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
 import '../components/body.dart';
@@ -8,32 +11,44 @@ import 'components/page_select.dart';
 //Models
 import 'package:cntt2_crm/models/Conversation/FilterConversation.dart';
 
-class FacebookMessageScreen extends StatelessWidget {
+class FacebookMessageScreen extends StatefulWidget {
+  const FacebookMessageScreen({Key key}) : super(key: key);
+
+  @override
+  _FacebookMessageScreenState createState() => _FacebookMessageScreenState();
+}
+
+class _FacebookMessageScreenState extends State<FacebookMessageScreen> {
+  bool _isSearch = true;
+  int _indexTab = 0;
+  TextEditingController _search = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final filters = Provider.of<Conversations>(context, listen: false).filters;
     return DefaultTabController(
-      length: 3,
+      length: filters.map.length,
+      initialIndex: _indexTab,
       child: Scaffold(
         appBar: _facebookMessengerScreenAppBar(),
         body: SafeArea(
           child: TabBarView(
-            children: [
-              Provider.value(
-                value: FilterConversation.all,
-                child: Body(),
+            children: List.generate(
+              filters.map.length,
+              (index) => _tabBarBody(
+                filters.map.values.elementAt(index),
               ),
-              Provider.value(
-                value: FilterConversation.unread,
-                child: Body(),
-              ),
-              Provider.value(
-                value: FilterConversation.unreplied,
-                child: Body(),
-              ),
-            ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _tabBarBody(FilterConversation filterConversation) {
+    return Provider.value(
+      value: filterConversation,
+      child: const Body(),
     );
   }
 
@@ -44,8 +59,14 @@ class FacebookMessageScreen extends StatelessWidget {
       actions: [
         PageSelect(),
         IconButton(
-          icon: Icon(Icons.search_rounded),
-          onPressed: () => {},
+          icon: _isSearch
+              ? Icon(Icons.cancel_outlined)
+              : Icon(Icons.search_rounded),
+          onPressed: () {
+            setState(() {
+              _isSearch = !_isSearch;
+            });
+          },
         ),
         IconButton(
           icon: Icon(Icons.more_vert_rounded),
@@ -53,33 +74,84 @@ class FacebookMessageScreen extends StatelessWidget {
         ),
       ],
       bottom: PreferredSize(
-        preferredSize: Size.fromHeight(40),
-        child: _tabBar(),
+        preferredSize: _isSearch ? Size.fromHeight(90) : Size.fromHeight(40),
+        child: _toolBar(),
       ),
     );
   }
 
+  Widget _toolBar() {
+    return Column(
+      children: [
+        if (_isSearch) _searchBar(),
+        _tabBar(),
+      ],
+    );
+  }
+
   Widget _tabBar() {
+    final filters = Provider.of<Conversations>(context, listen: false).filters;
     return Row(
       children: [
         Align(
           alignment: Alignment.centerLeft,
           child: TabBar(
             isScrollable: true,
-            tabs: [
-              Tab(
-                text: 'Tất cả',
+            tabs: List.generate(
+              filters.map.length,
+              (index) => Tab(
+                text: filters.map.keys.elementAt(index),
               ),
-              Tab(
-                text: 'Chưa xem',
-              ),
-              Tab(
-                text: 'Chưa trả lời',
-              ),
-            ],
+            ),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _searchBar() {
+    final conversations = Provider.of<Conversations>(context, listen: false);
+    final filters = Provider.of<Conversations>(context, listen: false).filters;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Layouts.SPACING),
+      child: TextField(
+        controller: _search,
+        style: Theme.of(context).textTheme.bodyText2,
+        autofocus: false,
+        autocorrect: false,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.search,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.search,
+            color: Theme.of(context).accentColor,
+          ),
+          hintText: "Nhập tên, nội dung",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+        onEditingComplete: () {
+          if (_search.text.isNotEmpty) {
+            FocusScope.of(context).unfocus();
+            showDialog<bool>(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => ProgressDialog(
+                future: conversations.searchData(
+                    filters.map.values.elementAt(_indexTab), _search.text),
+                loading: 'Đang tìm kiếm tin nhắn',
+                success: 'Tìm kiếm tin nhắn thành công',
+                falied: 'Tìm kiếm tin nhắn thất bại',
+              ),
+            ).then(
+              (value) {
+                return value ? _search.text = '' : null;
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }

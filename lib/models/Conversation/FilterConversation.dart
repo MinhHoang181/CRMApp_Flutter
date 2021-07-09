@@ -54,18 +54,32 @@ class FilterConversation {
     );
   }
 
-  static FilterConversation get all => const FilterConversation();
-  static FilterConversation get unread =>
-      const FilterConversation(isRead: false);
-  static FilterConversation get unreplied =>
-      const FilterConversation(isReplied: false);
-
-  static List<FilterConversation> _list = <FilterConversation>[
-    all,
-    unread,
-    unreplied,
-  ];
-  static UnmodifiableListView get list => UnmodifiableListView(_list);
+  FilterConversation copyWith({
+    FilterConversation filterConversation,
+    List<String> pageIds,
+    List<String> labeIds,
+    bool hasPhone,
+    bool hasNote,
+    bool hasOrder,
+    bool isRead,
+    bool isReplied,
+    int mimeType,
+    String search,
+    String participantId,
+  }) {
+    return FilterConversation(
+      pageIds: pageIds == null ? this.pageIds : pageIds,
+      labeIds: labeIds == null ? this.labeIds : labeIds,
+      hasPhone: hasPhone == null ? this.hasPhone : hasPhone,
+      hasNote: hasNote == null ? this.hasNote : hasNote,
+      hasOrder: hasOrder == null ? this.hasOrder : hasOrder,
+      isRead: isRead == null ? this.isRead : isRead,
+      isReplied: isReplied == null ? this.isReplied : isReplied,
+      mimeType: mimeType == null ? this.mimeType : mimeType,
+      search: search == null ? this.search : search,
+      participantId: participantId == null ? this.participantId : participantId,
+    );
+  }
 
   String get toGraphQL {
     String filter = '''

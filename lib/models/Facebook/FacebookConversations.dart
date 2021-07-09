@@ -6,42 +6,37 @@ import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 import 'package:cntt2_crm/models/Conversation/FilterConversation.dart';
 import 'package:cntt2_crm/models/PageInfo.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
+import 'package:cntt2_crm/models/list_model/FilterConversationList.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 
 class FacebookConversations extends Conversations {
-  Map<FilterConversation, FilterConversation> _filter = Map.fromIterable(
-    FilterConversation.list,
-    key: (filter) => filter,
-    value: (filter) {
-      return FilterConversation.copy(
-        filterConversation: filter,
-        pageIds: AzsalesData.instance.pages.selectedPageIds,
-      );
-    },
-  );
-  Map<FilterConversation, Map<String, Conversation>> _list = Map.fromIterable(
-    FilterConversation.list,
-    key: (filter) => filter,
-    value: (_) => null,
-  );
+  Map<FilterConversation, Map<String, Conversation>> _list =
+      Map<FilterConversation, Map<String, Conversation>>();
   Map<FilterConversation, PagingInfo> _pageInfo =
-      <FilterConversation, PagingInfo>{
-    FilterConversation.all: PagingInfo(hasNextPage: false, next: 1, start: 1),
-  };
+      Map<FilterConversation, PagingInfo>();
+
+  FilterConversationList _filters =
+      FilterConversationList(pageIds: AzsalesData.instance.pages.pageIds);
+
+  int get unreadCount => _list.values.first.values
+      .where((conversation) => conversation.isRead == false)
+      .length;
 
   FacebookConversations(ConversationList root) : super(root);
 
   @override
-  UnmodifiableMapView get map =>
-      UnmodifiableMapView(_list[FilterConversation.all]);
+  UnmodifiableMapView get map => UnmodifiableMapView(_list.values.first);
 
   @override
-  PagingInfo get pageInfo => (_pageInfo[FilterConversation.all]);
+  PagingInfo get pageInfo => (_pageInfo.values.first);
 
   @override
   PagingInfo pageFilter(FilterConversation filterConversation) {
     return _pageInfo[filterConversation];
   }
+
+  @override
+  FilterConversationList get filters => _filters;
 
   @override
   List<Conversation> list(FilterConversation filterConversation) {
@@ -65,7 +60,7 @@ class FacebookConversations extends Conversations {
       _list[filterConversation] = Map<String, Conversation>();
       final data = await ConversationAPI.fetchConversations(
         start: 0,
-        filter: _filter[filterConversation],
+        filter: filterConversation,
       );
       if (data != null) {
         _addList(filterConversation, data.item1);
@@ -79,7 +74,7 @@ class FacebookConversations extends Conversations {
   Future<bool> refreshData(FilterConversation filterConversation) async {
     final data = await ConversationAPI.fetchConversations(
       start: 0,
-      filter: _filter[filterConversation],
+      filter: filterConversation,
     );
     if (data != null) {
       _list[filterConversation].clear();
@@ -95,7 +90,7 @@ class FacebookConversations extends Conversations {
     if (_pageInfo[filterConversation].hasNextPage) {
       final data = await ConversationAPI.fetchConversations(
         start: pageInfo.next,
-        filter: _filter[filterConversation],
+        filter: filterConversation,
       );
       if (data != null) {
         _addList(filterConversation, data.item1);
@@ -107,12 +102,28 @@ class FacebookConversations extends Conversations {
   }
 
   @override
+  Future<bool> searchData(
+      FilterConversation filterConversation, String search) async {
+    final data = await ConversationAPI.fetchConversations(
+      start: 0,
+      filter: filterConversation.copyWith(search: search),
+    );
+    if (data != null) {
+      _list[filterConversation].clear();
+      _addList(filterConversation, data.item1);
+      _pageInfo[filterConversation] = data.item2;
+      return true;
+    }
+    return false;
+  }
+
+  @override
   bool addConversation(
       FilterConversation filterConversation, Conversation conversation) {
-    if (!_list[FilterConversation.all].containsKey(conversation.id)) {
-      _list[FilterConversation.all][conversation.id] = conversation;
+    if (!_list.values.first.containsKey(conversation.id)) {
+      _list.values.first[conversation.id] = conversation;
     } else {
-      conversation = _list[FilterConversation.all][conversation.id];
+      conversation = _list.values.first[conversation.id];
     }
     if (!_list[filterConversation].containsKey(conversation.id)) {
       _list[filterConversation][conversation.id] = conversation;

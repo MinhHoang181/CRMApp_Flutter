@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
@@ -40,7 +41,9 @@ class TextMessage extends StatelessWidget {
                   fontSize: Fonts.SIZE_TEXT_MEDIUM,
                 )
             : Theme.of(context).textTheme.headline3.copyWith(
-                  color: Colors.black,
+                  color: AzsalesData.instance.ligthTheme
+                      ? Colors.black
+                      : Colors.white,
                   fontSize: Fonts.SIZE_TEXT_MEDIUM,
                 ),
       ),

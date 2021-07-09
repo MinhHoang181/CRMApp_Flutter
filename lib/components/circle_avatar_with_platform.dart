@@ -33,7 +33,7 @@ class CircleAvatarWithPlatform extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(0.5),
               decoration: BoxDecoration(
-                color: Theme.of(context).scaffoldBackgroundColor,
+                color: Colors.white,
                 shape: BoxShape.circle,
               ),
               child: Image(

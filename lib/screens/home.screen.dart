@@ -28,7 +28,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var _messNotfiCount = min(10, 999);
+    int messNotification = 0;
+    messNotification = min(messNotification, 999);
     return Scaffold(
       body: widget._bodyOption.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -54,12 +55,12 @@ class _HomeState extends State<Home> {
               ),
               child: Icon(Icons.messenger_rounded),
               badgeContent: Text(
-                '$_messNotfiCount',
+                '$messNotification',
                 style: TextStyle(
                   color: Colors.white,
                 ),
               ),
-              showBadge: _messNotfiCount > 0 ? true : false,
+              showBadge: messNotification > 0 ? true : false,
             ),
             label: 'Tin nhắn',
           ),
