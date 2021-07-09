@@ -2,7 +2,6 @@ import 'dart:collection';
 import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:cntt2_crm/models/Conversation/AllConversations.dart';
 import 'package:cntt2_crm/models/Conversation/Conversations.dart';
-import 'package:cntt2_crm/models/Conversation/FilterConversation.dart';
 import 'package:cntt2_crm/models/Facebook/FacebookConversations.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +74,7 @@ class ConversationList extends ChangeNotifier {
     }
   }
 
-  bool addConversation(Conversation conversation) {
+  Conversation addConversation(Conversation conversation) {
     final all = _list[PlatformConversation.all] as AllConversations;
     return all.addConversation(all.filters.map.values.first, conversation);
   }

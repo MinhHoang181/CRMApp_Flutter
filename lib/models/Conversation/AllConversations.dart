@@ -115,7 +115,7 @@ class AllConversations extends Conversations {
   }
 
   @override
-  bool addConversation(
+  Conversation addConversation(
       FilterConversation filterConversation, Conversation conversation) {
     if (!_list.values.first.containsKey(conversation.id)) {
       _list.values.first[conversation.id] = conversation;
@@ -124,9 +124,8 @@ class AllConversations extends Conversations {
     }
     if (!_list[filterConversation].containsKey(conversation.id)) {
       _list[filterConversation][conversation.id] = conversation;
-      return true;
     }
-    return false;
+    return conversation;
   }
 
   @override

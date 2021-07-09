@@ -47,7 +47,7 @@ class FacebookConversations extends Conversations {
   void _addList(
       FilterConversation filterConversation, List<Conversation> conversations) {
     conversations.forEach((conversation) {
-      root.addConversation(conversation);
+      conversation = root.addConversation(conversation);
       addConversation(filterConversation, conversation);
     });
     notifyListeners();
@@ -118,7 +118,7 @@ class FacebookConversations extends Conversations {
   }
 
   @override
-  bool addConversation(
+  Conversation addConversation(
       FilterConversation filterConversation, Conversation conversation) {
     if (!_list.values.first.containsKey(conversation.id)) {
       _list.values.first[conversation.id] = conversation;
@@ -127,9 +127,8 @@ class FacebookConversations extends Conversations {
     }
     if (!_list[filterConversation].containsKey(conversation.id)) {
       _list[filterConversation][conversation.id] = conversation;
-      return true;
     }
-    return false;
+    return conversation;
   }
 
   @override

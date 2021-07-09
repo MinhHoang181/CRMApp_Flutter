@@ -34,7 +34,7 @@ abstract class Conversations extends ChangeNotifier {
   Future<bool> loadMoreData(FilterConversation filterConversation);
   Future<bool> searchData(FilterConversation filterConversation, String search);
 
-  bool addConversation(
+  Conversation addConversation(
       FilterConversation filterConversation, Conversation conversation);
 
   Future<bool> refreshAll();
