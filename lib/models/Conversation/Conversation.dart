@@ -104,9 +104,10 @@ class Conversation extends ChangeNotifier {
     this.isRead = conversation.isRead;
     this.isReplied = conversation.isReplied;
     this.labelIds = conversation.labelIds;
-    if (conversation.hasNote != null) this.hasNote = conversation.hasNote;
-    if (conversation.hasOrder != null) this.hasOrder = conversation.hasOrder;
-    if (conversation.hasPhone != null) this.hasPhone = conversation.hasPhone;
+
+    // if (conversation.hasNote != null) this.hasNote = conversation.hasNote;
+    // if (conversation.hasOrder != null) this.hasOrder = conversation.hasOrder;
+    // if (conversation.hasPhone != null) this.hasPhone = conversation.hasPhone;
 
     if (this.timeUpdate != conversation.timeUpdate) {
       notifyListeners();
