@@ -4,9 +4,16 @@ import 'package:cntt2_crm/constants/images.dart' as Images;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
 import 'package:cntt2_crm/constants/enum.dart';
 
+//Models
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Facebook/FacebookConversations.dart';
+import 'package:cntt2_crm/models/list_model/ConversationList.dart';
+
 class PlatformInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FacebookConversations facebook =
+        AzsalesData.instance.conversations.map[PlatformConversation.facebook];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,7 +48,7 @@ class PlatformInfo extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _platformRow(context, Platform.facebook, 0, 0),
+              _platformRow(context, Platform.facebook, facebook.unreadCount, 0),
               Divider(),
               _platformRow(context, Platform.zalo, 0, 0),
             ],

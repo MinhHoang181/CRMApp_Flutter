@@ -23,9 +23,9 @@ class LabelItem extends StatelessWidget {
           ),
           Text(
             label.name,
-            style: TextStyle(
-              fontSize: Fonts.SIZE_ITEM_LIST,
-            ),
+            style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  fontWeight: FontWeight.normal,
+                ),
           ),
         ],
       ),
