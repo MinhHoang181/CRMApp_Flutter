@@ -2,7 +2,7 @@ const String BELL = 'assets/icons/bell-icon.png';
 const String BELL2 = 'assets/icons/bell-icon-2.png';
 const String MESSAGE = 'assets/icons/message-icon.png';
 const String CONVERSATION = 'assets/icons/conversation-icon.png';
-const String CONVERSATION2 = 'assets/icons/conversation-icon-2_1.png';
+const String CONVERSATION2 = 'assets/icons/conversation-icon-2.png';
 const String MONEY = 'assets/icons/money-icon.png';
 const String MONEY_BAG = 'assets/icons/money-bag-icon.png';
 const String APPROVE = 'assets/icons/approve-icon.png';
@@ -27,4 +27,6 @@ const String SUPPORT = 'assets/icons/suppotr-icon.png';
 const String SWITCH_ACCOUNT_ICON = 'assets/icons/switch-account-icon.png';
 const String UPDATE_ICON = 'assets/icons/update-icon.png';
 const String TAG_ICON = 'assets/icons/tag-icon.png';
+const String CHOOSE_PRODUCT = 'assets/icons/choose-product.png';
+const String SAMPLE_MESSAGE= 'assets/icons/sample-message-2.png';
 

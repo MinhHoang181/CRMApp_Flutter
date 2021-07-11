@@ -64,10 +64,10 @@ class Options extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                width: 50,
-                height: 50,
+                width: 75,
+                height: 75,
                 child: Image(
-                  image: AssetImage(MyIcons.BOX),
+                  image: AssetImage(MyIcons.CHOOSE_PRODUCT),
                 ),
               ),
               SizedBox(height: Layouts.SPACING / 3),

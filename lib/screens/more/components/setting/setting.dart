@@ -43,6 +43,7 @@ class Setting extends StatelessWidget {
             DarkModeSwitch(),
             _switchAccount(context),
             _labels(context),
+            _sampleMessage(context),
             _update(context),
             _support(context),
             _logout(context),
@@ -140,6 +141,36 @@ class Setting extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _sampleMessage(BuildContext context) {
+    return InkWell(
+      child: Padding(
+        padding: const EdgeInsets.only(
+            left: Layouts.SPACING,
+            top: Layouts.SPACING,
+            bottom: Layouts.SPACING / 2),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 45,
+              height: 45,
+              child: Image(
+                image: AssetImage(MyIcons.SAMPLE_MESSAGE),
+              ),
+            ),
+            SizedBox(width: Layouts.SPACING),
+            Text(
+              'Câu trả lời mẫu',
+              style: Theme.of(context).textTheme.subtitle1.copyWith(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
             ),
           ],
         ),
