@@ -213,7 +213,12 @@ class Setting extends StatelessWidget {
 
   Widget _logoutDialog(BuildContext context) {
     return AlertDialog(
-      content: Text('Bạn muốn đăng xuất?'),
+      content: Text(
+        'Bạn muốn đăng xuất?',
+        style: Theme.of(context).textTheme.subtitle1.copyWith(
+              fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 3,
+            ),
+      ),
       actions: [
         TextButton(
           child: Text('Hủy'),

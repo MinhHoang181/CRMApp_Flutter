@@ -40,13 +40,17 @@ class _ChatInputFieldState extends State<ChatInputField> {
             ),
             Expanded(
               child: TextField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.headline3.copyWith(
+                      fontSize:
+                          Theme.of(context).textTheme.bodyText2.fontSize + 2,
+                    ),
                 maxLines: 6,
                 minLines: 1,
                 controller: _inputController,
                 textInputAction: TextInputAction.newline,
                 decoration: InputDecoration(
                   hintText: 'Nhập nội dung',
+                  hintStyle: Theme.of(context).textTheme.bodyText2,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(30),

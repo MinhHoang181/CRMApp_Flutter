@@ -18,9 +18,9 @@ class ReplyItem extends StatelessWidget {
       child: ListTile(
         title: Text(
           reply.shortcut,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 3,
+              ),
         ),
         subtitle: Text(
           reply.text,
@@ -34,7 +34,7 @@ class ReplyItem extends StatelessWidget {
         IconSlideAction(
           icon: Icons.edit_rounded,
           caption: 'Sửa',
-          color: Theme.of(context).colorScheme.onBackground,
+          color: Colors.yellowAccent,
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
@@ -45,7 +45,7 @@ class ReplyItem extends StatelessWidget {
         IconSlideAction(
           icon: Icons.delete_rounded,
           caption: 'Xoá',
-          color: Theme.of(context).colorScheme.onBackground,
+          color: Colors.redAccent,
           onTap: () => {},
         ),
       ],

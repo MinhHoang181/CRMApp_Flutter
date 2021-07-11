@@ -127,6 +127,7 @@ class _FacebookMessageScreenState extends State<FacebookMessageScreen> {
             color: Theme.of(context).accentColor,
           ),
           hintText: "Nhập tên, nội dung",
+          hintStyle: Theme.of(context).textTheme.bodyText2,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
           ),

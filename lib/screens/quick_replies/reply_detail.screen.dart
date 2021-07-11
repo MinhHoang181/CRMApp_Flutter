@@ -111,15 +111,16 @@ class _ReplyDetailScreenState extends State<ReplyDetailScreen> {
         children: [
           Text(
             'Tiêu đề',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 3,
+                ),
           ),
           SizedBox(
             height: Layouts.SPACING,
           ),
           TextField(
             controller: _shortcut,
+            style: Theme.of(context).textTheme.bodyText2,
             maxLines: null,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -145,9 +146,9 @@ class _ReplyDetailScreenState extends State<ReplyDetailScreen> {
         children: [
           Text(
             'Văn bản',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 3,
+                ),
           ),
           SizedBox(
             height: Layouts.SPACING,
@@ -155,6 +156,7 @@ class _ReplyDetailScreenState extends State<ReplyDetailScreen> {
           TextField(
             controller: _text,
             maxLines: null,
+            style: Theme.of(context).textTheme.bodyText2,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Nhập nội dung câu trả lời...',

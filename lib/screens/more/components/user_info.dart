@@ -84,7 +84,9 @@ class UserInfo extends StatelessWidget {
       padding: const EdgeInsets.all(Layouts.SPACING),
       child: Text(
         page.name,
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.subtitle1.copyWith(
+              fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 3,
+            ),
       ),
     );
   }

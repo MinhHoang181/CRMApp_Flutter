@@ -121,6 +121,7 @@ TextTheme textTheme(BuildContext context, Color color) {
             // Header
             fontSize: 20,
             fontWeight: FontWeight.w400,
+            color: color,
           )),
           subtitle1: TextStyle(
             fontSize: Fonts.SIZE_TEXT_LARGE,
