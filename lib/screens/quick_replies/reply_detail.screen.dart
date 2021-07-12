@@ -1,12 +1,12 @@
-import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Models
 import 'package:cntt2_crm/models/QuickReply.dart';
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 
 //Components
-import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 
 class ReplyDetailScreen extends StatefulWidget {
   final QuickReply reply;

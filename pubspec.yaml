@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  modal_bottom_sheet: ^2.0.0
+  flutter_dotenv: ^5.0.0
   currency_text_input_formatter: ^2.0.1
   expandable: ^5.0.1
   implicitly_animated_reorderable_list: ^0.4.0

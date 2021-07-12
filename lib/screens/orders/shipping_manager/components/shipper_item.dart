@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
-import 'package:cntt2_crm/components/image_item.dart';
+import 'package:cntt2_crm/screens/components/image_item.dart';
 
 //Models
 import 'package:cntt2_crm/models/Shipper.dart';

@@ -11,7 +11,7 @@ import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
 import 'package:cntt2_crm/screens/messenger/conversation_info/conversation_info.screen.dart';
 
 //components
-import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
+import 'package:cntt2_crm/screens/components/circle_avatar_with_platform.dart';
 import 'components/chatbox.dart';
 
 //Models

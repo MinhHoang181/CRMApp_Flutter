@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
-import 'package:cntt2_crm/components/image_item.dart';
 
 //Models
 import 'package:cntt2_crm/models/ChatMessage.dart';
 import 'package:flutter/rendering.dart';
+import 'package:cntt2_crm/screens/components/image_item.dart';
 
 class AttachmentMessage extends StatelessWidget {
   final ChatMessage message;

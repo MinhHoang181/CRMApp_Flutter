@@ -1,14 +1,14 @@
-import 'package:cntt2_crm/components/progress_dialog.dart';
-import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
 import '../components/body.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 
 //Models
 import 'package:cntt2_crm/models/Conversation/FilterConversation.dart';
+import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 
 class AllMessageScreen extends StatefulWidget {
   const AllMessageScreen({Key key}) : super(key: key);

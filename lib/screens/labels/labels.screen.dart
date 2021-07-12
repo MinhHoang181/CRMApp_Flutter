@@ -9,7 +9,7 @@ import 'package:cntt2_crm/models/Label.dart';
 
 //Components
 import 'components/label_item.dart';
-import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 
 //Screen
 import 'label_detail.screen.dart';

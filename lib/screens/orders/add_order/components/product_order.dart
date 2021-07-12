@@ -13,7 +13,7 @@ import 'package:cntt2_crm/models/Product/Variant.dart';
 import '../select_product/select_product.screen.dart';
 
 //Components
-import 'package:cntt2_crm/components/image_item.dart';
+import 'package:cntt2_crm/screens/components/image_item.dart';
 import 'no_product_order.dart';
 
 class ProductOrder extends StatelessWidget {

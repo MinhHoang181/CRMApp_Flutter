@@ -3,7 +3,7 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 
 //Components
-import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
+import 'package:cntt2_crm/screens/components/circle_avatar_with_platform.dart';
 
 class CustomerInfo extends StatelessWidget {
   const CustomerInfo({Key key}) : super(key: key);

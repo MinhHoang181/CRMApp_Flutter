@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
 //Components
-import '../../../../components/address_info.dart';
+import 'package:cntt2_crm/screens/components/address_info.dart';
 
 //Models
 import 'package:cntt2_crm/models/Customer.dart';

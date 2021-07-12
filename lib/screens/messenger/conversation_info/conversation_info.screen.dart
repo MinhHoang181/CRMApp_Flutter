@@ -7,7 +7,7 @@ import 'components/list_note/list_note.dart';
 import 'components/list_order/list_order.dart';
 import 'components/list_customer/list_customer.dart';
 import 'package:cntt2_crm/screens/messenger/conversation_info/components/edit_dialog.dart';
-import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 
 //Models
 import 'package:cntt2_crm/models/Conversation/Conversation.dart';

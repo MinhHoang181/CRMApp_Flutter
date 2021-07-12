@@ -3,7 +3,7 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:provider/provider.dart';
 
 //Components
-import 'package:cntt2_crm/components/address_info.dart';
+import 'package:cntt2_crm/screens/components/address_info.dart';
 
 //Models
 import 'package:cntt2_crm/models/Cart.dart';

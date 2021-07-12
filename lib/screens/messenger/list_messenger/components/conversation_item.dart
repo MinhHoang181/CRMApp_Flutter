@@ -10,7 +10,7 @@ import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Label.dart';
 
 //Components
-import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
+import 'package:cntt2_crm/screens/components/circle_avatar_with_platform.dart';
 
 //Screens
 import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';

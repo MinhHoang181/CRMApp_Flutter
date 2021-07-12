@@ -8,7 +8,7 @@ import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 
 //Components
-import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 
 class PageSelect extends StatelessWidget {
   const PageSelect({Key key}) : super(key: key);

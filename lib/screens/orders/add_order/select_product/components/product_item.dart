@@ -14,7 +14,7 @@ import 'package:cntt2_crm/models/Product/Photo.dart';
 import 'package:cntt2_crm/models/list_model/VariantList.dart';
 
 //Components
-import 'package:cntt2_crm/components/image_item.dart';
+import 'package:cntt2_crm/screens/components/image_item.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({Key key}) : super(key: key);

@@ -1,4 +1,3 @@
-import 'package:cntt2_crm/components/progress_dialog.dart';
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/utilities/text_color.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,8 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/models/Label.dart';
 
 //Components
-import 'package:cntt2_crm/components/color_list.dart';
+import 'package:cntt2_crm/screens/components/color_list.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 
 class LabelDetailScreen extends StatelessWidget {
   const LabelDetailScreen({Key key, this.label}) : super(key: key);

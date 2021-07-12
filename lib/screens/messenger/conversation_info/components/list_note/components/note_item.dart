@@ -7,7 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:cntt2_crm/models/Note.dart';
 
 //Components
-import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 import 'package:cntt2_crm/screens/messenger/conversation_info/components/edit_dialog.dart';
 
 class NoteItem extends StatelessWidget {

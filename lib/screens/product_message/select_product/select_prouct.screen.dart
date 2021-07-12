@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-import 'package:cntt2_crm/constants/fonts.dart' as Fonts;
 import 'package:provider/provider.dart';
 
 //Components
 import 'components/body.dart';
-import 'package:cntt2_crm/components/progress_dialog.dart';
+import 'package:cntt2_crm/screens/components/progress_dialog.dart';
 
 //Models
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';

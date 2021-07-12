@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 //Models
 import 'package:cntt2_crm/models/ProductMessage.dart';
-import 'package:cntt2_crm/components/image_item.dart';
+import 'package:cntt2_crm/screens/components/image_item.dart';
 import 'package:cntt2_crm/models/Product/Photo.dart';
 
 class PhotoProduct extends StatelessWidget {

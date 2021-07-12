@@ -1,4 +1,3 @@
-import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 //Model
@@ -7,6 +6,7 @@ import 'package:cntt2_crm/models/ChatMessage.dart';
 //Components
 import 'message/text_message.dart';
 import 'message/attachment_message.dart';
+import 'package:cntt2_crm/screens/components/circle_avatar_with_platform.dart';
 
 class Message extends StatelessWidget {
   const Message({

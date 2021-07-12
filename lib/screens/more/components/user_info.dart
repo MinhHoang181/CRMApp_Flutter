@@ -4,7 +4,7 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 
 //Components
-import 'package:cntt2_crm/components/circle_avatar_with_platform.dart';
+import 'package:cntt2_crm/screens/components/circle_avatar_with_platform.dart';
 
 class UserInfo extends StatelessWidget {
   const UserInfo({Key key}) : super(key: key);
