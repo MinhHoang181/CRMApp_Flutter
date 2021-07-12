@@ -1,10 +1,11 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:graphql/client.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final Duration timeout = Duration(minutes: 1);
 
 final _chatWebSocketLink = WebSocketLink(
-  'ws://chat-service-dev.azsales.vn/graphql',
+  dotenv.env['CHAT_WEBSOCKET_SERVICE_AZSALES'],
   config: SocketClientConfig(
     autoReconnect: true,
     inactivityTimeout: const Duration(minutes: 30),
@@ -13,7 +14,7 @@ final _chatWebSocketLink = WebSocketLink(
 
 GraphQLClient getChatClient() {
   Link link = HttpLink(
-    'https://chat-service-dev.azsales.vn/graphql',
+    dotenv.env['CHAT_SERVICE_AZSALES'],
     defaultHeaders: {
       'access_token': AzsalesData.instance.azsalesAccessToken,
     },
@@ -27,7 +28,9 @@ GraphQLClient getChatClient() {
 }
 
 GraphQLClient getAuthClient() {
-  final Link _link = HttpLink('https://auth-service-dev.azsales.vn/graphql');
+  final Link _link = HttpLink(
+    dotenv.env['AUTH_SERVICE_AZSALES'],
+  );
   return GraphQLClient(
     link: _link,
     cache: GraphQLCache(),
@@ -36,7 +39,7 @@ GraphQLClient getAuthClient() {
 
 GraphQLClient getPosClient() {
   final Link _link = HttpLink(
-    'https://pos-service-dev.azsales.vn/graphql',
+    dotenv.env['POS_SERVICE_AZSALES'],
     defaultHeaders: {
       'access_token': AzsalesData.instance.azsalesAccessToken,
     },
@@ -49,7 +52,7 @@ GraphQLClient getPosClient() {
 
 GraphQLClient getShippingClient() {
   final Link _link = HttpLink(
-    'https://shipping-service-dev.azsales.vn/graphql',
+    dotenv.env['SHIPPING_SERVICE_AZSALES'],
     defaultHeaders: {
       'access_token': AzsalesData.instance.azsalesAccessToken,
     },
