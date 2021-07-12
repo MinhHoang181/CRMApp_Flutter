@@ -5,6 +5,8 @@ class ImageItem extends StatelessWidget {
   final String url;
   final String imageString;
   final Size size;
+  final double border;
+  final bool circle;
   final String placeholder = MyImage.IMAGE_HOLDER;
 
   const ImageItem({
@@ -12,10 +14,38 @@ class ImageItem extends StatelessWidget {
     this.url,
     this.imageString,
     this.size = const Size(50, 50),
+    this.border = 0,
+    this.circle = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (circle) {
+      return CircleAvatar(
+        radius: size.height / 2,
+        child: Container(
+          padding: EdgeInsets.all(border),
+          decoration: BoxDecoration(
+            color: Theme.of(context).shadowColor,
+            shape: BoxShape.circle,
+          ),
+          child: ClipOval(
+            child: _image(),
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.all(border),
+        decoration: BoxDecoration(
+          color: Theme.of(context).shadowColor,
+        ),
+        child: _image(),
+      );
+    }
+  }
+
+  Image _image() {
     if (url != null && url.isNotEmpty) {
       return Image.network(
         url,

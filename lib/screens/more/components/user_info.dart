@@ -1,4 +1,5 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/screens/components/image_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
@@ -82,11 +83,22 @@ class UserInfo extends StatelessWidget {
   Widget _itemPage(BuildContext context, FacebookPage page) {
     return Container(
       padding: const EdgeInsets.all(Layouts.SPACING),
-      child: Text(
-        page.name,
-        style: Theme.of(context).textTheme.subtitle1.copyWith(
-              fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 3,
-            ),
+      child: Row(
+        children: [
+          ImageItem(
+            url: page.imageUrl,
+            border: 1,
+          ),
+          SizedBox(
+            width: Layouts.SPACING,
+          ),
+          Text(
+            page.name,
+            style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  fontSize: Theme.of(context).textTheme.subtitle1.fontSize - 3,
+                ),
+          ),
+        ],
       ),
     );
   }

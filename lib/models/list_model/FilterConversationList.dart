@@ -9,7 +9,9 @@ class FilterConversationList {
     List<String> pageIds,
   }) {
     _filters = <String, FilterConversation>{
-      'Tất cả': FilterConversation(pageIds: pageIds),
+      'Tất cả': FilterConversation(
+        pageIds: pageIds,
+      ),
       'Chưa xem': FilterConversation(
         pageIds: pageIds,
         isRead: false,

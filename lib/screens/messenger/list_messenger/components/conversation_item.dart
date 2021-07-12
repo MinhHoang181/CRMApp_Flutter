@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cntt2_crm/constants/enum.dart';
+import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
@@ -11,6 +12,7 @@ import 'package:cntt2_crm/models/Label.dart';
 
 //Components
 import 'package:cntt2_crm/screens/components/circle_avatar_with_platform.dart';
+import 'package:cntt2_crm/screens/components/image_item.dart';
 
 //Screens
 import 'package:cntt2_crm/screens/messenger/chatbox/chatbox.screen.dart';
@@ -69,6 +71,8 @@ class ConversationItem extends StatelessWidget {
   }
 
   Widget _message(BuildContext context, Conversation conversation) {
+    final FacebookPage page =
+        AzsalesData.instance.pages.map[conversation.pageId];
     return Row(
       children: [
         Expanded(
@@ -107,17 +111,11 @@ class ConversationItem extends StatelessWidget {
                         .withOpacity(0.5),
                     size: 14,
                   ),
-                  Badge(
-                    toAnimate: false,
-                    badgeColor: Colors.blue.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(20),
-                    shape: BadgeShape.square,
-                    badgeContent: Text(
-                      AzsalesData.instance.pages.map[conversation.pageId].name,
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
+                  ImageItem(
+                    url: page.imageUrl,
+                    size: const Size(25, 25),
+                    circle: true,
+                    border: 1,
                   ),
                 ],
               ),

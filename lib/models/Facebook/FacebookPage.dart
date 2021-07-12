@@ -4,18 +4,23 @@ import 'package:flutter/material.dart';
 class FacebookPage {
   final String id;
   final String name;
+  final String imageUrl;
   bool _isSelected = true;
   bool get isSelected => _isSelected;
 
   FacebookPage({
     @required this.id,
     @required this.name,
+    @required this.imageUrl,
   });
 
   factory FacebookPage.fromJson(Map<String, dynamic> json) {
+    final String id = json['_id'];
+    final String imageUrl = 'https://graph.facebook.com/$id/picture';
     return FacebookPage(
-      id: json['_id'],
+      id: id,
       name: json['name'],
+      imageUrl: imageUrl,
     );
   }
 

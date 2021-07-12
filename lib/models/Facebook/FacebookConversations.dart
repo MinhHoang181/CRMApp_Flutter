@@ -15,8 +15,9 @@ class FacebookConversations extends Conversations {
   Map<FilterConversation, PagingInfo> _pageInfo =
       Map<FilterConversation, PagingInfo>();
 
-  FilterConversationList _filters =
-      FilterConversationList(pageIds: AzsalesData.instance.pages.pageIds);
+  FilterConversationList _filters = FilterConversationList(
+    pageIds: AzsalesData.instance.pages.selectedPageIds,
+  );
 
   int get unreadCount => _list.values.first.values
       .where((conversation) => conversation.isRead == false)
@@ -141,6 +142,7 @@ class FacebookConversations extends Conversations {
         }
       },
     );
+    print(_list.values.first.length);
     notifyListeners();
     return true;
   }

@@ -1,3 +1,4 @@
+import 'package:cntt2_crm/screens/components/image_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
@@ -155,9 +156,21 @@ class _ListPageSelectState extends State<ListPageSelect> {
   Widget _pageItemSelect(BuildContext context, FacebookPage page) {
     bool _isSelect = widget.selectList.contains(page.id);
     return ListTile(
-      title: Text(
-        page.name,
-        style: Theme.of(context).textTheme.bodyText2,
+      title: Row(
+        children: [
+          ImageItem(
+            url: page.imageUrl,
+            circle: true,
+            border: 1,
+          ),
+          SizedBox(
+            width: Layouts.SPACING,
+          ),
+          Text(
+            page.name,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+        ],
       ),
       trailing: _isSelect
           ? Icon(

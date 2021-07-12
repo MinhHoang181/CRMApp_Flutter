@@ -45,6 +45,7 @@ class MessageList extends ChangeNotifier {
   }
 
   bool add(ChatMessage message) {
+    if (_list == null) return false;
     if (!_list.containsKey(message.id)) {
       _unUpdateList.any((element) {
         if (element.id == message.id) {
