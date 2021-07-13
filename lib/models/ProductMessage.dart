@@ -82,15 +82,6 @@ class ProductMessage extends ChangeNotifier {
     return _varaints.containsKey(variant.id);
   }
 
-  //TEST
-  String get photosToString {
-    String text = '';
-    _photos.forEach((key, value) {
-      text += value.id + ' / ';
-    });
-    return text;
-  }
-
   String get toMessage {
     String name = '${product.name}';
     String id = '\nMã sản phẩm: ${product.numberId}';

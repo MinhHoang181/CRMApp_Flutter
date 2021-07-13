@@ -101,6 +101,11 @@ class _ChatInputFieldState extends State<ChatInputField> {
   }
 
   void _sendTextMessage(String text) async {
+    setState(() {
+      widget.scrollController.jumpTo(0.0);
+      _inputController.clear();
+    });
+    text = text.trim();
     if (text.isNotEmpty) {
       final messageList = Provider.of<MessageList>(context, listen: false);
       final ChatMessage message = new ChatMessage(
@@ -109,10 +114,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
         isSender: true,
         isUpdate: false,
       );
-      setState(() {
-        widget.scrollController.jumpTo(0.0);
-        _inputController.clear();
-      });
+
       final success = await messageList.sendMessage(message);
       if (!success) {
         final snackBar = SnackBar(
@@ -145,10 +147,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
         isSender: true,
         isUpdate: false,
       );
-      setState(() {
-        widget.scrollController.jumpTo(0.0);
-        _inputController.clear();
-      });
+
       final success = await messageList.sendMessage(message);
       if (!success) {
         final snackBar = SnackBar(
@@ -163,12 +162,31 @@ class _ChatInputFieldState extends State<ChatInputField> {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     }
+    setState(() {
+      widget.scrollController.jumpTo(0.0);
+      _inputController.clear();
+    });
   }
 
   _sendMultiMessage(List<String> texts, List<String> urls) async {
+    setState(() {
+      widget.scrollController.jumpTo(0.0);
+      _inputController.clear();
+    });
     if (texts.isNotEmpty || urls.isNotEmpty) {
       final messageList = Provider.of<MessageList>(context, listen: false);
       List<ChatMessage> messages = List.empty(growable: true);
+      if (texts.isNotEmpty) {
+        texts.forEach((text) {
+          final ChatMessage message = new ChatMessage(
+            message: text,
+            messageType: MessageType.text,
+            isSender: true,
+            isUpdate: false,
+          );
+          messages.add(message);
+        });
+      }
       if (urls.isNotEmpty) {
         urls.forEach((url) {
           final ChatMessage message = new ChatMessage(
@@ -187,21 +205,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
           messages.add(message);
         });
       }
-      if (texts.isNotEmpty) {
-        texts.forEach((text) {
-          final ChatMessage message = new ChatMessage(
-            message: text,
-            messageType: MessageType.text,
-            isSender: true,
-            isUpdate: false,
-          );
-          messages.add(message);
-        });
-      }
-      setState(() {
-        widget.scrollController.jumpTo(0.0);
-        _inputController.clear();
-      });
+
       final result = await Future.wait<bool>(
         List.generate(
           messages.length,

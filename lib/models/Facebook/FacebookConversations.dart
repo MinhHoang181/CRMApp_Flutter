@@ -33,6 +33,10 @@ class FacebookConversations extends Conversations {
 
   @override
   PagingInfo pageFilter(FilterConversation filterConversation) {
+    if (_pageInfo[filterConversation] == null) {
+      _pageInfo[filterConversation] =
+          PagingInfo(hasNextPage: false, next: 1, start: 0);
+    }
     return _pageInfo[filterConversation];
   }
 
@@ -123,6 +127,7 @@ class FacebookConversations extends Conversations {
       FilterConversation filterConversation, Conversation conversation) {
     if (!_list.values.first.containsKey(conversation.id)) {
       _list.values.first[conversation.id] = conversation;
+      conversation.addListenTimeUpdate(this);
     } else {
       conversation = _list.values.first[conversation.id];
     }

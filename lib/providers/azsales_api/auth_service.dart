@@ -33,6 +33,7 @@ Future<AzsalesAccount> login(LoginData data) async {
         timeout,
         onTimeout: () => null,
       );
+  if (response == null) return null;
   if (response.hasException) {
     print(response.exception.toString());
     return null;

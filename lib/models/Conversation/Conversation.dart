@@ -1,4 +1,5 @@
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
+import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 import 'package:cntt2_crm/models/list_model/CustomerList.dart';
 import 'package:cntt2_crm/models/list_model/MessageList.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/conversation_api.dart';
@@ -37,6 +38,8 @@ class Conversation extends ChangeNotifier {
   final NoteList notes;
   final OrderList orders;
   final CustomerList customers;
+
+  final List<Conversations> _listeners = List.empty(growable: true);
 
   Conversation({
     @required this.id,
@@ -98,7 +101,7 @@ class Conversation extends ChangeNotifier {
     );
   }
 
-  bool update(Conversation conversation) {
+  void update(Conversation conversation) {
     this.snippet = conversation.snippet;
     this.dateUpdate = conversation.dateUpdate;
     this.isRead = conversation.isRead;
@@ -110,12 +113,21 @@ class Conversation extends ChangeNotifier {
     // if (conversation.hasPhone != null) this.hasPhone = conversation.hasPhone;
 
     if (this.timeUpdate != conversation.timeUpdate) {
-      notifyListeners();
       this.timeUpdate = conversation.timeUpdate;
-      return true;
-    } else {
-      notifyListeners();
-      return false;
+      _callUpdate();
+    }
+    notifyListeners();
+  }
+
+  void _callUpdate() {
+    _listeners.forEach((conversations) {
+      conversations.callNotifyUpdate();
+    });
+  }
+
+  void addListenTimeUpdate(Conversations conversations) {
+    if (!_listeners.contains(conversations)) {
+      _listeners.add(conversations);
     }
   }
 
@@ -155,5 +167,10 @@ class Conversation extends ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  Future<bool> setIsRead() async {
+    final check = await ConversationAPI.setIsRead(conversationId: this.id);
+    return check;
   }
 }

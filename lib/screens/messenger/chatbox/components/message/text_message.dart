@@ -34,7 +34,7 @@ class TextMessage extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
-        message.message,
+        message.message.trim(),
         style: message.isSender
             ? Theme.of(context).textTheme.headline3.copyWith(
                   color: Colors.white,

@@ -152,6 +152,39 @@ class ConversationAPI {
     }
   }
 
+  static Future<bool> setIsRead({
+    @required String conversationId,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          conversation {
+            setIsRead(conversationId: "$conversationId", isRead: true) {
+              _id,
+              is_read,
+            }
+          }
+        }
+        ''',
+      ),
+    );
+
+    final client = getChatClient();
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return false;
+    } else {
+      final bool check = response.data['conversation']['setIsRead']['is_read'];
+      return check;
+    }
+  }
+
   static Future<bool> notifyConversationChanged({
     @required String conversationId,
   }) async {

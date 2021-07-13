@@ -48,15 +48,18 @@ class ConversationItem extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider.value(
-            value: conversation,
-            child: ChatboxScreen(),
+      onTap: () {
+        if (!conversation.isRead) conversation.setIsRead();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChangeNotifierProvider.value(
+              value: conversation,
+              child: ChatboxScreen(),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -99,7 +102,7 @@ class ConversationItem extends StatelessWidget {
                                       .bodyText2
                                       .fontSize +
                                   2,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w900,
                             ),
                   ),
                   Icon(
@@ -127,7 +130,7 @@ class ConversationItem extends StatelessWidget {
                 style: conversation.isRead
                     ? Theme.of(context).textTheme.bodyText2
                     : Theme.of(context).textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                         ),
                 overflow: TextOverflow.ellipsis,
               ),

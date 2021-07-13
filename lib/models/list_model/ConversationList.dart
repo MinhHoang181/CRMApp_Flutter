@@ -23,10 +23,7 @@ class ConversationList extends ChangeNotifier {
 
   void listenUpdate(Conversation conversation) {
     if (root.containsKey(conversation.id)) {
-      final bool check = root[conversation.id].update(conversation);
-      if (check) {
-        notifyListeners();
-      }
+      root[conversation.id].update(conversation);
     }
   }
 

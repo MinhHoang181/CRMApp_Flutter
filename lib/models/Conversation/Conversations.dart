@@ -38,4 +38,8 @@ abstract class Conversations extends ChangeNotifier {
       FilterConversation filterConversation, Conversation conversation);
 
   Future<bool> refreshAll();
+
+  void callNotifyUpdate() {
+    notifyListeners();
+  }
 }

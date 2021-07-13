@@ -30,6 +30,8 @@ class MessageList extends ChangeNotifier {
     sortList.sort((a, b) {
       final dayA = a.timeCreated;
       final dayB = b.timeCreated;
+      if (dayA == null) return -1;
+      if (dayB == null) return 1;
       return dayB.compareTo(dayA);
     });
     return sortList;

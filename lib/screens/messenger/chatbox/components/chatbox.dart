@@ -1,4 +1,6 @@
+import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/ChatMessage.dart';
+import 'package:cntt2_crm/models/Facebook/FacebookPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,9 +69,12 @@ class ChatBox extends StatelessWidget {
           child: ListView.builder(
             controller: _scrollController,
             reverse: true,
-            itemCount: chatlog.length,
+            itemCount: chatlog.length + 1,
             itemBuilder: (context, index) {
-              return _buildRow(context, chatlog, index);
+              if (index == 0) {
+                return _whoSend(context, messageList.pageId);
+              }
+              return _buildRow(context, chatlog, index - 1);
             },
           ),
         ),
@@ -87,6 +92,24 @@ class ChatBox extends StatelessWidget {
     return Message(
       message: chatlog[index],
       isMutilLine: _isMutilLine,
+    );
+  }
+
+  Widget _whoSend(BuildContext context, String pageId) {
+    final FacebookPage page = AzsalesData.instance.pages.map[pageId];
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(
+          'Được gửi bởi: ',
+        ),
+        Text(
+          page.name,
+          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                color: Theme.of(context).primaryColor,
+              ),
+        ),
+      ],
     );
   }
 }

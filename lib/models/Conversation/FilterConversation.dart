@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 class FilterConversation {
   final List<String> pageIds;
   final List<String> labeIds;

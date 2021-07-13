@@ -51,7 +51,7 @@ class AttachmentMessage extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
-        message.message,
+        message.message.trim(),
         style: TextStyle(
           color: message.isSender
               ? Colors.white
@@ -74,7 +74,6 @@ class AttachmentMessage extends StatelessWidget {
   }
 
   Widget _image(String url) {
-    print(url);
     return Container(
       margin: message.isSender
           ? EdgeInsets.only(
