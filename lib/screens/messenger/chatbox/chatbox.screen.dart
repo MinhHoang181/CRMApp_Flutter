@@ -49,6 +49,7 @@ class ChatboxScreen extends StatelessWidget {
   AppBar _chatboxScreenAppBar(BuildContext context) {
     final conversation = Provider.of<Conversation>(context, listen: false);
     return AppBar(
+      centerTitle: false,
       title: InkWell(
         child: Row(
           children: [
@@ -60,10 +61,16 @@ class ChatboxScreen extends StatelessWidget {
             SizedBox(
               width: Layouts.SPACING * 0.75,
             ),
-            Text(
-              conversation.participants[0].name,
-              style: TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM),
-              overflow: TextOverflow.ellipsis,
+            Expanded(
+              child: Text(
+                conversation.participants[0].name,
+                style: Theme.of(context).textTheme.headline3.copyWith(
+                      color: Colors.white,
+                      fontSize:
+                          Theme.of(context).textTheme.bodyText2.fontSize + 2,
+                    ),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

@@ -134,6 +134,7 @@ class Conversation extends ChangeNotifier {
   void updateRead(bool isRead) {
     this.isRead = isRead;
     notifyListeners();
+    _callUpdate();
   }
 
   void _updateLabels(List<String> labelIds) {

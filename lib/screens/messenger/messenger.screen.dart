@@ -35,19 +35,35 @@ class MessengerScreen extends StatelessWidget {
       padding: const EdgeInsets.all(Layouts.SPACING),
       child: Column(
         children: [
-          _all(context),
+          ChangeNotifierProvider<Conversations>.value(
+            value: AzsalesData
+                .instance.conversations.map[PlatformConversation.all],
+            child: _All(),
+          ),
           Divider(),
-          _facebook(context),
+          ChangeNotifierProvider<Conversations>.value(
+            value: AzsalesData
+                .instance.conversations.map[PlatformConversation.facebook],
+            child: _Facebook(),
+          ),
           Divider(),
-          _zalo(context),
+          ChangeNotifierProvider<Conversations>.value(
+            value: null,
+            child: _Zalo(),
+          ),
         ],
       ),
     );
   }
+}
 
-  Widget _all(BuildContext context) {
-    int notificationCount = 0;
-    notificationCount = min(notificationCount, 999);
+class _All extends StatelessWidget {
+  const _All({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final conversations = context.watch<Conversations>();
+    final notificationCount = min(conversations.unreadCount, 999);
     return ListTile(
       leading: Image(
         height: 60,
@@ -75,18 +91,22 @@ class MessengerScreen extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider<Conversations>.value(
-            value: AzsalesData
-                .instance.conversations.map[PlatformConversation.all],
+            value: conversations,
             child: AllMessageScreen(),
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _facebook(BuildContext context) {
-    int notificationCount = 0;
-    notificationCount = min(notificationCount, 999);
+class _Facebook extends StatelessWidget {
+  const _Facebook({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final conversations = context.watch<Conversations>();
+    final notificationCount = min(conversations.unreadCount, 999);
     return ListTile(
       leading: Image(
         height: 60,
@@ -114,18 +134,22 @@ class MessengerScreen extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider<Conversations>.value(
-            value: AzsalesData
-                .instance.conversations.map[PlatformConversation.facebook],
+            value: conversations,
             child: FacebookMessageScreen(),
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _zalo(BuildContext context) {
-    int notificationCount = 0;
-    notificationCount = min(notificationCount, 999);
+class _Zalo extends StatelessWidget {
+  const _Zalo({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    //final conversations = context.watch<Conversations>();
+    final notificationCount = min(0, 999);
     return ListTile(
       leading: Image(
         height: 60,

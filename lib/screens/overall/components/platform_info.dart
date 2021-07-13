@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
-import 'package:cntt2_crm/constants/images.dart' as Images;
+import 'package:cntt2_crm/constants/images.dart' as MyImages;
 import 'package:cntt2_crm/constants/icons.dart' as MyIcons;
-import 'package:cntt2_crm/constants/enum.dart';
+import 'package:provider/provider.dart';
 
 //Models
 import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:cntt2_crm/models/Facebook/FacebookConversations.dart';
 import 'package:cntt2_crm/models/list_model/ConversationList.dart';
+import 'package:cntt2_crm/models/Conversation/Conversations.dart';
 
 class PlatformInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FacebookConversations facebook =
+    final facebook =
         AzsalesData.instance.conversations.map[PlatformConversation.facebook];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,40 +49,32 @@ class PlatformInfo extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _platformRow(context, Platform.facebook, facebook.unreadCount, 0),
+              ChangeNotifierProvider<Conversations>.value(
+                value: facebook,
+                child: _PlatformRow(name: 'Facebook', logo: MyImages.FACEBOOK),
+              ),
               Divider(),
-              _platformRow(context, Platform.zalo, 0, 0),
+              ChangeNotifierProvider<Conversations>.value(
+                value: null,
+                child: _PlatformRow(name: 'Zalo', logo: MyImages.ZALO),
+              ),
             ],
           ),
         ),
       ],
     );
   }
+}
 
-  Widget _platformRow(
-    BuildContext context,
-    Platform platform,
-    int numberMess,
-    int numberNotifi,
-  ) {
-    String _namePlatform;
-    String _logoPlatform;
-    switch (platform) {
-      case Platform.facebook:
-        {
-          _namePlatform = 'Facebook';
-          _logoPlatform = Images.FACEBOOK;
-          break;
-        }
-      case Platform.zalo:
-        {
-          _namePlatform = 'Zalo';
-          _logoPlatform = Images.ZALO;
-          break;
-        }
-      default:
-        break;
-    }
+class _PlatformRow extends StatelessWidget {
+  final String name;
+  final String logo;
+  const _PlatformRow({Key key, @required this.name, @required this.logo})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final platform = context.watch<Conversations>();
     return Container(
       margin: EdgeInsets.symmetric(vertical: Layouts.SPACING / 2),
       child: Column(
@@ -89,7 +82,7 @@ class PlatformInfo extends StatelessWidget {
           Row(
             children: [
               Image(
-                image: AssetImage(_logoPlatform),
+                image: AssetImage(logo),
                 width: 50,
                 height: 50,
               ),
@@ -97,7 +90,7 @@ class PlatformInfo extends StatelessWidget {
                 width: Layouts.SPACING,
               ),
               Text(
-                _namePlatform,
+                name,
                 style: Theme.of(context).textTheme.subtitle1,
               )
             ],
@@ -122,7 +115,11 @@ class PlatformInfo extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
-              _alertText(context, numberMess, 'tin nhắn'),
+              _alertText(
+                context,
+                platform != null ? platform.unreadCount : 0,
+                'tin nhắn',
+              ),
             ],
           ),
           SizedBox(
@@ -145,7 +142,7 @@ class PlatformInfo extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               Spacer(),
-              _alertText(context, numberNotifi, 'thông báo'),
+              _alertText(context, 0, 'thông báo'),
             ],
           ),
         ],
@@ -159,7 +156,7 @@ class PlatformInfo extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            numberAlert > 0 ? '$numberAlert chưa đọc' : 'Không có $name mới',
+            numberAlert > 0 ? '$numberAlert chưa đọc' : '0 $name mới',
             style: Theme.of(context).textTheme.bodyText2,
           ),
           SizedBox(
