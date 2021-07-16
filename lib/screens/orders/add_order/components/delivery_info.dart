@@ -46,6 +46,7 @@ class DeliveryInfo extends StatelessWidget {
   Widget _customer(BuildContext context) {
     final customer = context.select((Cart cart) => cart.customer);
     final formKey = context.select((FormValidate form) => form.customer);
+    final canEdit = context.select((Cart cart) => cart.canEdit);
     return Form(
       key: formKey,
       child: Column(
@@ -64,6 +65,7 @@ class DeliveryInfo extends StatelessWidget {
           ),
           SizedBox(height: Layouts.SPACING / 2),
           TextFormField(
+            enabled: canEdit,
             controller: TextEditingController(text: customer.name),
             style: Theme.of(context).textTheme.bodyText2,
             decoration: InputDecoration(
@@ -83,6 +85,7 @@ class DeliveryInfo extends StatelessWidget {
           ),
           SizedBox(height: Layouts.SPACING),
           TextFormField(
+            enabled: canEdit,
             controller: TextEditingController(text: customer.phone),
             style: Theme.of(context).textTheme.bodyText2,
             keyboardType: TextInputType.phone,
@@ -107,7 +110,10 @@ class DeliveryInfo extends StatelessWidget {
   }
 
   Widget _note(BuildContext context) {
-    var cart = Provider.of<Cart>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
+    final externalNote = context.select((Cart cart) => cart.externalNote);
+    final internalNote = context.select((Cart cart) => cart.internalNote);
+    final canEdit = context.select((Cart cart) => cart.canEdit);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -127,10 +133,12 @@ class DeliveryInfo extends StatelessWidget {
             Expanded(
               flex: 1,
               child: TextField(
+                enabled: canEdit,
                 minLines: 4,
                 maxLines: 6,
                 textAlignVertical: TextAlignVertical.center,
                 style: Theme.of(context).textTheme.bodyText2,
+                controller: TextEditingController(text: internalNote),
                 decoration: InputDecoration(
                   filled: false,
                   labelText: 'Ghi chú nội bộ',
@@ -145,10 +153,12 @@ class DeliveryInfo extends StatelessWidget {
             Expanded(
               flex: 1,
               child: TextField(
+                enabled: canEdit,
                 minLines: 4,
                 maxLines: 6,
                 textAlignVertical: TextAlignVertical.center,
                 style: Theme.of(context).textTheme.bodyText2,
+                controller: TextEditingController(text: externalNote),
                 decoration: InputDecoration(
                   filled: false,
                   labelText: 'Ghi chú khách',
@@ -203,11 +213,11 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
   void initState() {
     super.initState();
     _cart = Provider.of<Cart>(context, listen: false);
-    _cart.mimeType = 2;
   }
 
   @override
   Widget build(BuildContext context) {
+    final canEdit = _cart.canEdit;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -232,11 +242,13 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
               child: Text(widget.typeOrders[index]),
             ),
           ),
-          onChanged: (value) {
-            setState(() {
-              _cart.mimeType = value;
-            });
-          },
+          onChanged: canEdit
+              ? (value) {
+                  setState(() {
+                    _cart.mimeType = value;
+                  });
+                }
+              : null,
         ),
         if (_cart.mimeType != 1) ...[
           SizedBox(height: Layouts.SPACING),
@@ -251,6 +263,7 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
   Widget _address(BuildContext context) {
     final address = context.select((Cart cart) => cart.address);
     final formKey = context.select((FormValidate form) => form.address);
+    final canEdit = _cart.canEdit;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -268,6 +281,7 @@ class _DropDownTypeOrderState extends State<DropDownTypeOrder> {
         AddressInfo(
           address: address,
           formKey: formKey,
+          canEdit: canEdit,
         ),
       ],
     );
@@ -295,6 +309,7 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
 
   @override
   Widget build(BuildContext context) {
+    final canEdit = _cart.canEdit;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -319,11 +334,13 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
               child: Text(widget.whoReceives[index]),
             ),
           ),
-          onChanged: (value) {
-            setState(() {
-              _cart.whoReceive = value;
-            });
-          },
+          onChanged: canEdit
+              ? (value) {
+                  setState(() {
+                    _cart.whoReceive = value;
+                  });
+                }
+              : null,
         ),
         if (_cart.whoReceive == 2) ...[
           SizedBox(height: Layouts.SPACING),
@@ -335,6 +352,7 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
 
   Widget _recipientInfo(BuildContext context) {
     final fromKey = context.select((FormValidate form) => form.recipient);
+    final canEdit = _cart.canEdit;
     return Form(
       key: fromKey,
       child: Column(
@@ -353,6 +371,7 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
           ),
           SizedBox(height: Layouts.SPACING / 2),
           TextFormField(
+            enabled: canEdit,
             style: Theme.of(context).textTheme.bodyText2,
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.person),
@@ -370,6 +389,7 @@ class _DropDownWhoReceiveState extends State<DropDownWhoReceive> {
           ),
           SizedBox(height: Layouts.SPACING),
           TextFormField(
+            enabled: canEdit,
             style: Theme.of(context).textTheme.bodyText2,
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.phone),

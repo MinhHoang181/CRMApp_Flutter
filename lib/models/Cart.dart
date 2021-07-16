@@ -1,6 +1,7 @@
 import 'dart:collection';
-
 import 'package:cntt2_crm/models/Customer.dart';
+import 'package:cntt2_crm/models/Order/Order.dart';
+import 'package:cntt2_crm/models/Order/StatusOrder.dart';
 import 'package:cntt2_crm/models/Product/Variant.dart';
 import 'package:cntt2_crm/models/Stock.dart';
 import 'package:cntt2_crm/providers/azsales_api/chat_service/order_api.dart';
@@ -28,16 +29,122 @@ class Cart extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> updateOrder() async {
+    if (_idOrder == null) return false;
+    final order = await OrderAPI.updateOrder(idOrder: _idOrder, cart: this);
+    if (order != null) {
+      if (_order != null) {
+        _order.update(order);
+      }
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> confirmOrder() async {
+    if (_idOrder == null) return false;
+    final check = await OrderAPI.confirmOrder(idOrder: _idOrder);
+    if (check != null && check && _order != null) {
+      _order.updateStatus(StatusOrder.confirmedOrder);
+    }
+    return check;
+  }
+
+  Future<bool> receiveOrder() async {
+    if (_idOrder == null) return false;
+    final check = await OrderAPI.receiveOrder(idOrder: _idOrder);
+    if (check != null && check && _order != null) {
+      _order.updateStatus(StatusOrder.confirmedOrder);
+    }
+    return check;
+  }
+
+  Future<bool> returningOrder() async {
+    if (_idOrder == null) return false;
+    final check = await OrderAPI.returningOrder(idOrder: _idOrder);
+    if (check != null && check && _order != null) {
+      _order.updateStatus(StatusOrder.confirmedOrder);
+    }
+    return check;
+  }
+
+  Future<bool> returnOrder() async {
+    if (_idOrder == null) return false;
+    final check = await OrderAPI.returnOrder(idOrder: _idOrder);
+    if (check != null && check && _order != null) {
+      _order.updateStatus(StatusOrder.confirmedOrder);
+    }
+    return check;
+  }
+
+  Future<bool> cancelOrder() async {
+    if (_idOrder == null) return false;
+    final check = await OrderAPI.cancelOrder(idOrder: _idOrder);
+    if (check != null && check && _order != null) {
+      _order.updateStatus(StatusOrder.cancelOrder);
+    }
+    return check;
+  }
+
+  void updateFromOrder(Order order) {
+    _order = order;
+    _idOrder = order.id;
+    customer.copy(order.customer);
+    _address.copy(order.address);
+    mimeType = order.type.code;
+    stock = order.stock;
+    _recipientName = order.recipientName;
+    _recipientPhone = order.recipientPhone;
+    _externalNote = order.externalNote;
+    _internalNote = order.internalNote;
+    _bank = order.bankPaymen;
+    _card = order.cardPaymen;
+    _other = order.otherPaymen;
+    _discount = order.discount;
+    initStatus = order.status.code;
+    _products.clear();
+    order.products.forEach((element) {
+      final product = Product(
+        id: element.id,
+        name: element.name,
+      );
+      final variant = Variant(
+        product: product,
+        id: element.variantId,
+        barcode: null,
+        price: element.price,
+        inPrice: null,
+        salePrice: null,
+        attributes: element.attributes,
+        total: -1,
+      );
+      _products[variant] = element.quantity;
+    });
+  }
+
+  factory Cart.fromOrder(Order order) {
+    return Cart()
+      ..updateFromOrder(order)
+      ..canEdit = false;
+  }
+
+  Order _order;
+  String _idOrder;
   int mimeType = 2;
   int whoReceive;
   final String conversationId;
   final Customer customer = Customer();
-  String get cartItemsJson {
-    String cartItems = '';
-    _products.forEach((variant, total) {
-      cartItems += _itemToJson(variant);
-    });
-    return '[' + cartItems + ']';
+  int initStatus = 0;
+  bool _canEdit = true;
+  bool get canEdit {
+    if (initStatus < 3) return _canEdit && true;
+    return false;
+  }
+
+  set canEdit(bool value) {
+    _canEdit = value;
+    updateFromOrder(_order);
+    notifyListeners();
   }
 
   final Map<Variant, int> _products = Map<Variant, int>();
@@ -48,31 +155,38 @@ class Cart extends ChangeNotifier {
   Address get address => mimeType != 1 ? _address : null;
 
   String _recipientName = '';
-  String get recipientName => _recipientName.isNotEmpty ? _recipientName : null;
+  String get recipientName =>
+      (_recipientName != null && _recipientName.isNotEmpty)
+          ? _recipientName
+          : null;
   set recipientName(String name) {
     _recipientName = name;
   }
 
   String _recipientPhone = '';
   String get recipientPhone =>
-      _recipientPhone.isNotEmpty ? _recipientPhone : null;
+      (_recipientPhone != null && _recipientPhone.isNotEmpty)
+          ? _recipientPhone
+          : null;
   set recipientPhone(String phone) {
     _recipientPhone = phone;
   }
 
   String _externalNote = '';
-  String get externalNote => _externalNote.isNotEmpty ? _externalNote : null;
+  String get externalNote => (_externalNote != null && _externalNote.isNotEmpty)
+      ? _externalNote
+      : null;
   set externalNote(String note) {
     _externalNote = note;
   }
 
   String _internalNote = '';
-  String get internalNote => _internalNote.isNotEmpty ? _internalNote : null;
+  String get internalNote => (_internalNote != null && _internalNote.isNotEmpty)
+      ? _internalNote
+      : null;
   set internalNote(String note) {
     _internalNote = note;
   }
-
-  int initStatus = 1;
 
   int _discount = 0;
   int get discount => _discount;
@@ -125,7 +239,7 @@ class Cart extends ChangeNotifier {
 
   void add(Variant variant) {
     if (_products.containsKey(variant)) {
-      if (variant.total > _products[variant]) {
+      if (variant.total > _products[variant] || variant.total == -1) {
         _products[variant]++;
       }
     } else {
@@ -176,5 +290,13 @@ class Cart extends ChangeNotifier {
       qty: ${_products[variant]}
     }
     ''';
+  }
+
+  String get cartItemsJson {
+    String cartItems = '';
+    _products.forEach((variant, total) {
+      cartItems += _itemToJson(variant);
+    });
+    return '[' + cartItems + ']';
   }
 }

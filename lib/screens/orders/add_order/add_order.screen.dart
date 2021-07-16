@@ -6,10 +6,15 @@ import 'package:provider/provider.dart';
 
 //Components
 import 'components/body.dart';
-import 'package:cntt2_crm/screens/components/progress_dialog.dart';
+import 'components/order_buttons/create_button.dart';
+import 'components/order_buttons/confirm_button.dart';
+import 'components/order_buttons/send_button.dart';
+import 'components/order_buttons/receive_button.dart';
+import 'components/order_buttons/returning_button.dart';
 
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
+import 'package:cntt2_crm/models/Order/Order.dart';
 
 class FormValidate {
   final customer = GlobalKey<FormState>();
@@ -19,9 +24,10 @@ class FormValidate {
 }
 
 class AddOrderScreen extends StatelessWidget {
+  final Order order;
   final String conversationId;
-  final FormValidate form = new FormValidate();
-  AddOrderScreen({Key key, this.conversationId}) : super(key: key);
+  final FormValidate form = FormValidate();
+  AddOrderScreen({Key key, this.conversationId, this.order}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,20 +36,22 @@ class AddOrderScreen extends StatelessWidget {
         value: form,
         child: Body(),
       ),
-      bottomNavigationBar: CreateOrderButton(form: form),
+      bottomNavigationBar: _OrderButton(form: form),
     );
   }
 
   AppBar _addOrderScreenAppBar(BuildContext context) {
     return AppBar(
-      title: Text('Thêm đơn hàng'),
+      title: Text(
+        order != null ? 'Thông tin đơn hàng' : 'Thêm đơn hàng',
+      ),
     );
   }
 }
 
-class CreateOrderButton extends StatelessWidget {
+class _OrderButton extends StatelessWidget {
   final FormValidate form;
-  const CreateOrderButton({Key key, @required this.form}) : super(key: key);
+  const _OrderButton({Key key, @required this.form}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +79,7 @@ class CreateOrderButton extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Tạm tính',
+                      'Tổng tiền',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: Fonts.SIZE_TEXT_LARGE,
@@ -91,60 +99,9 @@ class CreateOrderButton extends StatelessWidget {
             ),
             TableRow(
               children: [
-                ElevatedButton(
-                  child: Text('Tạo đơn hàng'),
-                  onPressed: () {
-                    final customer = form.customer.currentState.validate();
-                    final stock = form.stock.currentState.validate();
-                    final address = form.address.currentState != null
-                        ? form.address.currentState.validate()
-                        : true;
-                    final recipient = form.recipient.currentState != null
-                        ? form.recipient.currentState.validate()
-                        : true;
-                    final product = Provider.of<Cart>(context, listen: false)
-                            .products
-                            .isEmpty
-                        ? false
-                        : true;
-
-                    if (customer && stock && address && recipient && product) {
-                      final cart = Provider.of<Cart>(context, listen: false);
-                      showDialog<bool>(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => ProgressDialog(
-                          future: cart.createOrder(),
-                          loading: 'Đang tạo đơn hàng',
-                          success: 'Tạo đơn hàng thành công',
-                          falied: 'Tạo đơn hàng thất bại',
-                        ),
-                      ).then((value) {
-                        if (value != null) {
-                          if (value) {
-                            Navigator.of(context).pop();
-                          }
-                        }
-                      });
-                    } else {
-                      if (!customer) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Chưa nhập thông tin khách hàng'));
-                      } else if (!address) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(errorSnackBar('Chưa nhập địa chỉ'));
-                      } else if (!stock) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(errorSnackBar('Chưa chọn kho'));
-                      } else if (!recipient) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            errorSnackBar('Chưa nhập thông tin người nhận'));
-                      } else if (!product) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(errorSnackBar('Chưa có sản phẩm'));
-                      }
-                    }
-                  },
+                Provider<FormValidate>.value(
+                  value: form,
+                  child: _StatusOrderButton(),
                 ),
               ],
             ),
@@ -153,11 +110,39 @@ class CreateOrderButton extends StatelessWidget {
       ),
     );
   }
+}
 
-  SnackBar errorSnackBar(String text) {
-    return SnackBar(
-      backgroundColor: Colors.redAccent,
-      content: Text(text),
-    );
+class _StatusOrderButton extends StatefulWidget {
+  const _StatusOrderButton({Key key}) : super(key: key);
+
+  @override
+  __StatusOrderButtonState createState() => __StatusOrderButtonState();
+}
+
+class __StatusOrderButtonState extends State<_StatusOrderButton> {
+  int _status;
+  @override
+  void initState() {
+    super.initState();
+    _status = Provider.of<Cart>(context, listen: false).initStatus;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    switch (_status) {
+      case 0:
+        return CreateOrderButton();
+        break;
+      case 1:
+        return ConfirmOrderButton();
+      case 2:
+        return SentOrderButton();
+      case 3:
+        return ReceiveOrderButton();
+      case 4:
+        return ReturningOrderButton();
+      default:
+        return Container();
+    }
   }
 }

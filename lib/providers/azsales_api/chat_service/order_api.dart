@@ -60,6 +60,11 @@ class OrderAPI {
                 recipient_name
                 recipient_phone_number
                 phone_number,
+                bank_payment,
+                cash_payment,
+                card_payment,
+                other_payment,
+                discount,
                 amount,
                 COD,
                 address,
@@ -81,6 +86,12 @@ class OrderAPI {
                   display_name,
                 }
                 minetype,
+                internal_note
+                external_note
+                stock {
+                  _id
+                  name
+                }
                 cart_items {
                   _id
                   product_name
@@ -148,6 +159,11 @@ class OrderAPI {
                 recipient_name
                 recipient_phone_number
                 phone_number,
+                bank_payment,
+                cash_payment,
+                card_payment,
+                other_payment,
+                discount,
                 amount,
                 COD,
                 address,
@@ -169,6 +185,12 @@ class OrderAPI {
                   display_name,
                 }
                 minetype,
+                internal_note
+                external_note
+                stock {
+                  _id
+                  name
+                }
                 cart_items {
                   _id
                   product_name
@@ -246,6 +268,9 @@ class OrderAPI {
     final internalNote = cart.internalNote != null
         ? 'internal_note: "${cart.internalNote}",'
         : '';
+
+    if (cart.initStatus == 0) cart.initStatus = 1;
+
     final MutationOptions options = MutationOptions(
       document: gql(
         '''
@@ -268,31 +293,49 @@ class OrderAPI {
               initStatus: ${cart.initStatus},
             }) {
               record {
-                _id
-                id
-                conversation_id
-                phone_number
-                amount
-                COD
-                address
+                _id,
+                id,
+                conversation_id,
+                customer {
+                  _id
+                  customer_name
+                  phone_number
+                }
+                recipient_name
+                recipient_phone_number
+                phone_number,
+                bank_payment,
+                cash_payment,
+                card_payment,
+                other_payment,
+                discount,
+                amount,
+                COD,
+                address,
                 city {
                   _id
-                  label
+                  label,
                 }
                 district {
                   _id
-                  label
+                  label,
                 }
                 ward {
                   _id
-                  label
+                  label,
                 }
-                status
-                date_created
+                status,
+                date_created,
                 created_by_user {
-                  display_name
+                  display_name,
                 }
-                minetype
+                minetype,
+                internal_note
+                external_note
+                stock {
+                  _id
+                  name
+                }
                 cart_items {
                   _id
                   product_name
@@ -325,6 +368,297 @@ class OrderAPI {
       Map<String, dynamic> order =
           response.data['order']['createOrder']['record'];
       return Order.fromJson(order);
+    }
+  }
+
+  static Future<Order> updateOrder({
+    @required String idOrder,
+    @required Cart cart,
+  }) async {
+    final address = cart.address != null
+        ? '''
+      address: "${cart.address.address}"
+      city_code: ${cart.address.cityCode},
+      district_code: ${cart.address.districtCode},
+      ward_code: ${cart.address.wardCode},
+      '''
+        : '';
+
+    final recipient = cart.whoReceive != 1
+        ? '''
+        recipient_name: "${cart.recipientName}",
+        recipient_phone_number: "${cart.recipientPhone}",
+      '''
+        : '';
+
+    final customer = cart.customer.id != null
+        ? '''
+        customer_id: "${cart.customer.id}"
+        customer_name: "${cart.customer.name}"
+        phone_number: "${cart.customer.phone}"
+        '''
+        : '''
+        customer_name: "${cart.customer.name}"
+        phone_number: "${cart.customer.phone}"
+        ''';
+
+    final externalNote = cart.externalNote != null
+        ? 'external_note: "${cart.externalNote}",'
+        : '';
+    final internalNote = cart.internalNote != null
+        ? 'internal_note: "${cart.internalNote}",'
+        : '';
+
+    //print('cart_items: ${cart.cartItemsJson}');
+
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          order {
+            updateOrder(
+              filter: { _id: "$idOrder" }
+              record: {
+                minetype: ${cart.mimeType},
+                conversation_id: "${cart.conversationId}",
+                $customer
+                stock_id: "${cart.stock.id}"
+                $address
+                bank_payment: ${cart.bank},
+                card_payment: ${cart.card},
+                other_payment: ${cart.other},
+                discount: ${cart.discount},
+                $recipient
+                $externalNote
+                $internalNote
+              }
+            ) {
+              record {
+                _id,
+                id,
+                conversation_id,
+                customer {
+                  _id
+                  customer_name
+                  phone_number
+                }
+                recipient_name
+                recipient_phone_number
+                phone_number,
+                bank_payment,
+                cash_payment,
+                card_payment,
+                other_payment,
+                discount,
+                amount,
+                COD,
+                address,
+                city {
+                  _id
+                  label,
+                }
+                district {
+                  _id
+                  label,
+                }
+                ward {
+                  _id
+                  label,
+                }
+                status,
+                date_created,
+                created_by_user {
+                  display_name,
+                }
+                minetype,
+                internal_note
+                external_note
+                stock {
+                  _id
+                  name
+                }
+                cart_items {
+                  _id
+                  product_name
+                  product_id_ref
+                  variant_id
+                  qty
+                  price
+                  attributes {
+                    name
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      Map<String, dynamic> order =
+          response.data['order']['updateOrder']['record'];
+      return Order.fromJson(order);
+    }
+  }
+
+  static Future<bool> confirmOrder({
+    @required String idOrder,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          order {
+            confirmOrder(_id: "$idOrder"){
+              status
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final client = getPosClient();
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  static Future<bool> receiveOrder({
+    @required String idOrder,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          order {
+            receiveOrder(_id: "$idOrder"){
+              status
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final client = getPosClient();
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  static Future<bool> returningOrder({
+    @required String idOrder,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          order {
+            returningOrder(_id: "$idOrder"){
+              status
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final client = getPosClient();
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  static Future<bool> returnOrder({
+    @required String idOrder,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          order {
+            returnOrder(_id: "$idOrder"){
+              status
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final client = getPosClient();
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  static Future<bool> cancelOrder({
+    @required String idOrder,
+  }) async {
+    final MutationOptions options = MutationOptions(
+      document: gql(
+        '''
+        mutation {
+          order {
+            cancelOrder(_id: "$idOrder"){
+              status
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final client = getPosClient();
+    final response = await client.mutate(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return false;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return false;
+    } else {
+      return true;
     }
   }
 

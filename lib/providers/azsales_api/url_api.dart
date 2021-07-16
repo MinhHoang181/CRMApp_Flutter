@@ -2,7 +2,7 @@ import 'package:cntt2_crm/models/Azsales/AzsalesData.dart';
 import 'package:graphql/client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final Duration timeout = Duration(minutes: 1);
+final Duration timeout = Duration(seconds: 30);
 
 final _chatWebSocketLink = WebSocketLink(
   dotenv.env['CHAT_WEBSOCKET_SERVICE_AZSALES'],

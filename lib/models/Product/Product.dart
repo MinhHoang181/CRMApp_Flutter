@@ -23,15 +23,15 @@ class Product {
 
   Product({
     @required this.id,
-    @required this.numberId,
-    @required this.name,
-    @required price,
-    @required inPrice,
-    @required salePrice,
-    @required this.featuredPhoto,
-    @required this.photos,
-    @required this.variants,
-    @required this.total,
+    this.numberId,
+    this.name,
+    price,
+    inPrice,
+    salePrice,
+    this.featuredPhoto,
+    this.photos,
+    this.variants,
+    this.total,
   }) {
     this._price = price;
     this._inPrice = inPrice;
@@ -55,7 +55,7 @@ class Product {
           ? Photo.fromJson(json['featured_photo'])
           : null,
       photos: photos,
-      variants: new VariantList(productId: json['_id']),
+      variants: VariantList(productId: json['_id']),
       total: json['stockData'] != null ? json['stockData']['total'] : 0,
     );
   }
@@ -78,7 +78,7 @@ class Product {
           ? Photo.fromJson(json['featured_photo'])
           : null,
       photos: photos,
-      variants: new VariantList(productId: json['_id']),
+      variants: VariantList(productId: json['_id']),
       total: json['stockData'] != null ? json['stockData']['total'] : 0,
     );
 

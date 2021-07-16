@@ -10,11 +10,13 @@ import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 class AddressInfo extends StatefulWidget {
   final Address address;
   final GlobalKey<FormState> formKey;
+  final bool canEdit;
 
   const AddressInfo({
     Key key,
     @required this.address,
     @required this.formKey,
+    this.canEdit = true,
   }) : super(key: key);
   @override
   _AddressInfoState createState() => _AddressInfoState();
@@ -45,6 +47,7 @@ class _AddressInfoState extends State<AddressInfo> {
 
   Widget _selectCity() {
     return TextFormField(
+      enabled: widget.canEdit,
       controller: TextEditingController(
         text: widget.address.city != null ? widget.address.city : '',
       ),
@@ -75,7 +78,7 @@ class _AddressInfoState extends State<AddressInfo> {
       ),
       style: Theme.of(context).textTheme.bodyText2,
       readOnly: true,
-      enabled: _city != null ? true : false,
+      enabled: (widget.canEdit && _city != null) ? true : false,
       onTap: _showDisctrictDialog,
       validator: (_) {
         if (widget.address.districtCode == null) {
@@ -97,7 +100,7 @@ class _AddressInfoState extends State<AddressInfo> {
       ),
       style: Theme.of(context).textTheme.bodyText2,
       readOnly: true,
-      enabled: _district != null ? true : false,
+      enabled: (widget.canEdit && _district != null) ? true : false,
       onTap: _showWardDialog,
       validator: (_) {
         if (widget.address.wardCode == null) {
@@ -110,6 +113,7 @@ class _AddressInfoState extends State<AddressInfo> {
 
   Widget _addressField() {
     return TextFormField(
+      enabled: widget.canEdit,
       controller: TextEditingController(text: widget.address.address),
       style: Theme.of(context).textTheme.bodyText2,
       decoration: InputDecoration(

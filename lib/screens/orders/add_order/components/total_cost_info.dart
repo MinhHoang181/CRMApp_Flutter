@@ -106,9 +106,11 @@ class _StorageSelectState extends State<StorageSelect> {
   @override
   Widget build(BuildContext context) {
     final formKey = context.select((FormValidate form) => form.stock);
+    final canEdit = context.select((Cart cart) => cart.canEdit);
     return Form(
       key: formKey,
       child: TextFormField(
+        enabled: canEdit,
         controller: TextEditingController(
           text: _cart.stock != null ? _cart.stock.name : '',
         ),

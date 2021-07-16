@@ -27,6 +27,7 @@ class ProductOrder extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context, var products) {
+    final canEdit = context.select((Cart cart) => cart.canEdit);
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.all(Layouts.SPACING / 2),
@@ -43,23 +44,25 @@ class ProductOrder extends StatelessWidget {
                     return _buildRow(context, products.keys.elementAt(index));
                   }),
             ),
-            TextButton(
-              child: Text(
-                'Thêm sản phẩm',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+            if (canEdit) ...[
+              TextButton(
+                child: Text(
+                  'Thêm sản phẩm',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => ChangeNotifierProvider<Cart>.value(
-                    value: Provider.of<Cart>(context, listen: false),
-                    child: selectProductScreen,
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ChangeNotifierProvider<Cart>.value(
+                      value: Provider.of<Cart>(context, listen: false),
+                      child: selectProductScreen,
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),
@@ -68,6 +71,7 @@ class ProductOrder extends StatelessWidget {
 
   Widget _buildRow(BuildContext context, Variant variant) {
     final cart = context.watch<Cart>();
+    final canEdit = cart.canEdit;
     return Slidable(
       child: Card(
         child: Padding(
@@ -85,14 +89,16 @@ class ProductOrder extends StatelessWidget {
           ),
         ),
       ),
-      secondaryActions: [
-        IconSlideAction(
-          icon: Icons.delete_rounded,
-          caption: 'Xoá',
-          color: Colors.red,
-          onTap: () => cart.delete(variant),
-        ),
-      ],
+      secondaryActions: canEdit
+          ? [
+              IconSlideAction(
+                icon: Icons.delete_rounded,
+                caption: 'Xoá',
+                color: Colors.red,
+                onTap: () => cart.delete(variant),
+              ),
+            ]
+          : null,
       actionPane: SlidableScrollActionPane(),
     );
   }
@@ -136,13 +142,14 @@ class ProductOrder extends StatelessWidget {
   }
 
   Widget _quantity(BuildContext context, Cart cart, Variant variant) {
+    final canEdit = cart.canEdit;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
           iconSize: 20,
           icon: Icon(Icons.remove),
-          onPressed: () => cart.remove(variant),
+          onPressed: canEdit ? () => cart.remove(variant) : null,
         ),
         Text(
           cart.products[variant].toString(),
@@ -153,7 +160,7 @@ class ProductOrder extends StatelessWidget {
         IconButton(
           iconSize: 20,
           icon: Icon(Icons.add),
-          onPressed: () => cart.add(variant),
+          onPressed: canEdit ? () => cart.add(variant) : null,
         ),
       ],
     );
