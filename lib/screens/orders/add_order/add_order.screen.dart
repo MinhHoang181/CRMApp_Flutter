@@ -6,11 +6,12 @@ import 'package:provider/provider.dart';
 
 //Components
 import 'components/body.dart';
-import 'components/order_buttons/create_button.dart';
-import 'components/order_buttons/confirm_button.dart';
-import 'components/order_buttons/send_button.dart';
-import 'components/order_buttons/receive_button.dart';
-import 'components/order_buttons/returning_button.dart';
+import 'components/order_actions/create_order_actions.dart';
+import 'components/order_actions/new_order_actions.dart';
+import 'components/order_actions/confirmed_order_actions.dart';
+import 'components/order_actions/sent_order_actions.dart';
+import 'components/order_actions/received_order_actions.dart';
+import 'components/order_actions/returning_order_actions.dart';
 
 //Models
 import 'package:cntt2_crm/models/Cart.dart';
@@ -131,16 +132,18 @@ class __StatusOrderButtonState extends State<_StatusOrderButton> {
   Widget build(BuildContext context) {
     switch (_status) {
       case 0:
-        return CreateOrderButton();
+        return CreateOrderActions();
         break;
       case 1:
-        return ConfirmOrderButton();
+        return NewOrderActions();
       case 2:
-        return SentOrderButton();
+        return ConfirmedOrderActions();
       case 3:
-        return ReceiveOrderButton();
+        return SentOrderActions();
       case 4:
-        return ReturningOrderButton();
+        return ReceivedOrderActions();
+      case 5:
+        return ReturningOrderActions();
       default:
         return Container();
     }

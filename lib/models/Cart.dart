@@ -54,7 +54,7 @@ class Cart extends ChangeNotifier {
     if (_idOrder == null) return false;
     final check = await OrderAPI.receiveOrder(idOrder: _idOrder);
     if (check != null && check && _order != null) {
-      _order.updateStatus(StatusOrder.confirmedOrder);
+      _order.updateStatus(StatusOrder.doneOrder);
     }
     return check;
   }
@@ -63,7 +63,7 @@ class Cart extends ChangeNotifier {
     if (_idOrder == null) return false;
     final check = await OrderAPI.returningOrder(idOrder: _idOrder);
     if (check != null && check && _order != null) {
-      _order.updateStatus(StatusOrder.confirmedOrder);
+      _order.updateStatus(StatusOrder.returningOrder);
     }
     return check;
   }
@@ -72,7 +72,7 @@ class Cart extends ChangeNotifier {
     if (_idOrder == null) return false;
     final check = await OrderAPI.returnOrder(idOrder: _idOrder);
     if (check != null && check && _order != null) {
-      _order.updateStatus(StatusOrder.confirmedOrder);
+      _order.updateStatus(StatusOrder.returnedOrder);
     }
     return check;
   }
