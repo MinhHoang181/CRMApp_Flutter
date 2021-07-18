@@ -25,6 +25,12 @@ class DailyOrderInfo {
       );
       returnOrder = total != null ? total : 0;
     }
+    if (cancelOrder == null) {
+      final total = await OrderAPI.fetchCancelOrderInDay(
+        date: DateTime.now(),
+      );
+      cancelOrder = total != null ? total : 0;
+    }
     return this;
   }
 
@@ -40,12 +46,16 @@ class DailyOrderInfo {
         OrderAPI.fetchReturnOrderInDay(
           date: DateTime.now(),
         ),
+        OrderAPI.fetchCancelOrderInDay(
+          date: DateTime.now(),
+        ),
       ],
     ).onError((error, stackTrace) => null);
     if (result != null) {
       amount = result[0];
       newOrder = result[1];
       returnOrder = result[2];
+      cancelOrder = result[3];
       return true;
     }
     return false;

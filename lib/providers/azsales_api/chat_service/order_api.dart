@@ -640,6 +640,14 @@ class OrderAPI {
         '''
         mutation {
           order {
+            updateOrder(
+              filter: { _id: "$idOrder" }
+              record: {}
+            ) {
+              record {
+                status
+              }
+            }
             cancelOrder(_id: "$idOrder"){
               status
             }
@@ -826,6 +834,7 @@ class OrderAPI {
                 itemCount,
               }
               items {
+                date_updated
                 date_created
               }
             }
@@ -857,19 +866,127 @@ class OrderAPI {
           PageInfo.fromJson(response.data['order']['ordersPaging']['pageInfo']);
       await Future(() async {
         ordersJson.forEach((order) {
-          if (order['date_created'] >= beginDay &&
-              order['date_created'] <= endDay) {
-            total++;
+          if (order['date_updated'] == null) {
+            if (order['date_created'] >= beginDay &&
+                order['date_created'] <= endDay) {
+              total++;
+            }
+          } else {
+            if (order['date_updated'] >= beginDay &&
+                order['date_updated'] <= endDay) {
+              total++;
+            }
           }
         });
         final last = ordersJson.length - 1;
         if (pageInfo.hasNextPage) {
-          if (ordersJson[last]['date_created'] >= beginDay &&
-              ordersJson[last]['date_created'] <= endDay) {
-            total += await fetchReturnOrderInDay(
-              date: date,
-              page: page + 1,
-            );
+          if (ordersJson[last]['date_updated'] == null) {
+            if (ordersJson[last]['date_created'] >= beginDay &&
+                ordersJson[last]['date_created'] <= endDay) {
+              total += await fetchReturnOrderInDay(
+                date: date,
+                page: page + 1,
+              );
+            }
+          } else {
+            if (ordersJson[last]['date_updated'] >= beginDay &&
+                ordersJson[last]['date_updated'] <= endDay) {
+              total += await fetchReturnOrderInDay(
+                date: date,
+                page: page + 1,
+              );
+            }
+          }
+        }
+      });
+      return total;
+    }
+  }
+
+  static Future<int> fetchCancelOrderInDay({
+    @required DateTime date,
+    int page = 1,
+  }) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(
+        '''
+        query {
+          order {
+            ordersPaging(
+              page: $page
+              filter: {
+                status: 7
+              }
+              sort: ID_DESC
+            ) {
+              pageInfo {
+                hasNextPage,
+                currentPage,
+                itemCount,
+              }
+              items {
+                date_updated
+                date_created
+              }
+            }
+          }
+        }
+        ''',
+      ),
+    );
+    final GraphQLClient client = getPosClient();
+    final response = await client.query(options).timeout(
+          timeout,
+          onTimeout: () => null,
+        );
+    if (response == null) return null;
+    if (response.hasException) {
+      print(response.exception.toString());
+      return null;
+    } else {
+      final int beginDay =
+          DateTime(date.year, date.month, date.day).microsecondsSinceEpoch ~/
+              1000;
+      final int endDay = DateTime(date.year, date.month, date.day, 23, 59, 59)
+              .microsecondsSinceEpoch ~/
+          1000;
+      int total = 0;
+      final List<dynamic> ordersJson =
+          response.data['order']['ordersPaging']['items'];
+      final PageInfo pageInfo =
+          PageInfo.fromJson(response.data['order']['ordersPaging']['pageInfo']);
+      await Future(() async {
+        ordersJson.forEach((order) {
+          if (order['date_updated'] == null) {
+            if (order['date_created'] >= beginDay &&
+                order['date_created'] <= endDay) {
+              total++;
+            }
+          } else {
+            if (order['date_updated'] >= beginDay &&
+                order['date_updated'] <= endDay) {
+              total++;
+            }
+          }
+        });
+        final last = ordersJson.length - 1;
+        if (pageInfo.hasNextPage) {
+          if (ordersJson[last]['date_updated'] == null) {
+            if (ordersJson[last]['date_created'] >= beginDay &&
+                ordersJson[last]['date_created'] <= endDay) {
+              total += await fetchCancelOrderInDay(
+                date: date,
+                page: page + 1,
+              );
+            }
+          } else {
+            if (ordersJson[last]['date_updated'] >= beginDay &&
+                ordersJson[last]['date_updated'] <= endDay) {
+              total += await fetchCancelOrderInDay(
+                date: date,
+                page: page + 1,
+              );
+            }
           }
         }
       });

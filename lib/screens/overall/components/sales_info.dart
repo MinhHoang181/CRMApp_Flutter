@@ -109,7 +109,9 @@ class _SalesInfoState extends State<SalesInfo> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      dailyOrderInfo != null ? '$_cancelOrder' : '0',
+                      dailyOrderInfo != null
+                          ? '${dailyOrderInfo.cancelOrder}'
+                          : '0',
                       style: GoogleFonts.robotoMono(
                         textStyle:
                             TextStyle(fontSize: Fonts.SIZE_TEXT_MEDIUM * 1.5),
