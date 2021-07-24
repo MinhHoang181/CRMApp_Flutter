@@ -105,12 +105,9 @@ class AttachmentMessage extends StatelessWidget {
               top: 1,
               right: Layouts.SPACING * 4,
             ),
-      child: SizedBox(
-        height: 100,
-        width: 100,
-        child: Image(
-          image: NetworkImage(url),
-        ),
+      child: ImageItem(
+        url: url,
+        size: const Size(100, 100),
       ),
     );
   }

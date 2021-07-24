@@ -3,9 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:cntt2_crm/constants/layouts.dart' as Layouts;
 
+//Screens
+import 'package:cntt2_crm/screens/orders/add_order/add_order.screen.dart';
+
 //Models
 import 'package:cntt2_crm/models/Order/Order.dart';
 import 'package:cntt2_crm/models/Order/CartProduct.dart';
+import 'package:cntt2_crm/models/Cart.dart';
 
 class OrderItem extends StatelessWidget {
   const OrderItem({Key key}) : super(key: key);
@@ -17,13 +21,26 @@ class OrderItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(
         horizontal: Layouts.SPACING / 2,
       ),
-      child: Card(
-        child: Column(
-          children: [
-            _header(context, order),
-            _detail(context, order),
-            _footer(context, order),
-          ],
+      child: InkWell(
+        child: Card(
+          child: Column(
+            children: [
+              _header(context, order),
+              _detail(context, order),
+              _footer(context, order),
+            ],
+          ),
+        ),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChangeNotifierProvider<Cart>.value(
+              value: Cart.fromOrder(order),
+              child: AddOrderScreen(
+                order: order,
+              ),
+            ),
+          ),
         ),
       ),
     );
