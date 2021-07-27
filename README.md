@@ -1,16 +1,25 @@
-# cntt2_crm
+# Sản phẩm Dự án Công nghệ thông tin 2
 
-A new Flutter application.
+Đề tài: Ứng dụng điện thoại về chăm sóc khách hàng trên nền tảng Facebook
 
-## Getting Started
+## Cách chạy ứng dụng
 
-This project is a starting point for a Flutter application.
+**Bước 1:**
 
-A few resources to get you started if this is your first Flutter project:
+Tải hoặc clone project này bằng link:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```
+https://github.com/MinhHoang181/flutter_cntt2.git
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Bước 2:**
+
+Tạo và chạy ứng dụng từ source code
+
+**iOS:**
+
+Dùng lệnh commands `flutter build` và `flutter run` tại thư mục gốc của ứng dụng để tạo/chạy ứng dụng hoặc có thể mở file `ios/Runner.xcworkspace` bằng Xcode và tạo/chạy ứng dụng như bình thường
+
+**Android:**
+
+Dùng lệnh commands `flutter build` và `flutter run` tại thư mục gốc của ứng dụng để tạo/chạy ứng dụng hoặc có thể mở thư mục `android` bằng Android Studio và tạo ứng dụng như bình thường
